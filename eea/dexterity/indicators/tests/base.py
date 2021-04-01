@@ -15,6 +15,8 @@ class EEAFixture(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         """ Setup Zope
         """
+        import plone.app.dexterity
+        self.loadZCML(package=plone.app.dexterity)
         import eea.dexterity.indicators
         self.loadZCML(package=eea.dexterity.indicators)
         z2.installProduct(app, 'eea.dexterity.indicators')
