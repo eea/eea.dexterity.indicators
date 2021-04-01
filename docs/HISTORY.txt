@@ -3,10 +3,4 @@ Changelog
 
 1.0 - (2021-04-01)
 ---------------------------
-* Change: Add ims_folder and ims_indicator DX types [avoinea]
-
-1.0 - (2021-04-01)
------------------------
-
-* Initial release.
-  [eea]
+* Initial release: Add ims_folder and ims_indicator DX types [avoinea]
