@@ -40,6 +40,7 @@ setup(
         install_requires=[
         'setuptools',
         # -*- Extra requirements: -*-
+        'plone.app.dexterity',
     ],
     extras_require={
         'test': [
