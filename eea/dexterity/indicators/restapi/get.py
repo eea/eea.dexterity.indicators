@@ -3,7 +3,6 @@
 from plone.restapi.interfaces import IExpandableElement
 from plone.restapi.serializer.converters import json_compatible
 from plone.restapi.services import Service
-from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from zope.component import adapter, queryMultiAdapter
 from zope.interface import implementer
@@ -28,13 +27,17 @@ class Charts(object):
         if IPloneSiteRoot.providedBy(self.context):
             return result
 
-        view = queryMultiAdapter((self.context, self.request), name='daviz-view.html')
+        view = queryMultiAdapter((
+            self.context, self.request),
+            name='daviz-view.html'
+        )
+
         if not view:
             return result
 
         result["charts"]["items"] = []
         for tab in view.tabs:
-            result["charts"]["items"].append(tab)
+            result["charts"]["items"].append(json_compatible(tab))
         return result
 
 
