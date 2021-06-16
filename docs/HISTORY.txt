@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0 - (2021-06-16)
+---------------------------
+* Change: Moved RestAPI endpoint @charts to eea.app.visualization
+  [avoinea refs 126277]
+
 1.1 - (2020-06-14)
 ---------------------------
 * Feature: RestAPI endpoint @charts for IVisualizationEnabled types
