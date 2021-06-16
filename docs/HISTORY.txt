@@ -3,6 +3,8 @@ Changelog
 
 2.0 - (2021-06-16)
 ---------------------------
+* Feature: Persist TTW GenericSetup profile
+  [avoinea refs #132603]
 * Change: Moved RestAPI endpoint @charts to eea.app.visualization
   [avoinea refs 126277]
 
