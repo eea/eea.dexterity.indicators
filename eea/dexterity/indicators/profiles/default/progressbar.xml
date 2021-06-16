@@ -3,7 +3,6 @@
  <object name="ims_indicator" meta_type="ProgressContentType">
   <property name="title">IMS Indicator</property>
   <property name="ctype">ims_indicator</property>
-  <object name=".schema" meta_type="Dexterity Container"/>
   <progress>
    <field name="dissemination">
     <property name="iconEmpty">eea-icon eea-icon-edit</property>
