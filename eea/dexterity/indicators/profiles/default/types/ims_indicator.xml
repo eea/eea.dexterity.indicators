@@ -2,14 +2,14 @@
 <object name="ims_indicator" meta_type="Dexterity FTI" i18n:domain="plone"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title" i18n:translate="">Indicator</property>
- <property name="description" i18n:translate="">(Dexterity) Indicator</property>
+ <property name="description" i18n:translate="">IMSv4 Indicator</property>
  <property name="icon_expr">string:${portal_url}/document_icon.png</property>
  <property name="factory">ims_indicator</property>
  <property
     name="add_view_expr">string:${folder_url}/++add++ims_indicator</property>
  <property name="link_target"></property>
  <property name="immediate_view">view</property>
- <property name="global_allow">False</property>
+ <property name="global_allow">True</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
   <element value="Image"/>
@@ -25,8 +25,160 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
+  <element value="volto.blocks.fixed.layout"/>
+  <element value="eea.api.layout.interfaces.IFixedLayoutBlocks"/>
+  <element value="collective.taxonomy.generated.themes"/>
+  <element value="plone.app.relationfield.behavior.IRelatedItems"/>
+  <element value="collective.taxonomy.generated.hog_users"/>
  </property>
- <property name="model_file">plone.app.contenttypes.schema:folder.xml</property>
+ <property name="schema"></property>
+ <property
+    name="model_source">&lt;model xmlns:form="http://namespaces.plone.org/supermodel/form" xmlns:i18n="http://xml.zope.org/namespaces/i18n" xmlns:marshal="http://namespaces.plone.org/supermodel/marshal" xmlns:security="http://namespaces.plone.org/supermodel/security" xmlns="http://namespaces.plone.org/supermodel/schema"&gt;
+    &lt;schema&gt;
+      &lt;field name="methodology" type="plone.app.textfield.RichText"&gt;
+        &lt;description&gt;Methodology for indicator calculation and for gap filling.&amp;#13;
+  Where relevant, include changes to methodology and subsequent implications for comparability. &amp;#13;
+  Also include uncertainties in relation to the indicator calculation and/or to gap filling) if these are considerable.&lt;/description&gt;
+        &lt;required&gt;False&lt;/required&gt;
+        &lt;title&gt;Methodology&lt;/title&gt;
+      &lt;/field&gt;
+      &lt;field name="references" type="plone.app.textfield.RichText"&gt;
+        &lt;description&gt;References relating to the assessment section.&amp;#13;
+  References relating to the methodology section.&amp;#13;
+  Here we should try to get integration with Zotero API (https://www.zotero.org/support/dev/web_api/v3/start).&lt;/description&gt;
+        &lt;required&gt;False&lt;/required&gt;
+        &lt;title&gt;References&lt;/title&gt;
+      &lt;/field&gt;
+      &lt;field name="Consultation_emails" type="zope.schema.Set"&gt;
+        &lt;description&gt;list of emails for the consultation phase&lt;/description&gt;
+        &lt;required&gt;False&lt;/required&gt;
+        &lt;title&gt;Consultation emails&lt;/title&gt;
+        &lt;value_type type="zope.schema.Choice"&gt;
+          &lt;values/&gt;
+        &lt;/value_type&gt;
+      &lt;/field&gt;
+      &lt;fieldset name="euro_sdmx_metadata_structure" label="Euro-SDMX Metadata Structure" description="Information is structured according to the Euro-SDMX Metadata Structure (ESMS), used in the European Statistical System, as applicable to the EEA indicators."&gt;
+        &lt;field name="contact_name" type="zope.schema.TextLine"&gt;
+          &lt;description&gt;Full name of the contact person for the indicator.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Contact name&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="contact_email" type="plone.schema.email.Email"&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Contact email&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="contact_organisation_unit" type="zope.schema.TextLine"&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Contact organisation unit&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="policy_relevance" type="plone.app.textfield.RichText"&gt;
+          &lt;description&gt;Policy to which the indicator relates and specific thresholds against which the indicator measures progress.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Policy relevance&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="environmental_relevance" type="plone.app.textfield.RichText"&gt;
+          &lt;description&gt;Relevance/importance of indicator from an environmental perspective.&amp;#13;
+  Whether an increase in the indicator value constitutes a positive or a negative development for the environment. &amp;#13;
+  If important, any uncertainty around the rationale for the indicator.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Environmental relevance&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="data_description" type="zope.schema.Text"&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Data description&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="time_coverage" type="zope.schema.TextLine"&gt;
+          &lt;description&gt;Length of time for which data are available, e.g. 1920-2019&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Time coverage&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="unit_of_measure" type="zope.schema.TextLine"&gt;
+          &lt;description&gt;Unit in which data values are measured.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Unit of measure&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="reference_period" type="zope.schema.TextLine"&gt;
+          &lt;description&gt;Period or point in time of the measured observation. Date or date range.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Reference period&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="institutional_mandate" type="plone.app.textfield.RichText"&gt;
+          &lt;description&gt;Legal base or other agreement creating the reporting requirement.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Institutional mandate&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="data_sharing" type="plone.app.textfield.RichText"&gt;
+          &lt;description&gt;Agreements related to data sharing and exchange between international data producing agencies.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Data sharing&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="frequency_of_dissemination" type="zope.schema.Int"&gt;
+          &lt;default&gt;1&lt;/default&gt;
+          &lt;description&gt;Time interval at which the indicator is published (in years, from 1 to 5). E.g. use 1 if it is published yearly, 2 if it is published every 2 years and so on.&lt;/description&gt;
+          &lt;max&gt;5&lt;/max&gt;
+          &lt;min&gt;1&lt;/min&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Frequency of dissemination&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="dissemination" type="zope.schema.TextLine"&gt;
+          &lt;default&gt;Published via the EEA's website.&lt;/default&gt;
+          &lt;description&gt;Means of dissemination to make indicator available to users.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Dissemination&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="accuracy_and_reliability" type="zope.schema.Text"&gt;
+          &lt;description&gt;Closeness of computations or estimates to the unknown exact or true values that the statistics were intended to measure; closeness of the initial estimated value to the subsequent estimated value.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Accuracy and reliability&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="timeliness" type="zope.schema.TextLine"&gt;
+          &lt;description&gt;Length of time between data availability and the phenomenon the data describe.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Timeliness&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="geographical_comparability" type="zope.schema.Text"&gt;
+          &lt;description&gt;Extent to which statistics are comparable between geographical areas.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Geographical comparability&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="comparability_over_time" type="zope.schema.Text"&gt;
+          &lt;description&gt;Extent to which statistics are comparable over time.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Comparability over time&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="base_period" type="zope.schema.TextLine"&gt;
+          &lt;description&gt;Period of time used as the base of an indicator number, or to which a constant series refers&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Base period&lt;/title&gt;
+        &lt;/field&gt;
+      &lt;/fieldset&gt;
+      &lt;fieldset name="layout" label="Layout"&gt;
+        &lt;field name="blocks" type="plone.schema.jsonfield.JSONField"&gt;
+          &lt;default&gt;{u'794c9b24-5cd4-4b9f-a0cd-b796aadc86e8': {u'styles': {u'style_name': u'environment-theme-bg'}, u'fixedLayout': True, u'title': u'Content header', u'required': True, u'disableNewBlocks': True, u'as': u'section', u'disableInnerButtons': True, u'readOnlySettings': True, u'instructions': {u'data': u'&amp;lt;p&amp;gt;&amp;lt;br/&amp;gt;&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}, u'fixed': True, u'data': {u'blocks': {u'ddde07aa-4e48-4475-94bd-e1a517d26eab': {u'placeholder': u'Indicator title', u'fixed': True, u'disableNewBlocks': True, u'@type': u'title', u'required': True}, u'9f452ca7-172a-42e0-a699-8df0714c89f8': {u'styles': {u'align': u'full'}, u'align': u'full', u'@type': u'splitter'}, u'12d8c532-f7ad-43fe-ada7-330b2d7a7a39': {u'plaintext': u' Published: date \u2012 25min read ', u'required': True, u'disableNewBlocks': True, u'value': [{u'type': u'p', u'children': [{u'text': u''}, {u'type': u'sup', u'children': [{u'text': u'Published: '}, {u'type': u'mention', u'data': {u'widget': u'datetime', u'id': u'effective'}, u'children': [{u'text': u'date'}]}, {u'text': u' \u2012 25min read'}]}, {u'text': u''}]}], u'readOnly': True, u'fixed': True, u'@type': u'slate', u'instructions': {u'data': u'&amp;lt;p&amp;gt;&amp;lt;br/&amp;gt;&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}}, u'ca212ba0-859e-4e67-b610-debe0d498b74': {u'fixedLayout': False, u'maxChars': u'500', u'required': True, u'disableNewBlocks': True, u'as': u'div', u'placeholder': u'Summary', u'title': u'Summary', u'disableInnerButtons': True, u'readOnlySettings': True, u'instructions': {u'data': u'&amp;lt;p&amp;gt;The summary tells the reader about the indicator trend over the examined period and whether or not it helps to achieve the associated policy objective, which can be either quantitative or directional.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;In the absence of a policy objective, it explains whether the trend is in the right or wrong direction in relation to the issue examined.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;If there has been an important change over the most recent period of the time series, e.g. over the last year, this is indicated too.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Furthermore, if there is a quantitative target, it also indicates whether we are on track to meet it and if not what are the reasons preventing that, e.g. socio-economic drivers, implementation gap etc.&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}, u'fixed': True, u'data': {u'blocks': {u'2679fdcc-60be-47ea-90b6-435837793600': {u'plaintext': u'', u'placeholder': u'Summary', u'@type': u'slate', u'value': [{u'type': u'p', u'children': [{u'text': u''}]}], u'instructions': {u'data': u'&amp;lt;p&amp;gt;&amp;lt;br/&amp;gt;&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}}}, u'blocks_layout': {u'items': [u'2679fdcc-60be-47ea-90b6-435837793600']}}, u'@type': u'group', u'allowedBlocks': [u'slate']}}, u'blocks_layout': {u'items': [u'ddde07aa-4e48-4475-94bd-e1a517d26eab', u'ca212ba0-859e-4e67-b610-debe0d498b74', u'9f452ca7-172a-42e0-a699-8df0714c89f8', u'12d8c532-f7ad-43fe-ada7-330b2d7a7a39']}}, u'@type': u'group', u'allowedBlocks': []}, u'ee9b580e-029b-49ef-b36d-7f1de74c481d': {u'required': True, u'disableNewBlocks': True, u'readOnly': False, u'readOnlySettings': True, u'fixed': True, u'placeholder': u'Automatically populated by references and footnotes created within text.', u'@type': u'slateFootnotes', u'instructions': {u'data': u'&amp;lt;p&amp;gt;References and footnotes instructions goes here&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}}, u'1bc4379d-cddb-4120-84ad-5ab025533b12': {u'title': u'Aggregate level assessment', u'maxChars': u'2000', u'required': True, u'disableNewBlocks': False, u'as': u'section', u'placeholder': u'Aggregate level assessment e.g. progress at global, EU level..', u'disableInnerButtons': True, u'readOnlySettings': True, u'instructions': {u'data': u'&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Assessment text remains at&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;the relevant&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;aggregate level&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;(i.e.&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;global, EU, sectoral)&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;and addresses the following:\xa0&amp;lt;/strong&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;ol keys="ctu26,7qvql,u1tr,ftif7,6u2tn,7ui54" depth="0"&amp;gt;&amp;lt;li&amp;gt;Explains in one or two sentences on the environmental rationale of the indicator, i.e. why it matters to the environment that we see an increase/decrease in the value measured.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;Explains in one or two sentences the associated policy objective, which can be either quantitative or directional. More information on the policy objective and related references will be included in the supporting information section. Where there is no policy objective associated with the indicator, i.e. where the indicator addresses an issue that is important for future policy formulation, this text should explain instead why this issue is important.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;IF NECESSARY \u2014 Explains any mismatch between what the indicator tracks and what the policy objective/issue is.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;Qualifies the historical trend (e.g. steady increase) and explains the key reasons (e.g. policies) behind it. If there is a quantitative target it explains if we are on track to meet it.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;IF NECESSARY \u2014 Explains any recent changes to the trend and why.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;IF NECESSARY \u2014 Describes what needs to happen to see adequate progress in future, for instance in order to remain on track to meet targets.\xa0&amp;lt;/li&amp;gt;&amp;lt;/ol&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Please cite your work if&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;necessary&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;using the EEA citation style (i.e.&amp;lt;/strong&amp;gt; &amp;lt;strong&amp;gt;EEA, 2020). A full reference list appears in the supporting information section.&amp;lt;/strong&amp;gt;&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}, u'fixed': True, u'data': {u'blocks': {u'deb7e84d-d2c8-4491-90fa-3dc65fe02143': {u'plaintext': u'', u'required': True, u'value': [{u'type': u'p', u'children': [{u'text': u''}]}], u'fixed': True, u'@type': u'slate', u'instructions': {u'data': u'&amp;lt;p&amp;gt;&amp;lt;br/&amp;gt;&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}}, u'b0279dde-1ceb-4137-a7f1-5ab7b46a782c': {u'required': True, u'fixed': True, u'disableNewBlocks': True, u'@type': u'dataFigure', u'instructions': {u'data': u'&amp;lt;p&amp;gt;figure instructions goes here&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}}}, u'blocks_layout': {u'items': [u'b0279dde-1ceb-4137-a7f1-5ab7b46a782c', u'deb7e84d-d2c8-4491-90fa-3dc65fe02143']}}, u'@type': u'group', u'allowedBlocks': [u'slate']}, u'd060487d-88fc-4f7b-8ea4-003f14e0fb0c': {u'title': u'Disaggregate level assessment', u'maxChars': u'1000', u'required': True, u'disableNewBlocks': False, u'readOnly': False, u'as': u'section', u'placeholder': u'Disaggregate level assessment e.g. country, sectoral, regional level assessment', u'disableInnerButtons': True, u'readOnlySettings': True, u'instructions': {u'data': u'&amp;lt;ol keys="8l2if,hhq8,bj3pq,3dsb1" depth="0"&amp;gt;&amp;lt;li&amp;gt;Depending on the indicator context, this text can provide information at country level or, if this is not relevant, at some other level, e.g. sectoral, regional level.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;This text interprets the data represented in the chart, rather than describing results, i.e. it provides explanations for some of the results.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;The text related to progress at this level does not have to be comprehensive.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;If there is no information that adds value to what is already visible there is no need to have any text.&amp;lt;/li&amp;gt;&amp;lt;/ol&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}, u'fixed': True, u'data': {u'blocks': {u'd3d49723-14e5-4663-b346-37ee3572f28d': {u'plaintext': u'', u'required': True, u'value': [{u'type': u'p', u'children': [{u'text': u''}]}], u'fixed': True, u'@type': u'slate', u'instructions': {u'data': u'&amp;lt;p&amp;gt;&amp;lt;br/&amp;gt;&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}}, u'02ba4a04-fcfe-4968-806f-1dac3119cfef': {u'required': True, u'fixed': True, u'disableNewBlocks': True, u'@type': u'dataFigure', u'instructions': {u'data': u'&amp;lt;p&amp;gt;&amp;lt;br/&amp;gt;&amp;lt;/p&amp;gt;', u'content-type': u'text/html', u'encoding': u'utf8'}}}, u'blocks_layout': {u'items': [u'02ba4a04-fcfe-4968-806f-1dac3119cfef', u'd3d49723-14e5-4663-b346-37ee3572f28d']}}, u'@type': u'group', u'allowedBlocks': [u'slate']}}&lt;/default&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;blocks&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="blocks_layout" type="plone.schema.jsonfield.JSONField"&gt;
+          &lt;default&gt;{u'items': [u'794c9b24-5cd4-4b9f-a0cd-b796aadc86e8', u'1bc4379d-cddb-4120-84ad-5ab025533b12', u'd060487d-88fc-4f7b-8ea4-003f14e0fb0c', u'ee9b580e-029b-49ef-b36d-7f1de74c481d']}&lt;/default&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;blocks_layout&lt;/title&gt;
+        &lt;/field&gt;
+      &lt;/fieldset&gt;
+      &lt;fieldset name="workflow" label="Workflow"&gt;
+        &lt;field name="Head_of group email" type="plone.schema.email.Email"&gt;
+          &lt;description&gt;email of the head of group (HoG)&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Head of group email&lt;/title&gt;
+        &lt;/field&gt;
+        &lt;field name="Consultation_members emails" type="zope.schema.TextLine"&gt;
+          &lt;description&gt;List of consultation members emails, separated by commas.&lt;/description&gt;
+          &lt;required&gt;False&lt;/required&gt;
+          &lt;title&gt;Consultation members emails&lt;/title&gt;
+        &lt;/field&gt;
+      &lt;/fieldset&gt;
+    &lt;/schema&gt;
+  &lt;/model&gt;</property>
+ <property name="model_file"></property>
  <property name="schema_policy">dexterity</property>
  <alias from="(Default)" to="(dynamic view)"/>
  <alias from="edit" to="@@edit"/>
