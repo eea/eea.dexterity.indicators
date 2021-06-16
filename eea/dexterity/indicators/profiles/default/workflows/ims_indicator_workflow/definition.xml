@@ -428,12 +428,4 @@
   <guard >
   </guard>
  </variable>
- <script script_id="fake_transition" type="External Method" filename="" module="eea.workflow.workflow_scripts" function="fake_transition" />
- <script script_id="publish" type="External Method" filename="" module="EEAPloneAdmin.frontpage_workflow_scripts" function="publish" />
- <script script_id="reject" type="External Method" filename="" module="EEAPloneAdmin.frontpage_workflow_scripts" function="reject" />
- <script script_id="self-qa" type="External Method" filename="" module="Products.EEAPloneAdmin.workflow_scripts" function="check_selfqa" />
- <script script_id="sendWorkflowEmail" type="External Method" filename="" module="EEAPloneAdmin.frontpage_workflow_scripts" function="sendWorkflowEmail" />
- <script script_id="submitForContentReview" type="External Method" filename="" module="EEAPloneAdmin.frontpage_workflow_scripts" function="submitForContentReview" />
- <script script_id="submitForProofReading" type="External Method" filename="" module="EEAPloneAdmin.frontpage_workflow_scripts" function="submitForProofReading" />
- <script script_id="submitForWebQA" type="External Method" filename="" module="EEAPloneAdmin.frontpage_workflow_scripts" function="submitForWebQA" />
 </dc-workflow>
