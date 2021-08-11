@@ -27,3 +27,9 @@ def uninstall(context):
     """ Uninstall script
     """
     # Do something at the end of the uninstallation of this package.
+
+
+def post_upgrade(context):
+    """ Post upgrade script
+    """
+    # Do something at the end of the upgrade of this package.
