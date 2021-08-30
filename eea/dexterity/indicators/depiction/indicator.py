@@ -2,7 +2,7 @@
 """
 import logging
 import six
-from six.moves.urllib.parse import unquote
+from six.moves import urllib
 from zope.interface import implementer
 from zope.component import queryMultiAdapter
 from eea.depiction.browser.interfaces import IImageView
@@ -54,7 +54,7 @@ class IndicatorImageView(DexterityContainerImageView):
                 if url:
                     if six.PY2 and isinstance(url, six.text_type):
                         url = url.encode('utf-8')
-                    url = unquote(url).split('/')[-1]
+                    url = urllib.parse.unquote(url).split('/')[-1]
                     if url in self.context.keys():
                         obj = self.context[url]
                         self._imgview = queryMultiAdapter(
@@ -66,7 +66,7 @@ class IndicatorImageView(DexterityContainerImageView):
             if six.PY2 and isinstance(figureUrl, six.text_type):
                 figureUrl = figureUrl.encode('utf-8')
 
-            figureUrl = unquote(figureUrl).strip('/')
+            figureUrl = urllib.parse.unquote(figureUrl).strip('/')
             try:
                 obj = self.context.unrestrictedTraverse(figureUrl)
             except Exception as err:
