@@ -3,6 +3,8 @@ Changelog
 
 2.2-dev0 - (unreleased)
 ---------------------------
+* Feature: Fix depiction from dataFigure blocks with uploaded chart
+  [avoinea refs #128468]
 
 2.1 - (2021-08-11)
 ---------------------------
