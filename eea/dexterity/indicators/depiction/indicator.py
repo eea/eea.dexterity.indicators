@@ -2,6 +2,7 @@
 """
 import logging
 import six
+from six.moves import urllib
 from zope.interface import implementer
 from zope.component import queryMultiAdapter
 from eea.depiction.browser.interfaces import IImageView
@@ -15,7 +16,7 @@ def getDataFigureBlock(blocks):
     for uid in blocks:
         block = blocks[uid]
         if block.get('@type') == 'dataFigure':
-            if block.get('figureUrl', ''):
+            if block.get('figureUrl', '') or block.get('url', ''):
                 return block
 
         data = block.get('data', {})
@@ -48,13 +49,24 @@ class IndicatorImageView(DexterityContainerImageView):
                 return self._imgview
 
             figureUrl = block.get('figureUrl', '')
+            url = block.get('url', '')
             if not figureUrl:
+                if url:
+                    if six.PY2 and isinstance(url, six.text_type):
+                        url = url.encode('utf-8')
+                    url = urllib.parse.unquote(url).split('/')[-1]
+                    if url in self.context.keys():
+                        obj = self.context[url]
+                        self._imgview = queryMultiAdapter(
+                            (obj, self.request),
+                            name='imgview'
+                        )
                 return self._imgview
 
-            figureUrl = figureUrl.strip('/')
             if six.PY2 and isinstance(figureUrl, six.text_type):
                 figureUrl = figureUrl.encode('utf-8')
 
+            figureUrl = urllib.parse.unquote(figureUrl).strip('/')
             try:
                 obj = self.context.unrestrictedTraverse(figureUrl)
             except Exception as err:
@@ -62,7 +74,6 @@ class IndicatorImageView(DexterityContainerImageView):
                 return self._imgview
 
             chart = None
-            url = block.get('url', '')
             if url:
                 if 'embed-chart.svg?chart=' in url:
                     chart = url.split('embed-chart.svg?chart=')[-1]

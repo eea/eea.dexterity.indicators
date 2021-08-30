@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.2 - (2021-08-30)
+---------------------------
+* Feature: Fix depiction from dataFigure blocks with uploaded chart
+  [avoinea refs #128468]
+
 2.1 - (2021-08-11)
 ---------------------------
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
