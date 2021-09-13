@@ -42,6 +42,7 @@ setup(
         'setuptools',
         # -*- Extra requirements: -*-
         'plone.app.dexterity',
+        'eea.schema.slate',
     ],
     extras_require={
         'test': [
