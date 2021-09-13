@@ -1,8 +1,10 @@
 Changelog
 =========
 
-2.3-dev0 - (unreleased)
+2.3 - (2021-09-13)
 ---------------------------
+* Change: Update ims_indicator behaviors and DX schema/layout
+  [avoinea]
 
 2.2 - (2021-08-30)
 ---------------------------
