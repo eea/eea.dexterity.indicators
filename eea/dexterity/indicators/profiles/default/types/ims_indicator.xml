@@ -25,7 +25,6 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
-  <element value="volto.blocks.fixed.layout"/>
   <element value="eea.api.layout.interfaces.IFixedLayoutBlocks"/>
   <element value="collective.taxonomy.generated.themes"/>
   <element value="plone.app.relationfield.behavior.IRelatedItems"/>

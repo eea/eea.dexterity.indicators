@@ -17,9 +17,10 @@ class EEAFixture(PloneSandboxLayer):
         """
         import plone.app.dexterity
         self.loadZCML(package=plone.app.dexterity)
+        import eea.api.layout
+        self.loadZCML(package=eea.api.layout)
         import eea.schema.slate
         self.loadZCML(package=eea.schema.slate)
-        z2.installProduct(app, 'eea.schema.slate')
         import eea.dexterity.indicators
         self.loadZCML(package=eea.dexterity.indicators)
         z2.installProduct(app, 'eea.dexterity.indicators')

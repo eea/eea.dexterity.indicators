@@ -42,7 +42,9 @@ setup(
         'setuptools',
         # -*- Extra requirements: -*-
         'plone.app.dexterity',
+        'eea.api.layout',
         'eea.schema.slate',
+        'eea.dexterity.themes',
     ],
     extras_require={
         'test': [
