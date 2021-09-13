@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.0 - (2021-09-13)
+---------------------------
+* Change: Update ims_indicator behaviors and DX schema/layout
+  [avoinea]
+
 2.2 - (2021-08-30)
 ---------------------------
 * Feature: Fix depiction from dataFigure blocks with uploaded chart
