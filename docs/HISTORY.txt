@@ -1,8 +1,10 @@
 Changelog
 =========
 
-3.1-dev0 - (unreleased)
+3.1 - (2021-09-14)
 ---------------------------
+* Change: Move all ims_indicator text fields to SlateJSONField
+  [avoinea]
 
 3.0 - (2021-09-13)
 ---------------------------
