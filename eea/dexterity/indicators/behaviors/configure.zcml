@@ -10,6 +10,7 @@
     name="eea.dexterity.indicators.indicator"
     title="IMS Indicator"
     description="IMS Indicator"
+    factory=".indicator.Indicator"
     provides="eea.dexterity.indicators.interfaces.IIndicator"
     />
 
