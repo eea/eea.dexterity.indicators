@@ -1,6 +1,9 @@
 Changelog
 =========
 
+3.3-dev0 - (unreleased)
+---------------------------
+
 3.2 - (2021-09-24)
 ---------------------------
 * Change: Add Indicators behavior to extract temporal and geo from blocks
