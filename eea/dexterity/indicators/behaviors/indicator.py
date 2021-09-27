@@ -24,7 +24,8 @@ def getAllBlocks(blocks, flat_blocks):
 @implementer(IIndicator)
 @adapter(IDexterityContent)
 class Indicator(object):
-    """Automatically extract metadata from blocks"""
+    """ Automatically extract metadata from blocks
+    """
 
     def __init__(self, context):
         self.context = context
@@ -79,5 +80,17 @@ class Indicator(object):
 
     @geo_coverage.setter
     def geo_coverage(self, value):
-        """Read-only geographic coverage"""
+        """ Read-only geographic coverage
+        """
         return
+
+    @property
+    def providers(self):
+        """ Data sources and providers
+        """
+        return []
+
+    @providers.setter
+    def providers(self, value):
+        """ Read-only data providers
+        """
