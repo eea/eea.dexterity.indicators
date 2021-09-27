@@ -32,6 +32,14 @@
     provides="Products.GenericSetup.interfaces.EXTENSION"
     post_handler=".setuphandlers.post_upgrade" />
 
+  <genericsetup:registerProfile
+    name="upgrade33"
+    title="Upgrade profile for eea.dexterity.indicators 3.3"
+    directory="profiles/upgrade/to_33"
+    description="This profile contains configuration changes from 2.1 to 3.3"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    post_handler=".setuphandlers.post_upgrade" />
+
   <utility
       factory=".setuphandlers.HiddenProfiles"
       name="eea.dexterity.indicators-hiddenprofiles"

@@ -1,10 +1,15 @@
 Changelog
 =========
 
+3.3 - (2021-09-27)
+---------------------------
+* Change: Update Indicator schema and layout. Add un_sdgs taxonomy
+  [avoinea refs #139536]
+
 3.2 - (2021-09-24)
 ---------------------------
 * Change: Add Indicators behavior to extract temporal and geo from blocks
-  [avoinea]
+  [avoinea refs #139536]
 
 3.1 - (2021-09-14)
 ---------------------------
