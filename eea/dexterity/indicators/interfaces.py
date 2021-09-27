@@ -23,15 +23,8 @@ class IIndicator(model.Schema):
         label=_("Metadata"),
         fields=[
             "temporal_coverage",
-            "geo_coverage"
-        ]
-    )
-
-    model.fieldset(
-        "euro_sdmx_metadata_structure",
-        label=_("Supporting information"),
-        fields=[
-            "data_provenance"
+            "geo_coverage",
+            "data_provenance",
         ]
     )
 
