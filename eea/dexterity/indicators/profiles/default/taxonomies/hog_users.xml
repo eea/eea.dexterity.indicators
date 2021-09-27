@@ -5,18 +5,6 @@
   </vocabName>
   <vocabIdentifier>hog_users</vocabIdentifier>
   <term>
-    <termIdentifier>antonio.demarinis@eea.europa.eu</termIdentifier>
-    <caption>
-      <langstring language="en">Antonio De Marinis</langstring>
-    </caption>
-  </term>
-  <term>
-    <termIdentifier>alin@eaudeweb.ro</termIdentifier>
-    <caption>
-      <langstring language="en">Alin Voinea</langstring>
-    </caption>
-  </term>
-  <term>
     <termIdentifier>antonio.demarinis</termIdentifier>
     <caption>
       <langstring language="en">Antonio de Marinis</langstring>
