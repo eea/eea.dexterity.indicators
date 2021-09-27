@@ -7,6 +7,7 @@ from zope.interface import provider
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 from eea.dexterity.indicators import EEAMessageFactory as _
+from eea.schema.slate.field import SlateJSONField
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
@@ -22,7 +23,15 @@ class IIndicator(model.Schema):
         label=_("Metadata"),
         fields=[
             "temporal_coverage",
-            "geo_coverage"
+            "geo_coverage",
+        ]
+    )
+
+    model.fieldset(
+        "euro_sdmx_metadata_structure",
+        label=_("Supporting information"),
+        fields=[
+            "data_provenance",
         ]
     )
 
@@ -46,4 +55,14 @@ class IIndicator(model.Schema):
         required=False,
         widget="geolocation",
         default={"readOnly": True, "geolocation": []}
+    )
+
+    data_provenance = SlateJSONField(
+        title=_(u"Data sources and providers"),
+        description=_(
+            "This property is read-only and it is automatically "
+            "extracted from this indicator's data visualizations"
+        ),
+        required=False,
+        default=[]
     )

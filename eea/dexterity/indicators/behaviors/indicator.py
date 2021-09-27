@@ -14,17 +14,17 @@ def getAllBlocks(blocks, flat_blocks):
             block.get("data", {}).get("blocks", {}) or
             block.get("blocks", {})
         )
-        if sub_blocks:
-            return getAllBlocks(sub_blocks, flat_blocks)
-
         flat_blocks.append(block)
+        if sub_blocks:
+            getAllBlocks(sub_blocks, flat_blocks)
     return flat_blocks
 
 
 @implementer(IIndicator)
 @adapter(IDexterityContent)
 class Indicator(object):
-    """Automatically extract metadata from blocks"""
+    """ Automatically extract metadata from blocks
+    """
 
     def __init__(self, context):
         self.context = context
@@ -79,5 +79,30 @@ class Indicator(object):
 
     @geo_coverage.setter
     def geo_coverage(self, value):
-        """Read-only geographic coverage"""
+        """ Read-only geographic coverage
+        """
+        return
+
+    @property
+    def data_provenance(self):
+        """ Data sources and providers
+        """
+        res = []
+        blocks = getattr(self.context, 'blocks', None) or {}
+        for block in getAllBlocks(blocks, []):
+            if block.get('@type', '') != 'dataFigure':
+                continue
+
+            dataSources = block.get(
+                'metadata', {}).get(
+                'dataSources', {}).get(
+                'value', []
+            ) or []
+            res.extend(dataSources)
+        return res
+
+    @data_provenance.setter
+    def data_provenance(self, value):
+        """ Read-only data providers
+        """
         return
