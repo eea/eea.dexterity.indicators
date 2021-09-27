@@ -85,12 +85,25 @@ class Indicator(object):
         return
 
     @property
-    def providers(self):
+    def data_provenance(self):
         """ Data sources and providers
         """
-        return []
+        res = []
+        blocks = getattr(self.context, 'blocks', None) or {}
+        for block in getAllBlocks(blocks, []):
+            if block.get('@type', '') != 'dataFigure':
+                continue
 
-    @providers.setter
-    def providers(self, value):
+            dataSources = block.get(
+                'metadata', {}).get(
+                'dataSources', {}).get(
+                'value', []
+            ) or []
+            res.extend(dataSources)
+        return res
+
+    @data_provenance.setter
+    def data_provenance(self, value):
         """ Read-only data providers
         """
+        return
