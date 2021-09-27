@@ -9,13 +9,8 @@
     profile="eea.dexterity.indicators:default">
 
     <genericsetup:upgradeDepends
-       title="Import steps from eea.dexterity.indicators: collective.taxonomy"
-       import_profile="collective.taxonomy"
-      />
-
-    <genericsetup:upgradeDepends
-       title="Import steps from eea.dexterity.indicators: typeinfo"
-       import_profile="typeinfo"
+       title="Import all steps from eea.dexterity.indicators upgrade33: taxonomies, typeinfo"
+       import_profile="eea.dexterity.indicators:upgrade33"
       />
 
   </genericsetup:upgradeSteps>
