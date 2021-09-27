@@ -57,6 +57,5 @@ class IIndicator(model.Schema):
             "extracted from this indicator's data visualizations"
         ),
         required=False,
-        widget="slate_readonly",
         default=[]
     )

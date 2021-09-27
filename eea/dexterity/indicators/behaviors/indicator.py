@@ -14,10 +14,9 @@ def getAllBlocks(blocks, flat_blocks):
             block.get("data", {}).get("blocks", {}) or
             block.get("blocks", {})
         )
-        if sub_blocks:
-            return getAllBlocks(sub_blocks, flat_blocks)
-
         flat_blocks.append(block)
+        if sub_blocks:
+            getAllBlocks(sub_blocks, flat_blocks)
     return flat_blocks
 
 
