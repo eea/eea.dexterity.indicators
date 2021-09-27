@@ -34,7 +34,7 @@ class IIndicator(model.Schema):
         ),
         required=False,
         widget="temporal",
-        default={}
+        default={"readOnly": True, "temporal": []}
     )
 
     geo_coverage = JSONField(
@@ -45,5 +45,5 @@ class IIndicator(model.Schema):
         ),
         required=False,
         widget="geolocation",
-        default={}
+        default={"readOnly": True, "geolocation": []}
     )
