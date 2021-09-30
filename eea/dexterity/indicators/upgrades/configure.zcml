@@ -4,6 +4,18 @@
   i18n_domain="eea">
 
   <genericsetup:upgradeSteps
+    source="3.3"
+    destination="4.0"
+    profile="eea.dexterity.indicators:default">
+
+    <genericsetup:upgradeStep
+      title="Upgrade Indicator schema"
+      handler="eea.dexterity.indicators.upgrades.evolve40.migrate_schema"
+      />
+
+  </genericsetup:upgradeSteps>
+
+  <genericsetup:upgradeSteps
     source="2.1"
     destination="3.3"
     profile="eea.dexterity.indicators:default">

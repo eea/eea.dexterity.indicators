@@ -47,11 +47,11 @@ class EEAFixture(PloneSandboxLayer):
         # Create testing environment
         portal.invokeFactory("Folder", "sandbox", title="Sandbox")
 
-
     def tearDownZope(self, app):
         """ Uninstall Zope
         """
         z2.uninstallProduct(app, 'eea.dexterity.indicators')
+
 
 EEAFIXTURE = EEAFixture()
 FUNCTIONAL_TESTING = FunctionalTesting(bases=(EEAFIXTURE,),
