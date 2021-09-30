@@ -1,6 +1,14 @@
 Changelog
 =========
 
+4.0 - (2021-10-01)
+---------------------------
+* Upgrade step: Within "Plone > Site setup > Add-ons" click on
+  upgrade button available for eea.dexterity.indicators.
+  [avoinea refs #139536]
+* Change: Move Indicator schema and layout to static behavior
+  [avoinea refs #139536]
+
 3.3 - (2021-09-27)
 ---------------------------
 * Change: Update Indicator schema and layout. Add un_sdgs taxonomy
