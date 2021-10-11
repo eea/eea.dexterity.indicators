@@ -263,6 +263,7 @@ class IIndicatorLayout(model.Schema):
                         u"ca212ba0-859e-4e67-b610-debe0d498b74": {
                             u"fixedLayout": False,
                             u"maxChars": u"500",
+                            u"ignoreSpaces": True,
                             u"required": True,
                             u"disableNewBlocks": True,
                             u"as": u"div",
@@ -318,6 +319,7 @@ class IIndicatorLayout(model.Schema):
             u"1bc4379d-cddb-4120-84ad-5ab025533b12": {
                 u"title": u"Aggregate level assessment",
                 u"maxChars": u"2000",
+                u"ignoreSpaces": True,
                 u"required": True,
                 u"disableNewBlocks": False,
                 u"as": u"section",
@@ -662,6 +664,7 @@ class IIndicatorLayout(model.Schema):
             u"d060487d-88fc-4f7b-8ea4-003f14e0fb0c": {
                 u"title": u"Disaggregate level assessment",
                 u"maxChars": u"1000",
+                u"ignoreSpaces": True,
                 u"required": True,
                 u"disableNewBlocks": False,
                 u"readOnly": False,

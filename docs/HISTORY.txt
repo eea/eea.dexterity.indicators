@@ -1,8 +1,10 @@
 Changelog
 =========
 
-4.1-dev0 - (unreleased)
+4.1 - (2021-10-11)
 ---------------------------
+* Feature: Add ignoreSpaces to Indicator layout chars count
+  [avoinea refs #140173]
 
 4.0 - (2021-10-01)
 ---------------------------
