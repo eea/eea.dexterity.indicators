@@ -1,6 +1,9 @@
 Changelog
 =========
 
+4.2-dev0 - (unreleased)
+---------------------------
+
 4.1 - (2021-10-11)
 ---------------------------
 * Feature: Add ignoreSpaces to Indicator layout chars count
