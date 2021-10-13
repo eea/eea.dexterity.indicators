@@ -29,7 +29,8 @@ class Indicator(object):
         self.__dict__['readOnly'] = [
             'temporal_coverage',
             'geo_coverage',
-            'data_provenance'
+            'data_provenance',
+            'institutional_mandate',
         ]
 
     def __getattr__(self, name):         # pylint: disable=R1710
@@ -104,4 +105,22 @@ class Indicator(object):
                     "value", []) or []
             )
             res.extend(dataSources)
+        return res
+
+    @property
+    def institutional_mandate(self):
+        """Institutional mandate"""
+        res = []
+        blocks = getattr(self.context, "blocks", None) or {}
+        for block in getAllBlocks(blocks, []):
+            if block.get("@type", "") != "dataFigure":
+                continue
+
+            institutionalMandate = (
+                block.get(
+                    "metadata", {}).get(
+                    "institutionalMandate", {}).get(
+                    "value", []) or []
+            )
+            res.extend(institutionalMandate)
         return res
