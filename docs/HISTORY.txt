@@ -1,6 +1,9 @@
 Changelog
 =========
 
+4.3-dev0 - (unreleased)
+---------------------------
+
 4.2 - (2021-10-13)
 ---------------------------
 * Feature: Add institutional_mandate field
