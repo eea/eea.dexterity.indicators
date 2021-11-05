@@ -3,6 +3,8 @@ Changelog
 
 4.3-dev0 - (unreleased)
 ---------------------------
+* Change: Frequency of dissemination, max=10
+  [avoinea refs #141535]
 
 4.2 - (2021-10-13)
 ---------------------------
