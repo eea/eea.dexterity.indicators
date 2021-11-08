@@ -1,6 +1,6 @@
 """ Custom behavior for Indicator
 """
-from eea.dexterity.indicators.interfaces import IIndicator
+from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
 from zope.interface import implementer
@@ -19,7 +19,7 @@ def getAllBlocks(blocks, flat_blocks):
     return flat_blocks
 
 
-@implementer(IIndicator)
+@implementer(IIndicatorMetadata)
 @adapter(IDexterityContent)
 class Indicator(object):
     """Automatically extract metadata from blocks"""
@@ -34,18 +34,18 @@ class Indicator(object):
         ]
 
     def __getattr__(self, name):         # pylint: disable=R1710
-        if name not in IIndicator:
+        if name not in IIndicatorMetadata:
             raise AttributeError(name)
 
         if name not in self.__dict__['readOnly']:
             return getattr(
                 self.__dict__.get('context'),
                 name,
-                IIndicator[name].missing_value
+                IIndicatorMetadata[name].missing_value
             )
 
     def __setattr__(self, name, value):
-        if name not in IIndicator:
+        if name not in IIndicatorMetadata:
             raise AttributeError(name)
 
         if name not in self.__dict__['readOnly']:
