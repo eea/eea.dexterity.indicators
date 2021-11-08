@@ -26,8 +26,9 @@
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
   <element value="collective.taxonomy.generated.hog_users"/>
-  <element value="eea.dexterity.indicators.interfaces.IIndicatorLayout"/>
   <element value="eea.dexterity.indicators.interfaces.IIndicator"/>
+  <element value="eea.dexterity.indicators.interfaces.IIndicatorMetadata"/>
+  <element value="eea.dexterity.indicators.interfaces.IIndicatorLayout"/>
   <element value="eea.api.layout.interfaces.IFixedLayoutBlocks"/>
   <element value="plone.app.lockingbehavior.behaviors.ILocking"/>
   <element value="collective.taxonomy.generated.themes"/>
@@ -37,9 +38,8 @@
  </property>
  <property name="schema"></property>
  <property
-    name="model_source">&lt;model xmlns="http://namespaces.plone.org/supermodel/schema"&gt;
-  &lt;schema&gt;
-  &lt;/schema&gt;
+    name="model_source">&lt;model xmlns:form="http://namespaces.plone.org/supermodel/form" xmlns:i18n="http://xml.zope.org/namespaces/i18n" xmlns:marshal="http://namespaces.plone.org/supermodel/marshal" xmlns:security="http://namespaces.plone.org/supermodel/security" xmlns="http://namespaces.plone.org/supermodel/schema"&gt;
+    &lt;schema/&gt;
   &lt;/model&gt;</property>
  <property name="model_file"></property>
  <property name="schema_policy">dexterity</property>

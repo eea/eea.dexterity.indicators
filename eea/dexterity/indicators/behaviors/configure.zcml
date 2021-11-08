@@ -7,11 +7,18 @@
   <include package="plone.behavior" file="meta.zcml"/>
 
   <plone:behavior
+    name="eea.dexterity.indicators.indicator"
+    title="IMS Indicator"
+    description="IMS Indicator"
+    provides="eea.dexterity.indicators.interfaces.IIndicator"
+    />
+
+  <plone:behavior
     name="eea.dexterity.indicators.metadata"
     title="IMS Indicator Metadata"
     description="IMS Indicator metadata"
     factory=".indicator.Indicator"
-    provides="eea.dexterity.indicators.interfaces.IIndicator"
+    provides="eea.dexterity.indicators.interfaces.IIndicatorMetadata"
     />
 
   <plone:behavior

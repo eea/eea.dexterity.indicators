@@ -5,7 +5,7 @@ from plone.autoform.interfaces import IFormFieldProvider
 from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
 from plone.schema import Email, JSONField
 from plone.supermodel import model
-from zope.interface import provider
+from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int, Set, TextLine
 
@@ -17,8 +17,13 @@ class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
     """Marker interface that defines a browser layer."""
 
 
+class IIndicator(Interface):
+    """ Marker interface for IMS Indicator
+    """
+
+
 @provider(IFormFieldProvider)
-class IIndicator(model.Schema):
+class IIndicatorMetadata(model.Schema):
     """IMS Indicator schema provider"""
 
     #
@@ -131,7 +136,7 @@ class IIndicator(model.Schema):
         required=False,
         default=1,
         min=1,
-        max=5
+        max=10
     )
 
     accuracy_and_reliability = SlateJSONField(

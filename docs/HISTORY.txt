@@ -1,6 +1,16 @@
 Changelog
 =========
 
+4.3 - (2021-11-05)
+---------------------------
+* Upgrade step: Within "Plone > Site setup > Add-ons" click on
+  upgrade button available for eea.dexterity.indicators.
+  [avoinea refs #141535]
+* Change: Frequency of dissemination, max=10
+  [avoinea refs #141535]
+* Bug fix: Fix depiction for IIndicator
+  [avoinea refs #141535]
+
 4.2 - (2021-10-13)
 ---------------------------
 * Feature: Add institutional_mandate field
