@@ -1,6 +1,11 @@
 Changelog
 =========
 
+4.4 - (2021-12-16)
+---------------------------
+* Change: Fix package classifiers and python_requires
+  [avoinea]
+
 4.3 - (2021-11-05)
 ---------------------------
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
