@@ -1,6 +1,9 @@
 Changelog
 =========
 
+4.5-dev0 - (unreleased)
+---------------------------
+
 4.4 - (2021-12-16)
 ---------------------------
 * Change: Fix package classifiers and python_requires
