@@ -3,6 +3,9 @@ Changelog
 
 4.5-dev0 - (unreleased)
 ---------------------------
+* Upgrade step: Within "Plone > Site setup > Add-ons" click on
+  upgrade button available for eea.dexterity.indicators.
+  [avoinea refs #143896]
 * Feature: Custom @copy / @move RestAPI endpoint for IMS Folder and Indicator ctype
   to handle relative paths
   [avoinea refs #143896]
