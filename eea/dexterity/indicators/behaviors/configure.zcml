@@ -7,6 +7,13 @@
   <include package="plone.behavior" file="meta.zcml"/>
 
   <plone:behavior
+    name="eea.dexterity.indicators.folder"
+    title="IMS Folder"
+    description="IMS Folder"
+    provides="eea.dexterity.indicators.interfaces.IIndicatorsFolder"
+    />
+
+  <plone:behavior
     name="eea.dexterity.indicators.indicator"
     title="IMS Indicator"
     description="IMS Indicator"

@@ -3,6 +3,9 @@ Changelog
 
 4.5-dev0 - (unreleased)
 ---------------------------
+* Feature: Custom @copy / @move RestAPI endpoint for IMS Folder and Indicator ctype
+  to handle relative paths
+  [avoinea refs #143896]
 
 4.4 - (2021-12-16)
 ---------------------------

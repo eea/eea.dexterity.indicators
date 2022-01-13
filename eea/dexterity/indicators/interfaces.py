@@ -22,6 +22,11 @@ class IIndicator(Interface):
     """
 
 
+class IIndicatorsFolder(Interface):
+    """ Marker interface for IMS Folder
+    """
+
+
 @provider(IFormFieldProvider)
 class IIndicatorMetadata(model.Schema):
     """IMS Indicator schema provider"""
