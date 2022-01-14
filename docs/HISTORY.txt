@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.5-dev0 - (unreleased)
+4.5 - (2022-01-14)
 ---------------------------
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.dexterity.indicators.
