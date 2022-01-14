@@ -35,4 +35,13 @@
     provides="eea.dexterity.indicators.interfaces.IIndicatorLayout"
     />
 
+  <!-- Short name -->
+  <plone:behavior
+    name="eea.dexterity.indicators.shortname"
+    title="IMS Short Name"
+    description="Gives the ability to rename an item from its edit form."
+    provides=".id.IShortName"
+    factory=".id.ShortName"
+    />
+
 </configure>
