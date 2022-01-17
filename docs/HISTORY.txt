@@ -11,6 +11,8 @@ Changelog
 * Feature: Custom @copy / @move RestAPI endpoint for IMS Folder and Indicator ctype
   to handle relative paths
   [avoinea refs #143896]
+* Bug fix: Remove duplicate consultation_emails
+  [avoinea]
 
 4.4 - (2021-12-16)
 ---------------------------

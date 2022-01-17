@@ -30,17 +30,6 @@ class IIndicatorsFolder(Interface):
 @provider(IFormFieldProvider)
 class IIndicatorMetadata(model.Schema):
     """IMS Indicator schema provider"""
-
-    #
-    # Default
-    #
-    consultation_emails = Set(
-        title=_(u"Consultation emails"),
-        description=_(u"List of emails for the consultation phase"),
-        required=False,
-        value_type=TextLine(),
-    )
-
     #
     # Metadata
     #
