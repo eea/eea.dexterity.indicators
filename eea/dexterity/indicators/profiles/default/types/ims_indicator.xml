@@ -26,7 +26,7 @@
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
   <element value="collective.taxonomy.generated.hog_users"/>
-  <element value="eea.dexterity.indicators.shortname" />
+  <element value="plone.shortname" />
   <element value="eea.dexterity.indicators.interfaces.IIndicator"/>
   <element value="eea.dexterity.indicators.interfaces.IIndicatorMetadata"/>
   <element value="eea.dexterity.indicators.interfaces.IIndicatorLayout"/>

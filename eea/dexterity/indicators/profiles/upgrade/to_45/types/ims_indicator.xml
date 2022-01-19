@@ -2,6 +2,6 @@
 <object name="ims_indicator" meta_type="Dexterity FTI" i18n:domain="plone"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="behaviors" purge="false">
-  <element value="eea.dexterity.indicators.shortname" />
+  <element value="plone.shortname" />
  </property>
 </object>
