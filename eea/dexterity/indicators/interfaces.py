@@ -7,7 +7,7 @@ from plone.schema import Email, JSONField
 from plone.supermodel import model
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.schema import Int, Set, TextLine
+from zope.schema import Int, TextLine
 
 from eea.dexterity.indicators import EEAMessageFactory as _
 from eea.schema.slate.field import SlateJSONField
