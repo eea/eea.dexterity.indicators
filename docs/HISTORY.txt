@@ -1,6 +1,19 @@
 Changelog
 =========
 
+4.5 - (2022-01-14)
+---------------------------
+* Upgrade step: Within "Plone > Site setup > Add-ons" click on
+  upgrade button available for eea.dexterity.indicators.
+  [avoinea refs #143896]
+* Feature: Add Short name behavior in order to allow renaming of Indicators
+  [avoinea refs #143896]
+* Feature: Custom @copy / @move RestAPI endpoint for IMS Folder and Indicator ctype
+  to handle relative paths
+  [avoinea refs #143896]
+* Bug fix: Remove duplicate consultation_emails
+  [avoinea]
+
 4.4 - (2021-12-16)
 ---------------------------
 * Change: Fix package classifiers and python_requires

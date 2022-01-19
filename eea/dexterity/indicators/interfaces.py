@@ -7,7 +7,7 @@ from plone.schema import Email, JSONField
 from plone.supermodel import model
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.schema import Int, Set, TextLine
+from zope.schema import Int, TextLine
 
 from eea.dexterity.indicators import EEAMessageFactory as _
 from eea.schema.slate.field import SlateJSONField
@@ -22,20 +22,14 @@ class IIndicator(Interface):
     """
 
 
+class IIndicatorsFolder(Interface):
+    """ Marker interface for IMS Folder
+    """
+
+
 @provider(IFormFieldProvider)
 class IIndicatorMetadata(model.Schema):
     """IMS Indicator schema provider"""
-
-    #
-    # Default
-    #
-    consultation_emails = Set(
-        title=_(u"Consultation emails"),
-        description=_(u"List of emails for the consultation phase"),
-        required=False,
-        value_type=TextLine(),
-    )
-
     #
     # Metadata
     #

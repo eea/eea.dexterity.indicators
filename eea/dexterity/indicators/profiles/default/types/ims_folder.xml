@@ -26,6 +26,8 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
+  <element value="plone.shortname" />
+  <element value="eea.dexterity.indicators.interfaces.IIndicatorsFolder"/>
   <element
      value="Products.CMFPlone.interfaces.constrains.ISelectableConstrainTypes"/>
   <element value="volto.blocks"/>
