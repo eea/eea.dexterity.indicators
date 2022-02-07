@@ -16,9 +16,19 @@ The eea.dexterity.indicators is a Plone add-on
 Main features
 =============
 
-1. Easy to install/uninstall via Site Setup > Add-ons
-2.
-3.
+1. IMS Folder and IMS Indicator content-types
+2. IMS Folder and IMS Indicator behaviors
+
+
+Develop
+=======
+::
+
+    git checkout https://github.com/eea/eea.dexterity.indicators.git
+    cd eea.dexterity.indicators
+    git checkout develop
+    docker-compose up
+
 
 Install
 =======
