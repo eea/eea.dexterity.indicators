@@ -3,6 +3,10 @@ Changelog
 
 4.6-dev0 - (unreleased)
 ---------------------------
+* Feature: Add docker-compose.yml to easily develop this add-on with Docker
+  [avoinea]
+* Change: Allow IMS Folder globally by default
+  [avoinea]
 
 4.5 - (2022-01-14)
 ---------------------------
