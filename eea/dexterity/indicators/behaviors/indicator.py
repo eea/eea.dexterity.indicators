@@ -5,7 +5,6 @@ from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
 from zope.interface import implementer
 
-
 def getAllBlocks(blocks, flat_blocks):
     """Get a flat list from a tree of blocks"""
     for block in blocks.values():
@@ -18,6 +17,12 @@ def getAllBlocks(blocks, flat_blocks):
             getAllBlocks(sub_blocks, flat_blocks)
     return flat_blocks
 
+def dedupe_data(data):
+    res_list = []
+    for i in range(len(data)):
+        if data.index(data[i]) == i:
+            res_list.append(data[i])
+    return res_list
 
 @implementer(IIndicatorMetadata)
 @adapter(IDexterityContent)
@@ -105,6 +110,7 @@ class Indicator(object):
                     "value", []) or []
             )
             res.extend(dataSources)
+        res = dedupe_data(res)
         return res
 
     @property
