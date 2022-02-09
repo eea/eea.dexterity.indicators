@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.6-dev0 - (unreleased)
+4.6 - (2022-02-09)
 ---------------------------
 * Feature: Add docker-compose.yml to easily develop this add-on with Docker
   [avoinea]
