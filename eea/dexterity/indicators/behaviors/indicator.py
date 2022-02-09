@@ -20,11 +20,8 @@ def getAllBlocks(blocks, flat_blocks):
 
 
 def dedupe_data(data):
-    """Remove duplication from data_provinance fields"""
-    res_list = []
-    for i in range(len(data)):
-        if data.index(data[i]) == i:
-            res_list.append(data[i])
+    """Remove duplication from metadata fields"""
+    res_list = [i for n, i in enumerate(data) if i not in data[n + 1:]]
     return res_list
 
 
@@ -133,4 +130,5 @@ class Indicator(object):
                     "value", []) or []
             )
             res.extend(institutionalMandate)
+        res = dedupe_data(res)
         return res
