@@ -18,12 +18,30 @@ def getAllBlocks(blocks, flat_blocks):
             getAllBlocks(sub_blocks, flat_blocks)
     return flat_blocks
 
+def find_url(value, key):
+    """Get a deeply nested url from slate data tree"""
+    stack = [value]
+    while stack:
+        item = stack.pop()
+        if key in item:
+            return item[key]
+        for k, v in item.items():
+            if(k == key):
+                return item[key]
+            elif isinstance(v, list):
+                stack.append(v[1]) # append only nested children.
+    return None
 
 def dedupe_data(data):
     """Remove duplication from metadata fields"""
-    res_list = [i for n, i in enumerate(data) if i not in data[n + 1:]]
-    return res_list
-
+    result = []
+    res_data = []
+    for value in data:
+        url = find_url(value,'url')
+        if(url not in result):
+            result.append(url)
+            res_data.append(value)
+    return res_data
 
 @implementer(IIndicatorMetadata)
 @adapter(IDexterityContent)
