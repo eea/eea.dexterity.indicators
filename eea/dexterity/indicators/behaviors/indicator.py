@@ -27,7 +27,7 @@ def find_url(value, key):
         if key in item:
             return item[key]
         for k, v in item.items():
-            if(k == key):
+            if k == key:
                 return item[key]
             elif isinstance(v, list):
                 stack.append(v[1])  # append only nested children.
@@ -40,7 +40,7 @@ def dedupe_data(data):
     res_data = []
     for value in data:
         url = find_url(value, 'url')
-        if(url not in result):
+        if url not in result:
             result.append(url)
             res_data.append(value)
     return res_data
