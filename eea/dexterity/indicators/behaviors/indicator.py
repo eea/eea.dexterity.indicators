@@ -48,7 +48,8 @@ def dedupe_data(data):
     >>> from eea.dexterity.indicators.behaviors.indicator import dedupe_data
     >>> value=[{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
     ... ,'type': 'p'},
-    ... {'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'}]
+    ... {'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
+    ... ,'type': 'p'}]
     >>> result = dedupe_data(value)
     >>> next(result)
     {'children': [{'text': '', 'url': 'https://www.eea.europa.eu'}],
