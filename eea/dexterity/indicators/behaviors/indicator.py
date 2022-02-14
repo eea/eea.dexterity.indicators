@@ -24,7 +24,8 @@ def find_url(value, key):
     """
     Get a deeply nested url from slate data tree
      >>> from eea.dexterity.indicators.behaviors.indicator import find_url
-     >>> find_url({'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'} ,'url')
+     >>> value={'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'}
+     >>> find_url(value ,'url')
      'https://www.eea.europa.eu'
 
     """
@@ -40,9 +41,13 @@ def find_url(value, key):
 
 
 def dedupe_data(data):
-    """Remove duplication from metadata fields
+    """
+    Remove duplication from metadata fields
+
     >>> from eea.dexterity.indicators.behaviors.indicator import dedupe_data
-    >>> result = dedupe_data([{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'},{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'}])
+    >>> value=[{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'},
+    ... {'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'}]
+    >>> result = dedupe_data(value)
     >>> next(result)
     {'children': [{'text': '', 'url': 'https://www.eea.europa.eu'}], 'type': 'p'}
 
