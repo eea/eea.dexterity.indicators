@@ -33,7 +33,7 @@ def find_url(value, key):
         item = stack.pop()
         if key in item:
             return item[key]
-        for v in item.get('children',[]):
+        for v in item.get('children', []):
             if isinstance(v, dict):
                 stack.append(v)  # append only nested object to find url
     return None
