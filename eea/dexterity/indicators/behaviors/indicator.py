@@ -40,7 +40,13 @@ def find_url(value, key):
 
 
 def dedupe_data(data):
-    """Remove duplication from metadata fields"""
+    """Remove duplication from metadata fields
+    >>> from eea.dexterity.indicators.behaviors.indicator import dedupe_data
+    >>> result = dedupe_data([{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'},{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'}])
+    >>> next(result)
+    {'children': [{'text': '', 'url': 'https://www.eea.europa.eu'}], 'type': 'p'}
+
+    """
     existing = set()
     for value in data:
         url = find_url(value, 'url')
