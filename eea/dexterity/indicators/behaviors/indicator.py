@@ -26,25 +26,22 @@ def find_url(value, key):
         item = stack.pop()
         if key in item:
             return item[key]
-        for k, v in item.items():
-            if k == key:
-                return item[key]
-            elif isinstance(v, list):
-                stack.append(v[1])  # append only nested children.
+        for v in item.get('children',[]):
+            if isinstance(v, dict):
+                stack.append(v)  # append only nested object to find url
     return None
 
 
 def dedupe_data(data):
     """Remove duplication from metadata fields"""
-    result = []
-    res_data = []
+    existing = set()
     for value in data:
         url = find_url(value, 'url')
-        if url not in result:
-            result.append(url)
-            res_data.append(value)
-    return res_data
-
+        if url in existing:
+            continue
+        existing.add(url)
+        yield value
+   
 
 @implementer(IIndicatorMetadata)
 @adapter(IDexterityContent)
@@ -132,8 +129,8 @@ class Indicator(object):
                     "value", []) or []
             )
             res.extend(dataSources)
-        res = dedupe_data(res)
-        return res
+        return [x for x in dedupe_data(res)]
+        
 
     @property
     def institutional_mandate(self):
@@ -151,5 +148,5 @@ class Indicator(object):
                     "value", []) or []
             )
             res.extend(institutionalMandate)
-        res = dedupe_data(res)
-        return res
+        return [x for x in dedupe_data(res)]
+    
