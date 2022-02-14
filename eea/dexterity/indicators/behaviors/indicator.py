@@ -1,4 +1,5 @@
 """ Custom behavior for Indicator
+
 """
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 from plone.dexterity.interfaces import IDexterityContent
@@ -20,7 +21,13 @@ def getAllBlocks(blocks, flat_blocks):
 
 
 def find_url(value, key):
-    """Get a deeply nested url from slate data tree"""
+    """
+    Get a deeply nested url from slate data tree
+     >>> from eea.dexterity.indicators.behaviors.indicator import find_url
+     >>> find_url({'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}],'type': 'p'} ,'url')
+     'https://www.eea.europa.eu'
+
+    """
     stack = [value]
     while stack:
         item = stack.pop()
