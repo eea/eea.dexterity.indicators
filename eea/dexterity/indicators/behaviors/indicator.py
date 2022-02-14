@@ -54,7 +54,7 @@ def dedupe_data(data):
             continue
         existing.add(url)
         yield value
-   
+
 
 @implementer(IIndicatorMetadata)
 @adapter(IDexterityContent)
@@ -143,7 +143,6 @@ class Indicator(object):
             )
             res.extend(dataSources)
         return [x for x in dedupe_data(res)]
-        
 
     @property
     def institutional_mandate(self):
@@ -162,4 +161,3 @@ class Indicator(object):
             )
             res.extend(institutionalMandate)
         return [x for x in dedupe_data(res)]
-    
