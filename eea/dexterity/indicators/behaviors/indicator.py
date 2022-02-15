@@ -1,4 +1,5 @@
 """ Custom behavior for Indicator
+
 """
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 from plone.dexterity.interfaces import IDexterityContent
@@ -17,6 +18,50 @@ def getAllBlocks(blocks, flat_blocks):
         if sub_blocks:
             getAllBlocks(sub_blocks, flat_blocks)
     return flat_blocks
+
+
+def find_url(value, key):
+    """
+    Get a deeply nested url from slate data tree
+     >>> from eea.dexterity.indicators.behaviors.indicator import find_url
+     >>> value={'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
+     ... ,'type': 'p'}
+     >>> find_url(value ,'url')
+     'https://www.eea.europa.eu'
+
+    """
+    stack = [value]
+    while stack:
+        item = stack.pop()
+        if key in item:
+            return item[key]
+        for v in item.get('children', []):
+            if isinstance(v, dict):
+                stack.append(v)  # append only nested object to find url
+    return None
+
+
+def dedupe_data(data):
+    """
+    Remove duplication from metadata fields
+
+    >>> from eea.dexterity.indicators.behaviors.indicator import dedupe_data
+    >>> value=[{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
+    ... ,'type': 'p'},
+    ... {'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
+    ... ,'type': 'p'}]
+    >>> result = dedupe_data(value)
+    >>> len([x for x in result])
+    1
+
+    """
+    existing = set()
+    for value in data:
+        url = find_url(value, 'url')
+        if url in existing:
+            continue
+        existing.add(url)
+        yield value
 
 
 @implementer(IIndicatorMetadata)
@@ -105,7 +150,7 @@ class Indicator(object):
                     "value", []) or []
             )
             res.extend(dataSources)
-        return res
+        return [x for x in dedupe_data(res)]
 
     @property
     def institutional_mandate(self):
@@ -123,4 +168,4 @@ class Indicator(object):
                     "value", []) or []
             )
             res.extend(institutionalMandate)
-        return res
+        return [x for x in dedupe_data(res)]

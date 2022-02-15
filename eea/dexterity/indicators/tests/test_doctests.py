@@ -17,6 +17,12 @@ def test_suite():
     suite.addTests([
         layered(
             doctest.DocFileSuite(
+                'indicator.py',
+                optionflags=OPTIONFLAGS,
+                package='eea.dexterity.indicators.behaviors'),
+            layer=FUNCTIONAL_TESTING),
+        layered(
+            doctest.DocFileSuite(
                 'README.txt',
                 optionflags=OPTIONFLAGS,
                 package='eea.dexterity.indicators'),

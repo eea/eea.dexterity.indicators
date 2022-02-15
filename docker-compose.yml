@@ -1,0 +1,17 @@
+version: '2.4'
+services:
+  backend:
+    image: eeacms/plone-backend
+    ports:
+    - "${BACKEND:-8080}:8080"
+    environment:
+      SITE: "Plone"
+      PROFILES: "eea.kitkat:default eea.dexterity.indicators:default"
+      DEVELOP: "/app/src/eea.dexterity.indicators"
+    volumes:
+      - data:/data
+      - ./:/app/src/eea.dexterity.indicators
+
+volumes:
+  data:
+    driver: local
