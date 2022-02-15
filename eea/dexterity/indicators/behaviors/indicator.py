@@ -51,9 +51,8 @@ def dedupe_data(data):
     ... {'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
     ... ,'type': 'p'}]
     >>> result = dedupe_data(value)
-    >>> next(result)
-    {'type': 'p',
-    'children': [{'url': 'https://www.eea.europa.eu', 'text': ''}]}
+    >>> len([x for x in result])
+    1
 
     """
     existing = set()
