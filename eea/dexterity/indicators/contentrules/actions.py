@@ -7,9 +7,9 @@ from datetime import datetime
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
-from z3c.form import form
 from plone.app.contentrules.browser.formhelper import AddForm, EditForm
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
+from z3c.form import form
 from zope.component import adapter
 from zope.interface import Interface, implementer
 
