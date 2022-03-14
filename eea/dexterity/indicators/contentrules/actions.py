@@ -2,7 +2,7 @@
 """
 
 import logging
-from datetime import datetime
+from time import time
 
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
@@ -50,7 +50,7 @@ class RetractAndRenameOldVersionExecutor(object):
 
         parent = obj.getParentNode()
         old_id = oid.replace('copy_of_', '', 1)
-        new_id = old_id + '-%s' % datetime.now().timestamp()
+        new_id = old_id + '-%d' % time()
 
         try:
             old_version = parent[old_id]
