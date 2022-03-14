@@ -7,9 +7,8 @@ from datetime import datetime
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
-from plone.app.contentrules.browser.formhelper import AddForm, EditForm
+from plone.app.contentrules.browser.formhelper import NullAddForm
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
-from z3c.form import form
 from zope.component import adapter
 from zope.interface import Interface, implementer
 
@@ -27,15 +26,10 @@ class RetractAndRenameOldVersionAction(SimpleItem):
     """
 
     element = 'eea.dexterity.indicators.retract_and_rename_old_version'
-    action = None
-
-    def summary(self):
-        """ Summary
-        """
-        return (
-            "Will retract, rename older version of an Indicator. "
-            "Then rename current one."
-        )
+    summary = (
+        "Will retract and rename older version of this Indicator. "
+        "Then rename current Indicator (remove copy_of_ from id)"
+    )
 
 
 @implementer(IExecutable)
@@ -71,29 +65,10 @@ class RetractAndRenameOldVersionExecutor(object):
         return True
 
 
-class RetractAndRenameOldVersionAddForm(AddForm):
+class RetractAndRenameOldVersionAddForm(NullAddForm):
     """ Retract and rename old version addform
     """
-    schema = IRetractAndRenameOldVersionAction
-    label = u"Retract and rename old version Action"
-    description = u"Retract and rename old version action."
-    form_name = u"Configure element"
-    Type = RetractAndRenameOldVersionAction
-
-    def create(self, data):
+    def create(self):
+        """ Create content-rule
         """
-        Since content rules expects paths, we're transforming UUID, which
-        is what the z3c form widget uses, to paths.
-        """
-        a = self.Type()
-        form.applyChanges(self, a, data)
-        return a
-
-
-class RetractAndRenameOldVersionEditForm(EditForm):
-    """ Retract and rename old version editform
-    """
-    schema = IRetractAndRenameOldVersionAction
-    label = u"Retract and rename old version Action"
-    description = u"Retract and rename old version action."
-    form_name = u"Configure element"
+        return RetractAndRenameOldVersionAction()

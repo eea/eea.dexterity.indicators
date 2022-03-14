@@ -15,13 +15,6 @@
         permission="plone.app.contentrules.ManageContentRules"
       />
 
-    <browser:page
-        for=".actions.IRetractAndRenameOldVersionAction"
-        name="edit"
-        class=".actions.RetractAndRenameOldVersionEditForm"
-        permission="plone.app.contentrules.ManageContentRules"
-      />
-
     <plone:ruleAction
         name="eea.dexterity.indicators.retract_and_rename_old_version"
         title="IMSv4: Retract and rename old Indicator"
@@ -29,7 +22,6 @@
         for="zope.interface.Interface"
         event="zope.interface.Interface"
         addview="eea.dexterity.indicators.retract_and_rename_old_version"
-        editview="edit"
         schema=".actions.IRetractAndRenameOldVersionAction"
         factory=".actions.RetractAndRenameOldVersionAction"
         />
