@@ -11,14 +11,14 @@
     <browser:page
         for="plone.app.contentrules.browser.interfaces.IRuleActionAdding"
         name="eea.dexterity.indicators.retract_and_rename_old_version"
-        class=".actions.RetractAndRenameOldVersionAddFormView"
+        class=".actions.RetractAndRenameOldVersionAddForm"
         permission="plone.app.contentrules.ManageContentRules"
       />
 
     <browser:page
         for=".actions.IRetractAndRenameOldVersionAction"
         name="edit"
-        class=".actions.RetractAndRenameOldVersionEditFormView"
+        class=".actions.RetractAndRenameOldVersionEditForm"
         permission="plone.app.contentrules.ManageContentRules"
       />
 

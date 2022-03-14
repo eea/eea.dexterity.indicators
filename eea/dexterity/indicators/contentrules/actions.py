@@ -7,8 +7,8 @@ from datetime import datetime
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
-from plone.app.contentrules.actions import ActionAddForm, ActionEditForm
-from plone.app.contentrules.browser.formhelper import ContentRuleFormWrapper
+from z3c.form import form
+from plone.app.contentrules.browser.formhelper import AddForm, EditForm
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
 from zope.component import adapter
 from zope.interface import Interface, implementer
@@ -71,7 +71,7 @@ class RetractAndRenameOldVersionExecutor(object):
         return True
 
 
-class RetractAndRenameOldVersionAddForm(ActionAddForm):
+class RetractAndRenameOldVersionAddForm(AddForm):
     """ Retract and rename old version addform
     """
     schema = IRetractAndRenameOldVersionAction
@@ -80,23 +80,20 @@ class RetractAndRenameOldVersionAddForm(ActionAddForm):
     form_name = u"Configure element"
     Type = RetractAndRenameOldVersionAction
 
+    def create(self, data):
+        """
+        Since content rules expects paths, we're transforming UUID, which
+        is what the z3c form widget uses, to paths.
+        """
+        a = self.Type()
+        form.applyChanges(self, a, data)
+        return a
 
-class RetractAndRenameOldVersionAddFormView(ContentRuleFormWrapper):
-    """ Retract and rename old version addform view
-    """
-    form = RetractAndRenameOldVersionAddForm
 
-
-class RetractAndRenameOldVersionEditForm(ActionEditForm):
+class RetractAndRenameOldVersionEditForm(EditForm):
     """ Retract and rename old version editform
     """
     schema = IRetractAndRenameOldVersionAction
     label = u"Retract and rename old version Action"
     description = u"Retract and rename old version action."
     form_name = u"Configure element"
-
-
-class RetractAndRenameOldVersionEditFormView(ContentRuleFormWrapper):
-    """ Retract and rename old version editform view
-    """
-    form = RetractAndRenameOldVersionEditForm
