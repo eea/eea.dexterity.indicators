@@ -1,6 +1,11 @@
 Changelog
 =========
 
+4.7 - (2022-03-14)
+---------------------------
+* Feature: Add custom content-rule to retract and rename old version of indicators
+  [avoinea refs #147129]
+
 4.6 - (2022-02-09)
 ---------------------------
 * Feature: Add docker-compose.yml to easily develop this add-on with Docker
