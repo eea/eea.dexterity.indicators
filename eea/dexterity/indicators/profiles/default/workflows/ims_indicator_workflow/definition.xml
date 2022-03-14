@@ -5,22 +5,21 @@
     <guard-group>WebReviewers</guard-group>
    </guard>
  </instance-creation-conditions>
- <group>SOERContributors</group>
- <group>SOERCopyEditors</group>
  <group>WebReviewers</group>
- <group>SOERContactAuthors</group>
- <group>SOERCoordinators</group>
- <group>SOERData</group>
- <group>proofReader</group>
  <group>AuthenticatedUsers</group>
- <group>SOERCountryAuthors</group>
- <group>SOERCountryCoordinators</group>
+ <group>indicatorsCopyEditors</group>
+ <group>IMSDataQCteam</group>
+ <group>IMSFiguresQCExperts</group>
+ <group>IMSIndicatorsAuthors</group>
+ <group>IMSHoGTeam</group>
  <permission>Access contents information</permission>
  <permission>Delete objects</permission>
+ <permission>Delete portal content</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>
- <permission>eea.annotator: Edit</permission>
- <permission>Delete portal content</permission>
+ <permission>View comments</permission>
+ <permission>Reply to item</permission>
+ <permission>Edit comments</permission>
  <state state_id="draft" title="First draft" >
   <description>Authors/Contact Authors enters content. Contact Author submit the first draft for further copy-editing and web integration (first web edit).</description>
   <exit-transition transition_id="retract" />
@@ -33,8 +32,11 @@
    <permission-role>Reader</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
-  <permission-map name="Delete objects" acquired="False">
-
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
   </permission-map>
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Editor</permission-role>
@@ -55,23 +57,15 @@
    <permission-role>Manager</permission-role>
    <permission-role>Reader</permission-role>
   </permission-map>
-  <group-map name="SOERContactAuthors">
+  <group-map name="IMSDataQCteam">
    <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="SOERContributors">
+  <group-map name="IMSFiguresQCExperts">
    <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="SOERCoordinators">
-   <group-role>Editor</group-role>
-   <group-role>Reader</group-role>
-  </group-map>
-  <group-map name="SOERCopyEditors">
-   <group-role>Editor</group-role>
-   <group-role>Reader</group-role>
-  </group-map>
-  <group-map name="SOERData">
+  <group-map name="IMSIndicatorsAuthors">
    <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
@@ -79,10 +73,11 @@
    <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="proofReader">
+  <group-map name="indicatorsCopyEditors">
+   <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
-
+  
  </state>
  <state state_id="marked_for_deletion" title="Marked for deletion" >
   <description>This item has been marked for permanent deletion. It will be deleted at a later stage by an automatic cleanup process.</description>
@@ -91,8 +86,11 @@
    <permission-role>Manager</permission-role>
    <permission-role>Reader</permission-role>
   </permission-map>
-  <permission-map name="Delete objects" acquired="False">
-
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
   </permission-map>
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
@@ -104,43 +102,134 @@
   <permission-map name="eea.annotator: Edit" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <group-map name="SOERContactAuthors">
-   <group-role>Reader</group-role>
-  </group-map>
-  <group-map name="SOERContributors">
-   <group-role>Reader</group-role>
-  </group-map>
-  <group-map name="SOERCoordinators">
-   <group-role>Reader</group-role>
-  </group-map>
-  <group-map name="SOERCopyEditors">
-   <group-role>Reader</group-role>
-  </group-map>
-  <group-map name="SOERData">
-   <group-role>Reader</group-role>
-  </group-map>
   <group-map name="WebReviewers">
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="proofReader">
+  <group-map name="indicatorsCopyEditors">
    <group-role>Reader</group-role>
   </group-map>
-
+  
  </state>
  <state state_id="pending_publication" title="Pending publication" >
   <exit-transition transition_id="publish" />
-
-
-
+  <exit-transition transition_id="retract" />
+  <permission-map name="Access contents information" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reader</permission-role>
+  </permission-map>
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Edit comments" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Editor</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reader</permission-role>
+  </permission-map>
+  <permission-map name="View comments" acquired="False">
+   <permission-role>Reader</permission-role>
+  </permission-map>
+  <permission-map name="eea.annotator: Edit" acquired="False">
+   <permission-role>Editor</permission-role>
+  </permission-map>
+  <group-map name="AuthenticatedUsers">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSDataQCteam">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSFiguresQCExperts">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSHoGTeam">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSIndicatorsAuthors">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="WebReviewers">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="indicatorsCopyEditors">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  
  </state>
  <state state_id="pending_review" title="Pending HoG review" >
   <exit-transition transition_id="submitForConsultation" />
-
-
-
+  <permission-map name="Access contents information" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reader</permission-role>
+  </permission-map>
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Edit comments" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Reply to item" acquired="True">
+   
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reader</permission-role>
+  </permission-map>
+  <permission-map name="View comments" acquired="True">
+   
+  </permission-map>
+  <permission-map name="eea.annotator: Edit" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <group-map name="IMSDataQCteam">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSFiguresQCExperts">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSHoGTeam">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSIndicatorsAuthors">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="WebReviewers">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="indicatorsCopyEditors">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  
  </state>
  <state state_id="published" title="Published" >
-
+  <exit-transition transition_id="markForDeletion" />
   <permission-map name="Access contents information" acquired="True">
    <permission-role>Anonymous</permission-role>
    <permission-role>Editor</permission-role>
@@ -148,14 +237,23 @@
    <permission-role>Reader</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Delete objects" acquired="False">
-
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Edit comments" acquired="True">
+   
   </permission-map>
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
    <permission-role>Reader</permission-role>
    <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Editor</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Anonymous</permission-role>
@@ -164,18 +262,37 @@
    <permission-role>Reader</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
+  <permission-map name="View comments" acquired="False">
+   <permission-role>Reader</permission-role>
+  </permission-map>
   <permission-map name="eea.annotator: Edit" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <group-map name="SOERCoordinators">
+  <group-map name="IMSDataQCteam">
    <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSFiguresQCExperts">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSHoGTeam">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSIndicatorsAuthors">
+   <group-role>Reader</group-role>
   </group-map>
   <group-map name="WebReviewers">
    <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
   </group-map>
-
+  <group-map name="indicatorsCopyEditors">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  
  </state>
  <state state_id="retracted" title="Retracted" >
   <description>Items in this state have been retracted from one of the publishing state due to discovered relevant errors in content.</description>
@@ -189,11 +306,14 @@
    <permission-role>Reviewer</permission-role>
    <permission-role>WebReviewer</permission-role>
   </permission-map>
-  <permission-map name="Delete objects" acquired="False">
-
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
   </permission-map>
   <permission-map name="Modify portal content" acquired="False">
-
+   
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Editor</permission-role>
@@ -204,7 +324,7 @@
    <permission-role>WebReviewer</permission-role>
   </permission-map>
   <permission-map name="eea.annotator: Edit" acquired="False">
-
+   
   </permission-map>
   <group-map name="SOERContactAuthors">
    <group-role>Reader</group-role>
@@ -233,15 +353,72 @@
   <group-map name="proofReader">
    <group-role>Reader</group-role>
   </group-map>
-
+  
  </state>
  <state state_id="under_qc" title="Under QC" >
-  <exit-transition transition_id="editingPhaseDone" />
   <exit-transition transition_id="finalVisualisationPhaseDone" />
+  <exit-transition transition_id="markDataMetadataDone" />
   <exit-transition transition_id="markReadyForPublication" />
-
-
-
+  <exit-transition transition_id="retract" />
+  <permission-map name="Access contents information" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+   <permission-role>Reader</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Edit comments" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Editor</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reader</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="View comments" acquired="False">
+   <permission-role>Reader</permission-role>
+  </permission-map>
+  <permission-map name="eea.annotator: Edit" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <group-map name="AuthenticatedUsers">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSDataQCteam">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSFiguresQCExperts">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSHoGTeam">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="IMSIndicatorsAuthors">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="WebReviewers">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="indicatorsCopyEditors">
+   <group-role>Editor</group-role>
+   <group-role>Reader</group-role>
+  </group-map>
+  
  </state>
  <state state_id="visible" title="Under consultation (visible with link)" >
   <description>Anyone with Eionet password may log in and enter comments. Content is available for anonymous to see by knowing the link.</description>
@@ -253,8 +430,14 @@
    <permission-role>Reader</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
-  <permission-map name="Delete objects" acquired="False">
-
+  <permission-map name="Delete objects" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Delete portal content" acquired="True">
+   
+  </permission-map>
+  <permission-map name="Edit comments" acquired="True">
+   
   </permission-map>
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Editor</permission-role>
@@ -262,12 +445,18 @@
    <permission-role>Reviewer</permission-role>
    <permission-role>WebReviewer</permission-role>
   </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Authenticated</permission-role>
+  </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
    <permission-role>Authenticated</permission-role>
    <permission-role>Manager</permission-role>
    <permission-role>Reader</permission-role>
    <permission-role>Site Administrator</permission-role>
+  </permission-map>
+  <permission-map name="View comments" acquired="False">
+   <permission-role>Authenticated</permission-role>
   </permission-map>
   <permission-map name="eea.annotator: Edit" acquired="False">
    <permission-role>Editor</permission-role>
@@ -278,113 +467,113 @@
   <group-map name="AuthenticatedUsers">
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="SOERContactAuthors">
+  <group-map name="IMSDataQCteam">
    <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="SOERContributors">
-   <group-role>Reader</group-role>
-  </group-map>
-  <group-map name="SOERCoordinators">
+  <group-map name="IMSFiguresQCExperts">
    <group-role>Editor</group-role>
    <group-role>Reader</group-role>
-   <group-role>Reviewer</group-role>
   </group-map>
-  <group-map name="SOERCopyEditors">
+  <group-map name="IMSHoGTeam">
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="SOERData">
+  <group-map name="IMSIndicatorsAuthors">
+   <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
   <group-map name="WebReviewers">
+   <group-role>Reader</group-role>
+  </group-map>
+  <group-map name="indicatorsCopyEditors">
    <group-role>Editor</group-role>
    <group-role>Reader</group-role>
   </group-map>
-  <group-map name="proofReader">
-   <group-role>Reader</group-role>
-  </group-map>
-
+  
  </state>
- <transition transition_id="editingPhaseDone" title="Light copy-edit done" new_state="" trigger="USER" before_script="" after_script="" >
-  <description>Basic copy-edit has been performed.</description>
-  <action url="" category="workflow" icon="">Light copy-edit done</action>
-  <guard >
-   <guard-group>SOERCopyEditors</guard-group>
-  </guard>
-
- </transition>
  <transition transition_id="enable" title="Enable" new_state="draft" trigger="USER" before_script="" after_script="" >
   <description>Puts the content back to the first draft stage after being retracted.</description>
   <action url="" category="workflow" icon="">Enable</action>
   <guard >
    <guard-group>WebReviewers</guard-group>
-   <guard-group>SOERCoordinators</guard-group>
+   <guard-group>indicatorsCopyEditors</guard-group>
   </guard>
-
+  
  </transition>
- <transition transition_id="finalVisualisationPhaseDone" title="Final visualisation integration done" new_state="" trigger="USER" before_script="" after_script="" >
-  <description>Final visualisation integration has been done. Figures have been embedded, metadata completed and finalized (approved by authors). Any data updates have also been done. Layout improvements can still be done in next phase.</description>
-  <action url="" category="workflow" icon="">Final visualisation integration done</action>
+ <transition transition_id="finalVisualisationPhaseDone" title="Figures finalised" new_state="" trigger="USER" before_script="" after_script="" >
+  <action url="" category="workflow" icon="">Figures finalised</action>
   <guard >
-   <guard-group>SOERDataCoordinators</guard-group>
+   <guard-group>IMSFiguresQCExperts</guard-group>
   </guard>
-
+  
+ </transition>
+ <transition transition_id="markDataMetadataDone" title="Data and metadata finalised" new_state="" trigger="USER" before_script="" after_script="" >
+  <action url="" category="workflow" icon="">Data and metadata finalised</action>
+  <guard >
+   <guard-group>IMSDataQCteam</guard-group>
+  </guard>
+  
  </transition>
  <transition transition_id="markForDeletion" title="Mark for deletion" new_state="marked_for_deletion" trigger="USER" before_script="" after_script="" >
   <description>Mark this content to be deleted.</description>
   <action url="" category="workflow" icon="">Mark for deletion</action>
   <guard >
-   <guard-role>WebReviewer</guard-role>
-   <guard-role>Reviewer</guard-role>
-   <guard-role>Owner</guard-role>
+   <guard-group>indicatorsCopyEditors</guard-group>
+   <guard-group>WebReviewers</guard-group>
   </guard>
-
+  
  </transition>
  <transition transition_id="markReadyForPublication" title="Mark ready for publication" new_state="pending_publication" trigger="USER" before_script="" after_script="" >
   <action url="" category="workflow" icon="">Mark ready for publication</action>
   <guard >
+   <guard-group>indicatorsCopyEditors</guard-group>
   </guard>
-
+  
  </transition>
  <transition transition_id="publish" title="Publish" new_state="published" trigger="USER" before_script="" after_script="" >
   <action url="" category="workflow" icon="">Publish</action>
   <guard >
    <guard-group>WebReviewers</guard-group>
   </guard>
-
+  
  </transition>
  <transition transition_id="retract" title="Retract" new_state="retracted" trigger="USER" before_script="" after_script="" >
   <description>Retract and cancel the publishing of this item.</description>
   <action url="" category="workflow" icon="">Retract</action>
   <guard >
    <guard-group>WebReviewers</guard-group>
-   <guard-group>SOERCoordinators</guard-group>
   </guard>
-
+  
  </transition>
  <transition transition_id="submitForConsultation" title="Submit for consultation" new_state="visible" trigger="USER" before_script="" after_script="" >
   <action url="" category="workflow" icon="">Submit for consultation</action>
   <guard >
+   <guard-group>IMSHoGTeam</guard-group>
+   <guard-group>indicatorsCopyEditors</guard-group>
   </guard>
-
+  
  </transition>
  <transition transition_id="submitForHoGReview" title="Submit for HoG review" new_state="pending_review" trigger="USER" before_script="" after_script="" >
   <action url="" category="workflow" icon="">Submit for HoG review</action>
   <guard >
+   <guard-group>IMSIndicatorsAuthors</guard-group>
+   <guard-group>indicatorsCopyEditors</guard-group>
   </guard>
-
+  
  </transition>
  <transition transition_id="submitForQC" title="Submit for QC" new_state="under_qc" trigger="USER" before_script="" after_script="" >
   <action url="" category="workflow" icon="">Submit for QC</action>
   <guard >
+   <guard-group>IMSIndicatorsAuthors</guard-group>
+   <guard-group>indicatorsCopyEditors</guard-group>
   </guard>
-
+  
  </transition>
-
+ 
  <variable variable_id="action" for_catalog="False" for_status="True" update_always="True" >
   <description>The last transition</description>
   <default>
-
+   
    <expression>transition/getId|nothing</expression>
   </default>
   <guard >
@@ -393,7 +582,7 @@
  <variable variable_id="actor" for_catalog="False" for_status="True" update_always="True" >
   <description>The ID of the user who performed the last transition</description>
   <default>
-
+   
    <expression>user/getId</expression>
   </default>
   <guard >
@@ -402,7 +591,7 @@
  <variable variable_id="comments" for_catalog="False" for_status="True" update_always="True" >
   <description>Comments about the last transition</description>
   <default>
-
+   
    <expression>python:state_change.kwargs.get('comment', '')</expression>
   </default>
   <guard >
@@ -411,7 +600,7 @@
  <variable variable_id="review_history" for_catalog="False" for_status="False" update_always="False" >
   <description>Provides access to workflow history</description>
   <default>
-
+   
    <expression>state_change/getHistory</expression>
   </default>
   <guard >
@@ -422,10 +611,11 @@
  <variable variable_id="time" for_catalog="False" for_status="True" update_always="True" >
   <description>Time of the last transition</description>
   <default>
-
+   
    <expression>state_change/getDateTime</expression>
   </default>
   <guard >
   </guard>
  </variable>
+ 
 </dc-workflow>
