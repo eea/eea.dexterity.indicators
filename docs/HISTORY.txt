@@ -1,6 +1,11 @@
 Changelog
 =========
 
+4.8 - (2022-04-11)
+---------------------------
+* Bug fix: Backport plone.restapi JSON Summary Serializer in order to include more metadata
+  [avoinea refs #144768]
+
 4.7 - (2022-03-14)
 ---------------------------
 * Feature: Add custom content-rule to retract and rename old version of indicators
