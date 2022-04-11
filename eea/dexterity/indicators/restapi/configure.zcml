@@ -4,6 +4,8 @@
 
   <include package="plone.restapi"/>
 
+  <adapter factory=".summary.BackportJSONSummarySerializer" />
+
   <plone:service
       method="POST"
       factory=".copymove.Copy"
