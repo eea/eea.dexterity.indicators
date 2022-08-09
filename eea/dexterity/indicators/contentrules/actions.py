@@ -4,6 +4,11 @@
 import logging
 from time import time
 
+from AccessControl import SpecialUsers
+from AccessControl import getSecurityManager
+from AccessControl.SecurityManagement import newSecurityManager
+from AccessControl.SecurityManagement import setSecurityManager
+
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
@@ -45,20 +50,36 @@ class RetractAndRenameOldVersionExecutor(object):
     def __call__(self):
         obj = self.event.object
         oid = obj.getId()
-        if not oid.startswith('copy_of_'):
-            return True
-
         parent = obj.getParentNode()
-        old_id = oid.replace('copy_of_', '', 1)
-        new_id = old_id + '-%d' % time()
+
+        old_id = new_id = None
+        if oid.startswith('copy_of_'):
+            old_id = oid.replace('copy_of_', '', 1)
+            new_id = old_id + '-%d' % time()
+        elif oid.endswith('.1'):
+            old_id = oid.replace('.1', '', 1)
+            new_id = old_id + '-%d' % time()
+
+        if not (old_id and new_id):
+            return True
 
         try:
             old_version = parent[old_id]
             api.content.transition(
-                obj=old_version, transition='markForDeletion')
+                obj=old_version,
+                transition='markForDeletion',
+                comment="Auto archive item due to new version being published")
+
+            # Bypass user roles in order to rename old version
+            oldSecurityManager = getSecurityManager()
+            newSecurityManager(None, SpecialUsers.system)
+
             api.content.rename(obj=old_version, new_id=new_id)
             api.content.rename(obj=obj, new_id=old_id)
             obj.setEffectiveDate(DateTime())
+
+            # Switch back to the current user
+            setSecurityManager(oldSecurityManager)
         except Exception as err:
             logger.exception(err)
             return True
