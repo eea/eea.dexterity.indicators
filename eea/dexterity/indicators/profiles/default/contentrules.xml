@@ -323,9 +323,9 @@
   </condition>
   </conditions>
   <actions>
-  <action type="plone.actions.Copy">
+  <!-- <action type="plone.actions.Copy">
    <property name="target_folder">/SITE/ims</property>
-  </action>
+  </action> -->
   <action type="plone.actions.Mail">
    <property name="source"/>
    <property name="message">
