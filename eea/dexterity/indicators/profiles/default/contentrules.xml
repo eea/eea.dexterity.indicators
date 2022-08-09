@@ -64,12 +64,15 @@
      is now available for your review and approval.
 
      Instructions:
-     If needed, modify the indicator together with the author of the indicator. Once finished please submit the indicator for consultation.
-     You should complete this step within XY days.
+     If needed, modify the indicator together with the author of the indicator (${creators_emails}). Once finished please submit the indicator for consultation. Make sure the consultation emails are entered in the appropriate indicator metadata section.
+
+     You should complete this step *within 10 working days* (2 weeks) from the date of receipt of this mail.
 
      if you think you are not the right person to review the indicator or have any other questions, please contact the indicator workflow manager Andy Martin.
 
-     </property>
+     ------
+     EEA Web CMS
+     -------</property>
     <property name="subject">[IMSv4] Indicator ready for approval</property>
     <property
        name="recipients">${head_of_group_email}, demarinis@eea.europa.eu</property>
@@ -284,11 +287,66 @@
    </action>
   </actions>
  </rule>
+ <rule name="ims-workflow-publish" title="IMSv4: Publish" cascading="False" description=""
+   enabled="True" event="Products.CMFCore.interfaces.IActionSucceededEvent"
+   stop-after="False">
+  <conditions>
+  <condition type="plone.conditions.PortalType">
+   <property name="check_types">
+   <element>ims_indicator</element>
+   </property>
+  </condition>
+  <condition type="plone.conditions.WorkflowTransition">
+   <property name="wf_transitions">
+   <element>publish</element>
+   </property>
+  </condition>
+  </conditions>
+  <actions>
+  <action type="eea.dexterity.indicators.retract_and_rename_old_version"/>
+  </actions>
+ </rule>
+ <rule name="ims-workflow-new-version" title="IMSv4: create new version" cascading="False"
+   description="this rule is run when a new version of indicator is triggered"
+   enabled="True" event="Products.CMFCore.interfaces.IActionSucceededEvent"
+   stop-after="False">
+  <conditions>
+  <condition type="plone.conditions.WorkflowTransition">
+   <property name="wf_transitions">
+   <element>createNewVersion</element>
+   </property>
+  </condition>
+  <condition type="plone.conditions.PortalType">
+   <property name="check_types">
+   <element>ims_indicator</element>
+   </property>
+  </condition>
+  </conditions>
+  <actions>
+  <action type="plone.actions.Copy">
+   <property name="target_folder">/SITE/ims</property>
+  </action>
+  <action type="plone.actions.Mail">
+   <property name="source"/>
+   <property name="message">
+   You can now start editing your new indicator version at:
+   ${url}.1
+
+
+   </property>
+   <property name="subject">[IMSv4] New indicator version created</property>
+   <property name="recipients">${user_email}</property>
+   <property name="exclude_actor">False</property>
+  </action>
+  </actions>
+ </rule>
  <assignment name="ims-workflow-change" bubbles="True" enabled="True" location="/SITE/ims"/>
  <assignment name="ims-workflow-notify-hog" bubbles="True" enabled="True" location="/SITE/ims"/>
  <assignment name="ims-workflow-invite-for" bubbles="True" enabled="True" location="/SITE/ims"/>
  <assignment name="ims-workflow-submit-qc" bubbles="True" enabled="True" location="/SITE/ims"/>
  <assignment name="ims-workflow-submit-publication" bubbles="True" enabled="True" location="/SITE/ims"/>
  <assignment name="ims-workflow-notify-qc" bubbles="True" enabled="True" location="/SITE/ims"/>
- <assignment name="ms-workflow-notify-figures" bubbles="True" enabled="True" location="/SITE/ims"/>
+ <assignment name="ims-workflow-notify-figures" bubbles="True" enabled="True" location="/SITE/ims"/>
+ <assignment name="ims-workflow-publish" bubbles="True" enabled="True" location="/SITE/ims"/>
+ <assignment name="ims-workflow-new-version" bubbles="True" enabled="True" location="/SITE/ims"/>
 </contentrules>
