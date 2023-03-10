@@ -26,7 +26,7 @@
 
           Note, the following people have also received this mail:
           Creators in IMS: ${creators_emails}
-          HoG: ${head_of_group_email}
+          HoG: ${taxonomy_hog_users}
 
           -----------
           EEA Web CMS
@@ -34,7 +34,7 @@
     <property
        name="subject">[IMSv4] Indicator state change ${review_state_title} for ${title}</property>
     <property
-       name="recipients">${creators_emails}, ${head_of_group_email}, demarinis@eea.europa.eu</property>
+       name="recipients">${creators_emails}, ${taxonomy_hog_users}, demarinis@eea.europa.eu</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -75,7 +75,7 @@
      -------</property>
     <property name="subject">[IMSv4] Indicator ready for approval</property>
     <property
-       name="recipients">${head_of_group_email}, demarinis@eea.europa.eu</property>
+       name="recipients">${taxonomy_hog_users}, demarinis@eea.europa.eu</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
