@@ -155,16 +155,9 @@ class IIndicatorMetadata(model.Schema):
         "workflow",
         label=_(u"Workflow"),
         fields=[
-            "head_of_group_email",
             "consultation_members_emails",
             "contact",
         ],
-    )
-
-    head_of_group_email = Email(
-        title=_(u"Head of group email"),
-        description=_(u"Email of the head of group (HoG)"),
-        required=False,
     )
 
     consultation_members_emails = TextLine(
