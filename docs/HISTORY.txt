@@ -3,7 +3,7 @@ Changelog
 
 5.0 - (2023-03-10)
 ---------------------------
-* Change: Release
+* Change: Cleanup head_of_group_email in favor of taxonomy_hog_users
   [avoinea]
 
 4.9 - (2022-08-09)
