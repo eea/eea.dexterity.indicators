@@ -160,6 +160,7 @@ class EnableDisableDiscussionAddForm(ActionAddForm):
     description = u"A Enable/Disable Discussion action."
     form_name = u"Configure element"
 
+
 class EnableDisableDiscussionEditForm(ActionEditForm):
     """ Enable/Disable Discussion editform
     """
