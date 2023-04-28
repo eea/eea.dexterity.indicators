@@ -1,7 +1,7 @@
 Changelog
 =========
 
-6.0-dev0 - (unreleased)
+6.0 - (2023-04-28)
 ---------------------------
 * Feature: Plone 6 support
   [avoinea - refs #145772]
