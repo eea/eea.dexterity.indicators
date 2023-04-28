@@ -9,7 +9,7 @@
     name="add_view_expr">string:${folder_url}/++add++ims_folder</property>
  <property name="link_target"></property>
  <property name="immediate_view">view</property>
- <property name="global_allow">True</property>
+ <property name="global_allow">False</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
   <element value="ims_indicator"/>
@@ -26,11 +26,11 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
-  <element value="plone.shortname" />
-  <element value="eea.dexterity.indicators.interfaces.IIndicatorsFolder"/>
   <element
      value="Products.CMFPlone.interfaces.constrains.ISelectableConstrainTypes"/>
   <element value="volto.blocks"/>
+  <element value="plone.shortname"/>
+  <element value="eea.dexterity.indicators.interfaces.IIndicatorsFolder"/>
  </property>
  <property name="schema"></property>
  <property

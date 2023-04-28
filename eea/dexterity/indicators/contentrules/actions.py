@@ -4,16 +4,16 @@
 import logging
 from time import time
 
-from AccessControl import SpecialUsers
-from AccessControl import getSecurityManager
-from AccessControl.SecurityManagement import newSecurityManager
-from AccessControl.SecurityManagement import setSecurityManager
-
+from AccessControl import SpecialUsers, getSecurityManager
+from AccessControl.SecurityManagement import (newSecurityManager,
+                                              setSecurityManager)
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
+from plone.app.contentrules.actions import ActionAddForm, ActionEditForm
 from plone.app.contentrules.browser.formhelper import NullAddForm
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
+from zope import schema
 from zope.component import adapter
 from zope.interface import Interface, implementer
 
@@ -93,3 +93,77 @@ class RetractAndRenameOldVersionAddForm(NullAddForm):
         """ Create content-rule
         """
         return RetractAndRenameOldVersionAction()
+
+
+class IEnableDisableDiscussionAction(Interface):
+    """ Enable/Disable Discussion settings schema
+    """
+    action = schema.Choice(title=u"How discussions are changed",
+                           description=u"Should the discussions be disabled"
+                                       u"or enabled?",
+                           values=['enabled', 'disabled'],
+                           required=True)
+
+
+@implementer(IEnableDisableDiscussionAction, IRuleElementData)
+class EnableDisableDiscussionAction(SimpleItem):
+    """ Enable/Disable Discussion Action settings
+    """
+    element = 'eea.dexterity.indicators.enable_disable_discussion'
+    action = None  # default value
+
+    def summary(self):
+        """ Summary
+        """
+        if self.action:
+            return "Discussions will be %s" % self.action
+        return "Not configured"
+
+
+@implementer(IExecutable)
+@adapter(Interface, IEnableDisableDiscussionAction, Interface)
+class EnableDisableDiscussionActionExecutor(object):
+    """ Enable/Disable Discussion Action executor
+    """
+    def __init__(self, context, element, event):
+        self.context = context
+        self.element = element
+        self.event = event
+
+    def __call__(self):
+        # container = self.context
+        # event = self.event
+        action = self.element.action
+        obj = self.event.object
+
+        choice = {'enabled': 1, 'disabled': 0}.get(action)
+
+        if choice is None:
+            return False
+
+        if choice is not None:
+            setattr(obj, 'allow_discussion', bool(choice))
+
+            logger.info("Discussions for %s set to %s", obj.absolute_url(),
+                        action)
+        else:
+            logger.info("eea.dexterity.indicators.actions.EnableDisable"
+                        "Discussion action is not properly configured")
+        return True
+
+
+class EnableDisableDiscussionAddForm(ActionAddForm):
+    """ Enable/Disable Discussion addform
+    """
+    schema = IEnableDisableDiscussionAction
+    label = u"Add Enable/Disable Discussion Action"
+    description = u"A Enable/Disable Discussion action."
+    form_name = u"Configure element"
+
+class EnableDisableDiscussionEditForm(ActionEditForm):
+    """ Enable/Disable Discussion editform
+    """
+    schema = IEnableDisableDiscussionAction
+    label = u"Edit Enable/Disable Discussion Action"
+    description = u"A Enable/Disable Discussion action."
+    form_name = u"Configure element"
