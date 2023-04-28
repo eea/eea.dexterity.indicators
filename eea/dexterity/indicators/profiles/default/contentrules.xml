@@ -425,14 +425,14 @@
    </action>
   </actions>
  </rule>
- <assignment name="ims-workflow-change" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-notify-hog" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-invite-for" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-submit-qc" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-submit-publication" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-notify-qc" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-notify-figures" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-publish" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-workflow-new-version" bubbles="True" enabled="True" location="/"/>
- <assignment name="ims-new-indicator-created" bubbles="True" enabled="True" location="/"/>
+ <assignment name="ims-workflow-change" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-notify-hog" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-invite-for" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-submit-qc" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-submit-publication" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-notify-qc" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-notify-figures" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-publish" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-workflow-new-version" bubbles="True" enabled="True" location=""/>
+ <assignment name="ims-new-indicator-created" bubbles="True" enabled="True" location=""/>
 </contentrules>
