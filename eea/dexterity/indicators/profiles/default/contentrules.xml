@@ -370,9 +370,6 @@
    </condition>
   </conditions>
   <actions>
-   <action type="plone.actions.Copy">
-    <property name="target_folder">/</property>
-   </action>
    <action type="plone.actions.Mail">
     <property name="source"/>
     <property name="message">Dear IMS user,
@@ -433,6 +430,6 @@
  <assignment name="ims-workflow-notify-qc" bubbles="True" enabled="True" location=""/>
  <assignment name="ims-workflow-notify-figures" bubbles="True" enabled="True" location=""/>
  <assignment name="ims-workflow-publish" bubbles="True" enabled="True" location=""/>
- <assignment name="ims-workflow-new-version" bubbles="True" enabled="True" location=""/>
  <assignment name="ims-new-indicator-created" bubbles="True" enabled="True" location=""/>
+  <assignment name="ims-workflow-new-version" bubbles="True" enabled="False" location=""/>
 </contentrules>
