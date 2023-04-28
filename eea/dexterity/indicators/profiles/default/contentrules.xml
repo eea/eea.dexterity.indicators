@@ -371,7 +371,7 @@
   </conditions>
   <actions>
    <action type="plone.actions.Copy">
-    <property name="target_folder">/en/analysis</property>
+    <property name="target_folder">/</property>
    </action>
    <action type="plone.actions.Mail">
     <property name="source"/>
