@@ -3,6 +3,8 @@ Changelog
 
 6.1-dev0 - (unreleased)
 ---------------------------
+* Change: Update Indicator Fixed layout to prepare for Plone 6 migration
+  [avoinea - refs #145772]
 
 6.0 - (2023-04-28)
 ---------------------------
