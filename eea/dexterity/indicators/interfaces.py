@@ -225,43 +225,6 @@ class IIndicatorLayout(model.Schema):
                             u"align": u"full",
                             u"@type": u"splitter",
                         },
-                        u"12d8c532-f7ad-43fe-ada7-330b2d7a7a39": {
-                            u"plaintext": u"Published: date \u2012 25min read",
-                            u"required": True,
-                            u"disableNewBlocks": True,
-                            u"value": [
-                                {
-                                    u"type": u"p",
-                                    u"children": [
-                                        {u"text": u""},
-                                        {
-                                            u"type": u"sup",
-                                            u"children": [
-                                                {u"text": u"Published: "},
-                                                {
-                                                    u"type": u"mention",
-                                                    u"data": {
-                                                        u"widget": u"datetime",
-                                                        u"id": u"effective",
-                                                    },
-                                                    u"children": [{u"text": u"date"}],
-                                                },
-                                                {u"text": u" \u2012 25min read"},
-                                            ],
-                                        },
-                                        {u"text": u""},
-                                    ],
-                                }
-                            ],
-                            u"readOnly": True,
-                            u"fixed": True,
-                            u"@type": u"slate",
-                            u"instructions": {
-                                u"data": u"<p><br/></p>",
-                                u"content-type": u"text/html",
-                                u"encoding": u"utf8",
-                            },
-                        },
                         u"ca212ba0-859e-4e67-b610-debe0d498b74": {
                             u"fixedLayout": False,
                             u"maxChars": u"500",
@@ -281,6 +244,9 @@ class IIndicatorLayout(model.Schema):
                             u"fixed": True,
                             u"data": {
                                 u"blocks": {
+                                    u"1c31c956-5086-476a-8694-9936cfa6c240": {
+                                        u"@type": u"description"
+                                    },
                                     u"2679fdcc-60be-47ea-90b6-435837793600": {
                                         u"plaintext": u"",
                                         u"placeholder": u"Summary",
@@ -299,11 +265,14 @@ class IIndicatorLayout(model.Schema):
                                     }
                                 },
                                 u"blocks_layout": {
-                                    u"items": [u"2679fdcc-60be-47ea-90b6-435837793600"]
+                                    u"items": [
+                                        u"1c31c956-5086-476a-8694-9936cfa6c240",
+                                        u"2679fdcc-60be-47ea-90b6-435837793600"
+                                    ]
                                 },
                             },
                             u"@type": u"group",
-                            u"allowedBlocks": [u"slate"],
+                            u"allowedBlocks": [u"description", u"slate"],
                         },
                     },
                     u"blocks_layout": {
@@ -311,7 +280,6 @@ class IIndicatorLayout(model.Schema):
                             u"ddde07aa-4e48-4475-94bd-e1a517d26eab",
                             u"ca212ba0-859e-4e67-b610-debe0d498b74",
                             u"9f452ca7-172a-42e0-a699-8df0714c89f8",
-                            u"12d8c532-f7ad-43fe-ada7-330b2d7a7a39",
                         ]
                     },
                 },

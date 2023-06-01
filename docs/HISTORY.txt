@@ -1,6 +1,11 @@
 Changelog
 =========
 
+6.1 - (2023-06-01)
+---------------------------
+* Change: Update Indicator Fixed layout to prepare for Plone 6 migration
+  [avoinea - refs #145772]
+
 6.0 - (2023-04-28)
 ---------------------------
 * Feature: Plone 6 support
