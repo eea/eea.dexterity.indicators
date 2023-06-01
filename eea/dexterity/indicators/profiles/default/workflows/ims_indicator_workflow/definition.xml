@@ -243,10 +243,10 @@
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Reader</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Reply to item" acquired="False">
+   <permission-role>Authenticated</permission-role>
    <permission-role>Editor</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
@@ -258,11 +258,6 @@
   </permission-map>
   <permission-map name="View comments" acquired="False">
    <permission-role>Reader</permission-role>
-  </permission-map>
-  <permission-map name="eea.annotator: Edit" acquired="False">
-   <permission-role>Editor</permission-role>
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
   </permission-map>
   <group-map name="IMSDataQCteam">
    <group-role>Editor</group-role>

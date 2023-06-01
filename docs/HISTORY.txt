@@ -1,6 +1,11 @@
 Changelog
 =========
 
+6.0 - (2023-04-28)
+---------------------------
+* Feature: Plone 6 support
+  [avoinea - refs #145772]
+
 5.0 - (2023-03-10)
 ---------------------------
 * Change: Cleanup head_of_group_email in favor of taxonomy_hog_users

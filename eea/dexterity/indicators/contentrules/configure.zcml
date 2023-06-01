@@ -26,4 +26,32 @@
         factory=".actions.RetractAndRenameOldVersionAction"
         />
 
+    <adapter factory=".actions.EnableDisableDiscussionActionExecutor" />
+
+    <browser:page
+        for="plone.app.contentrules.browser.interfaces.IRuleActionAdding"
+        name="eea.dexterity.indicators.EnableDisableDiscussion"
+        class=".actions.EnableDisableDiscussionAddForm"
+        permission="plone.app.contentrules.ManageContentRules"
+      />
+
+    <browser:page
+        for=".actions.IEnableDisableDiscussionAction"
+        name="edit"
+        class=".actions.EnableDisableDiscussionEditForm"
+        permission="plone.app.contentrules.ManageContentRules"
+      />
+
+    <plone:ruleAction
+        name="eea.dexterity.indicators.enable_disable_discussion"
+        title="Enable/disable discussions"
+        description="Enable and disable discussions"
+        for="*"
+        event="*"
+        addview="eea.dexterity.indicators.EnableDisableDiscussion"
+        editview="edit"
+        schema=".actions.IEnableDisableDiscussionAction"
+        factory=".actions.EnableDisableDiscussionAction"
+        />
+
 </configure>
