@@ -3,6 +3,8 @@ Changelog
 
 6.2-dev0 - (unreleased)
 ---------------------------
+* Change: Avoid duplicate urls by removing api substring
+  [iulianpetchesi - refs #157787]
 
 6.1 - (2023-06-01)
 ---------------------------
