@@ -1,6 +1,21 @@
 Changelog
 =========
 
+6.2-dev0 - (unreleased)
+---------------------------
+* Change: Avoid duplicate urls by removing api substring
+  [iulianpetchesi - refs #157787]
+
+6.1 - (2023-06-01)
+---------------------------
+* Change: Update Indicator Fixed layout to prepare for Plone 6 migration
+  [avoinea - refs #145772]
+
+6.0 - (2023-04-28)
+---------------------------
+* Feature: Plone 6 support
+  [avoinea - refs #145772]
+
 5.0 - (2023-03-10)
 ---------------------------
 * Change: Cleanup head_of_group_email in favor of taxonomy_hog_users
