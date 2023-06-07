@@ -49,7 +49,8 @@ def remove_api_string(url):
         url (str): url string
     """
     url = url.replace('/api/SITE/', '/')
-    url = url.replace('/++api++/', '/')
+    # future use
+    # url = url.replace('/++api++/', '/')
     return url
 
 
