@@ -41,6 +41,19 @@ def find_url(value, key):
     return None
 
 
+def remove_api_string(url):
+    """
+    Remove /api/SITE/ or ++api++ substring from url
+
+    Args:
+        url (str): url string
+    """
+    url = url.replace('/api/SITE/', '/')
+    # future use
+    # url = url.replace('/++api++/', '/')
+    return url
+
+
 def dedupe_data(data):
     """
     Remove duplication from metadata fields
@@ -58,6 +71,7 @@ def dedupe_data(data):
     existing = set()
     for value in data:
         url = find_url(value, 'url')
+        url = remove_api_string(url)
         if url in existing:
             continue
         existing.add(url)
