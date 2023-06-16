@@ -17,36 +17,34 @@ import transaction
 
 @provider(IFormFieldProvider)
 class IShortName(model.Schema):
-    """ Short name
-    """
+    """Short name"""
+
     model.fieldset(
-        'settings',
-        label=_(u"Settings"),
-        fields=['id'],
+        "settings",
+        label=_("Settings"),
+        fields=["id"],
     )
 
     id = schema.ASCIILine(
-        title=_(u'Short name'),
-        description=_(u'This name will be displayed in the URL.'),
+        title=_("Short name"),
+        description=_("This name will be displayed in the URL."),
         required=False,
     )
-    directives.write_permission(id='cmf.AddPortalContent')
+    directives.write_permission(id="cmf.AddPortalContent")
 
 
 class ShortName(object):
-    """ Short name
-    """
+    """Short name"""
+
     def __init__(self, context):
         self.context = context
 
     def _get_id(self):
-        """ Get ID
-        """
+        """Get ID"""
         return self.context.getId()
 
     def _set_id(self, value):
-        """ Set ID
-        """
+        """Set ID"""
         if not value:
             return
         context = aq_inner(self.context)
@@ -56,7 +54,7 @@ class ShortName(object):
             context.id = value
             return
         new_id = INameChooser(parent).chooseName(value, context)
-        if getattr(aq_base(context), 'id', None):
+        if getattr(aq_base(context), "id", None):
             transaction.savepoint()
             locked = False
             lockable = ILockable(context, None)
@@ -68,4 +66,5 @@ class ShortName(object):
                 lockable.lock()
         else:
             context.id = new_id
+
     id = property(_get_id, _set_id)
