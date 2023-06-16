@@ -214,66 +214,31 @@ class IIndicatorLayout(model.Schema):
                             "@type": "title",
                             "required": True,
                         },
-                        "9f452ca7-172a-42e0-a699-8df0714c89f8": {
-                            "styles": {"align": "full"},
-                            "align": "full",
-                            "@type": "splitter",
-                        },
-                        "ca212ba0-859e-4e67-b610-debe0d498b74": {
-                            "fixedLayout": False,
-                            "maxChars": "500",
-                            "ignoreSpaces": True,
-                            "required": True,
-                            "disableNewBlocks": True,
-                            "as": "div",
+                        "1c31c956-5086-476a-8694-9936cfa6c240": {
+                            "@type": "description",
+                            'disableNewBlocks': True,
+                            'fixed': True,
                             "placeholder": "Summary",
-                            "title": "Summary",
-                            "disableInnerButtons": True,
-                            "readOnlySettings": True,
                             "instructions": {
                                 "data": "<p>The summary tells the reader about the indicator trend over the examined period and whether or not it helps to achieve the associated policy objective, which can be either quantitative or directional.</p><p>In the absence of a policy objective, it explains whether the trend is in the right or wrong direction in relation to the issue examined.</p><p>If there has been an important change over the most recent period of the time series, e.g. over the last year, this is indicated too.</p><p>Furthermore, if there is a quantitative target, it also indicates whether we are on track to meet it and if not what are the reasons preventing that, e.g. socio-economic drivers, implementation gap etc.</p>",
                                 "content-type": "text/html",
                                 "encoding": "utf8",
                             },
-                            "fixed": True,
-                            "data": {
-                                "blocks": {
-                                    "1c31c956-5086-476a-8694-9936cfa6c240": {
-                                        "@type": "description"
-                                    },
-                                    "2679fdcc-60be-47ea-90b6-435837793600": {
-                                        "plaintext": "",
-                                        "placeholder": "Summary",
-                                        "@type": "slate",
-                                        "value": [
-                                            {
-                                                "type": "p",
-                                                "children": [{"text": ""}],
-                                            }
-                                        ],
-                                        "instructions": {
-                                            "data": "<p><br/></p>",
-                                            "content-type": "text/html",
-                                            "encoding": "utf8",
-                                        },
-                                    },
-                                },
-                                "blocks_layout": {
-                                    "items": [
-                                        "1c31c956-5086-476a-8694-9936cfa6c240",
-                                        "2679fdcc-60be-47ea-90b6-435837793600",
-                                    ]
-                                },
-                            },
-                            "@type": "group",
-                            "allowedBlocks": ["description", "slate"],
+                        },
+                        '3cccc2bb-471a-44c7-b006-5595c4713ff2': {
+                            '@type': 'layoutSettings',
+                            'layout_size': 'narrow_view',
+                            'disableNewBlocks': True,
+                            'fixed': True,
+                            "required": True,
+                            "readOnly": True,
                         },
                     },
                     "blocks_layout": {
                         "items": [
                             "ddde07aa-4e48-4475-94bd-e1a517d26eab",
-                            "ca212ba0-859e-4e67-b610-debe0d498b74",
-                            "9f452ca7-172a-42e0-a699-8df0714c89f8",
+                            "1c31c956-5086-476a-8694-9936cfa6c240",
+                            "3cccc2bb-471a-44c7-b006-5595c4713ff2",
                         ]
                     },
                 },

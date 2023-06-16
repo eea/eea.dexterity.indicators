@@ -23,21 +23,22 @@
  <property name="add_permission">cmf.AddPortalContent</property>
  <property name="klass">plone.dexterity.content.Container</property>
  <property name="behaviors">
-  <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
-  <element value="plone.app.content.interfaces.INameFromTitle"/>
-  <element value="collective.taxonomy.generated.hog_users"/>
-  <element value="eea.dexterity.indicators.interfaces.IIndicator"/>
-  <element value="eea.dexterity.indicators.interfaces.IIndicatorMetadata"/>
+  <element value="plone.dublincore"/>
+  <element value="plone.namefromtitle"/>
+  <element value="plone.leadimage"/>
+  <element value="plone.locking"/>
+  <element value="plone.allowdiscussion"/>
+  <element value="plone.shortname"/>
+  <element value="plone.versioning"/>
+  <element value="eea.dexterity.indicators.indicator"/>
+  <element value="eea.dexterity.indicators.metadata"/>
   <element value="eea.dexterity.indicators.blocks"/>
-  <element value="eea.api.layout.interfaces.IFixedLayoutBlocks"/>
-  <element value="plone.app.lockingbehavior.behaviors.ILocking"/>
+  <element value="volto.blocks.fixed.layout"/>
+  <element value="collective.taxonomy.generated.hog_users"/>
   <element value="collective.taxonomy.generated.themes"/>
   <element value="collective.taxonomy.generated.un_sdgs"/>
   <element value="collective.taxonomy.generated.typology"/>
   <element value="collective.taxonomy.generated.dpsir"/>
-  <element value="plone.app.dexterity.behaviors.discussion.IAllowDiscussion"/>
-  <element value="plone.shortname"/>
-  <element value="plone.app.versioningbehavior.behaviors.IVersionable"/>
  </property>
  <property name="schema"></property>
  <property
