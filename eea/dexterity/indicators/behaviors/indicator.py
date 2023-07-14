@@ -10,10 +10,8 @@ from zope.interface import implementer
 def getAllBlocks(blocks, flat_blocks):
     """Get a flat list from a tree of blocks"""
     for block in blocks.values():
-        sub_blocks = block.get(
-            "data", {}).get(
-            "blocks", {}) or block.get(
-            "blocks", {})
+        sub_blocks = block.get("data", {}).get(
+            "blocks", {}) or block.get("blocks", {})
         flat_blocks.append(block)
         if sub_blocks:
             getAllBlocks(sub_blocks, flat_blocks)
@@ -35,7 +33,7 @@ def find_url(value, url_list):
     while stack:
         item = stack.pop()
         for field, value in item.items():
-            if (field in url_list):
+            if field in url_list:
                 return value
             if isinstance(value, dict):
                 stack.append(value)
@@ -54,7 +52,7 @@ def remove_api_string(url):
     Args:
         url (str): url string
     """
-    url = url.replace('/api/SITE/', '/')
+    url = url.replace("/api/SITE/", "/")
     # future use
     # url = url.replace('/++api++/', '/')
     return url
@@ -77,10 +75,10 @@ def dedupe_data(data):
     existing = set()
     # @id -> internal_link
     # id -> hash link
-    url_list = ['url', 'external_link', '@id', 'id']
+    url_list = ["url", "external_link", "@id", "id"]
     for value in data:
         url = find_url(value, url_list)
-        if (url):
+        if url:
             url = remove_api_string(url)
             if url in existing:
                 continue
@@ -94,30 +92,30 @@ class Indicator(object):
     """Automatically extract metadata from blocks"""
 
     def __init__(self, context):
-        self.__dict__['context'] = context
-        self.__dict__['readOnly'] = [
-            'temporal_coverage',
-            'geo_coverage',
-            'data_provenance',
-            'institutional_mandate',
+        self.__dict__["context"] = context
+        self.__dict__["readOnly"] = [
+            "temporal_coverage",
+            "geo_coverage",
+            "data_provenance",
+            "institutional_mandate",
         ]
 
-    def __getattr__(self, name):         # pylint: disable=R1710
+    def __getattr__(self, name):  # pylint: disable=R1710
         if name not in IIndicatorMetadata:
             raise AttributeError(name)
 
-        if name not in self.__dict__['readOnly']:
+        if name not in self.__dict__["readOnly"]:
             return getattr(
-                self.__dict__.get('context'),
+                self.__dict__.get("context"),
                 name,
-                IIndicatorMetadata[name].missing_value
+                IIndicatorMetadata[name].missing_value,
             )
 
     def __setattr__(self, name, value):
         if name not in IIndicatorMetadata:
             raise AttributeError(name)
 
-        if name not in self.__dict__['readOnly']:
+        if name not in self.__dict__["readOnly"]:
             setattr(self.context, name, value)
 
     @property
@@ -168,10 +166,8 @@ class Indicator(object):
                 continue
 
             dataSources = (
-                block.get(
-                    "metadata", {}).get(
-                    "dataSources", {}).get(
-                    "value", []) or []
+                block.get("metadata", {}).get(
+                    "dataSources", {}).get("value", []) or []
             )
             res.extend(dataSources)
         return [x for x in dedupe_data(res)]
@@ -186,10 +182,10 @@ class Indicator(object):
                 continue
 
             institutionalMandate = (
-                block.get(
-                    "metadata", {}).get(
-                    "institutionalMandate", {}).get(
-                    "value", []) or []
+                block.get("metadata", {})
+                .get("institutionalMandate", {})
+                .get("value", [])
+                or []
             )
             res.extend(institutionalMandate)
         return [x for x in dedupe_data(res)]
