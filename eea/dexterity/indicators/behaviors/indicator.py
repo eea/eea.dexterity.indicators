@@ -20,19 +20,6 @@ def getAllBlocks(blocks, flat_blocks):
     return flat_blocks
 
 
-def process_data(data, field=None):
-    if isinstance(data, str) and field in ['url', 'external_link']:
-        return data
-    if isinstance(data, list):
-        for value in data:
-            return process_data(data=value, field=field)
-    if isinstance(data, dict):
-        for field, value in data.items():
-            return process_data(data=value, field=field)
-
-    return data
-
-
 def find_url(value, url_list):
     """
     Get a deeply nested url from slate data tree
