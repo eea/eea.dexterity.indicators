@@ -101,7 +101,7 @@ class IEnableDisableDiscussionAction(Interface):
 
     action = schema.Choice(
         title=_("How discussions are changed"),
-        description="Should the discussions be disabled" "or enabled?",
+        description=_("Should the discussions be disabled" "or enabled?"),
         values=["enabled", "disabled"],
         required=True,
     )
