@@ -164,7 +164,8 @@ class IIndicatorMetadata(model.Schema):
 
     consultation_members_emails = TextLine(
         title=_("Consultation members emails"),
-        description=_("List of consultation members emails, separated by commas."),
+        description=_(
+            "List of consultation members emails, separated by commas."),
         required=False,
     )
 
@@ -183,7 +184,8 @@ class IIndicatorLayout(model.Schema):
     #
     # Layout
     #
-    model.fieldset("layout", label=_("Layout"), fields=["blocks", "blocks_layout"])
+    model.fieldset("layout", label=_("Layout"),
+                   fields=["blocks", "blocks_layout"])
 
     blocks = JSONField(
         title=_("Blocks"),
