@@ -18,6 +18,8 @@ from zope import schema
 from zope.component import adapter
 from zope.interface import Interface, implementer
 
+from eea.dexterity.indicators import EEAMessageFactory as _
+
 logger = logging.getLogger("eea.dexterity.indicators")
 
 
@@ -98,7 +100,7 @@ class IEnableDisableDiscussionAction(Interface):
     """Enable/Disable Discussion settings schema"""
 
     action = schema.Choice(
-        title="How discussions are changed",
+        title=_("How discussions are changed"),
         description="Should the discussions be disabled" "or enabled?",
         values=["enabled", "disabled"],
         required=True,
