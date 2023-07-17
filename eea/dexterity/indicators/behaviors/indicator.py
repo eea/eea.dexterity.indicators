@@ -18,7 +18,7 @@ def getAllBlocks(blocks, flat_blocks):
     return flat_blocks
 
 
-def find_url(value, url_list):
+def find_url(data, url_list):
     """
     Get a deeply nested url from slate data tree
      >>> from eea.dexterity.indicators.behaviors.indicator import find_url
@@ -29,7 +29,7 @@ def find_url(value, url_list):
 
     """
 
-    stack = [value]
+    stack = [data]
     while stack:
         item = stack.pop()
         for field, value in item.items():
@@ -184,8 +184,8 @@ class Indicator(object):
             institutionalMandate = (
                 block.get("metadata", {})
                 .get("institutionalMandate", {})
-                .get("value", [])
-                or []
+                .get("value", []) or
+                []
             )
             res.extend(institutionalMandate)
         return [x for x in dedupe_data(res)]
