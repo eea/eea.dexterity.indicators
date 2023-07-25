@@ -5,11 +5,18 @@ import logging
 from time import time
 
 from AccessControl import SpecialUsers, getSecurityManager
-from AccessControl.SecurityManagement import newSecurityManager, setSecurityManager
+from AccessControl.SecurityManagement import (
+    newSecurityManager,
+    setSecurityManager,
+)
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
-from plone.app.contentrules.browser.formhelper import AddForm, EditForm, NullAddForm
+from plone.app.contentrules.browser.formhelper import (
+    AddForm,
+    EditForm,
+    NullAddForm,
+)
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
 from zope import schema
 from zope.component import adapter
@@ -140,7 +147,8 @@ class EnableDisableDiscussionActionExecutor(object):
         if choice is not None:
             setattr(obj, "allow_discussion", bool(choice))
 
-            logger.info("Discussions for %s set to %s", obj.absolute_url(), action)
+            logger.info("Discussions for %s set to %s",
+                        obj.absolute_url(), action)
         else:
             logger.info(
                 "eea.dexterity.indicators.actions.EnableDisable"
