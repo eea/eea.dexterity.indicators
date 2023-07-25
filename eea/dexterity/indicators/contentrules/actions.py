@@ -5,13 +5,18 @@ import logging
 from time import time
 
 from AccessControl import SpecialUsers, getSecurityManager
-from AccessControl.SecurityManagement import (newSecurityManager,
-                                              setSecurityManager)
+from AccessControl.SecurityManagement import (
+    newSecurityManager,
+    setSecurityManager,
+)
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
-from plone.app.contentrules.browser.formhelper import (AddForm, EditForm,
-                                                       NullAddForm)
+from plone.app.contentrules.browser.formhelper import (
+    AddForm,
+    EditForm,
+    NullAddForm,
+)
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
 from zope import schema
 from zope.component import adapter
@@ -21,16 +26,14 @@ logger = logging.getLogger("eea.dexterity.indicators")
 
 
 class IRetractAndRenameOldVersionAction(Interface):
-    """ Retract and rename old version
-    """
+    """Retract and rename old version"""
 
 
 @implementer(IRetractAndRenameOldVersionAction, IRuleElementData)
 class RetractAndRenameOldVersionAction(SimpleItem):
-    """ Retract and rename old version action
-    """
+    """Retract and rename old version action"""
 
-    element = 'eea.dexterity.indicators.retract_and_rename_old_version'
+    element = "eea.dexterity.indicators.retract_and_rename_old_version"
     summary = (
         "Will retract and rename older version of this Indicator. "
         "Then rename current Indicator (remove copy_of_ from id)"
@@ -40,8 +43,8 @@ class RetractAndRenameOldVersionAction(SimpleItem):
 @implementer(IExecutable)
 @adapter(Interface, IRetractAndRenameOldVersionAction, Interface)
 class RetractAndRenameOldVersionExecutor(object):
-    """ Retract and rename old version executor
-    """
+    """Retract and rename old version executor"""
+
     def __init__(self, context, element, event):
         self.context = context
         self.element = element
@@ -53,12 +56,12 @@ class RetractAndRenameOldVersionExecutor(object):
         parent = obj.getParentNode()
 
         old_id = new_id = None
-        if oid.startswith('copy_of_'):
-            old_id = oid.replace('copy_of_', '', 1)
-            new_id = old_id + '-%d' % time()
-        elif oid.endswith('.1'):
-            old_id = oid.replace('.1', '', 1)
-            new_id = old_id + '-%d' % time()
+        if oid.startswith("copy_of_"):
+            old_id = oid.replace("copy_of_", "", 1)
+            new_id = old_id + "-%d" % time()
+        elif oid.endswith(".1"):
+            old_id = oid.replace(".1", "", 1)
+            new_id = old_id + "-%d" % time()
 
         if not (old_id and new_id):
             return True
@@ -67,8 +70,9 @@ class RetractAndRenameOldVersionExecutor(object):
             old_version = parent[old_id]
             api.content.transition(
                 obj=old_version,
-                transition='markForDeletion',
-                comment="Auto archive item due to new version being published")
+                transition="markForDeletion",
+                comment="Auto archive item due to new version being published",
+            )
 
             # Bypass user roles in order to rename old version
             oldSecurityManager = getSecurityManager()
@@ -87,34 +91,33 @@ class RetractAndRenameOldVersionExecutor(object):
 
 
 class RetractAndRenameOldVersionAddForm(NullAddForm):
-    """ Retract and rename old version addform
-    """
+    """Retract and rename old version addform"""
+
     def create(self):
-        """ Create content-rule
-        """
+        """Create content-rule"""
         return RetractAndRenameOldVersionAction()
 
 
 class IEnableDisableDiscussionAction(Interface):
-    """ Enable/Disable Discussion settings schema
-    """
-    action = schema.Choice(title=u"How discussions are changed",
-                           description=u"Should the discussions be disabled"
-                                       u"or enabled?",
-                           values=['enabled', 'disabled'],
-                           required=True)
+    """Enable/Disable Discussion settings schema"""
+
+    action = schema.Choice(
+        title="How discussions are changed",
+        description="Should the discussions be disabled" "or enabled?",
+        values=["enabled", "disabled"],
+        required=True,
+    )
 
 
 @implementer(IEnableDisableDiscussionAction, IRuleElementData)
 class EnableDisableDiscussionAction(SimpleItem):
-    """ Enable/Disable Discussion Action settings
-    """
-    element = 'eea.dexterity.indicators.enable_disable_discussion'
+    """Enable/Disable Discussion Action settings"""
+
+    element = "eea.dexterity.indicators.enable_disable_discussion"
     action = None  # default value
 
     def summary(self):
-        """ Summary
-        """
+        """Summary"""
         if self.action:
             return "Discussions will be %s" % self.action
         return "Not configured"
@@ -123,8 +126,8 @@ class EnableDisableDiscussionAction(SimpleItem):
 @implementer(IExecutable)
 @adapter(Interface, IEnableDisableDiscussionAction, Interface)
 class EnableDisableDiscussionActionExecutor(object):
-    """ Enable/Disable Discussion Action executor
-    """
+    """Enable/Disable Discussion Action executor"""
+
     def __init__(self, context, element, event):
         self.context = context
         self.element = element
@@ -136,35 +139,37 @@ class EnableDisableDiscussionActionExecutor(object):
         action = self.element.action
         obj = self.event.object
 
-        choice = {'enabled': 1, 'disabled': 0}.get(action)
+        choice = {"enabled": 1, "disabled": 0}.get(action)
 
         if choice is None:
             return False
 
         if choice is not None:
-            setattr(obj, 'allow_discussion', bool(choice))
+            setattr(obj, "allow_discussion", bool(choice))
 
-            logger.info("Discussions for %s set to %s", obj.absolute_url(),
-                        action)
+            logger.info("Discussions for %s set to %s",
+                        obj.absolute_url(), action)
         else:
-            logger.info("eea.dexterity.indicators.actions.EnableDisable"
-                        "Discussion action is not properly configured")
+            logger.info(
+                "eea.dexterity.indicators.actions.EnableDisable"
+                "Discussion action is not properly configured"
+            )
         return True
 
 
 class EnableDisableDiscussionAddForm(AddForm):
-    """ Enable/Disable Discussion addform
-    """
+    """Enable/Disable Discussion addform"""
+
     schema = IEnableDisableDiscussionAction
-    label = u"Add Enable/Disable Discussion Action"
-    description = u"A Enable/Disable Discussion action."
-    form_name = u"Configure element"
+    label = "Add Enable/Disable Discussion Action"
+    description = "A Enable/Disable Discussion action."
+    form_name = "Configure element"
 
 
 class EnableDisableDiscussionEditForm(EditForm):
-    """ Enable/Disable Discussion editform
-    """
+    """Enable/Disable Discussion editform"""
+
     schema = IEnableDisableDiscussionAction
-    label = u"Edit Enable/Disable Discussion Action"
-    description = u"A Enable/Disable Discussion action."
-    form_name = u"Configure element"
+    label = "Edit Enable/Disable Discussion Action"
+    description = "A Enable/Disable Discussion action."
+    form_name = "Configure element"

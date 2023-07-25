@@ -24,13 +24,12 @@
  <property name="add_permission">cmf.AddPortalContent</property>
  <property name="klass">plone.dexterity.content.Container</property>
  <property name="behaviors">
-  <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
-  <element value="plone.app.content.interfaces.INameFromTitle"/>
-  <element
-     value="Products.CMFPlone.interfaces.constrains.ISelectableConstrainTypes"/>
+  <element value="plone.dublincore"/>
+  <element value="plone.namefromtitle"/>
+  <element value="plone.constraintypes"/>
   <element value="volto.blocks"/>
   <element value="plone.shortname"/>
-  <element value="eea.dexterity.indicators.interfaces.IIndicatorsFolder"/>
+  <element value="eea.dexterity.indicators.folder"/>
  </property>
  <property name="schema"></property>
  <property
