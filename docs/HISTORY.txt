@@ -1,7 +1,7 @@
 Changelog
 =========
 
-7.0-dev0 - (unreleased)
+7.0 - (2023-07-25)
 ---------------------------
 * Refactor: Drop Python2 / Plone 4 support
   [avoinea - refs #253802]
