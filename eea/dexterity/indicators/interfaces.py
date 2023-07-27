@@ -124,7 +124,7 @@ class IIndicatorMetadata(model.Schema):
 
     frequency_of_dissemination = Int(
         title=_("Frequency of dissemination"),
-        description=_(
+        description=(
             "Time interval at which the indicator is published (in years, from 1 to 5). E.g. use 1 if it is published yearly, 2 if it is published every 2 years and so on."
         ),
         required=False,
