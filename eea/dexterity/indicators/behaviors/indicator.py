@@ -10,8 +10,9 @@ from zope.interface import implementer
 def getAllBlocks(blocks, flat_blocks):
     """Get a flat list from a tree of blocks"""
     for block in blocks.values():
-        sub_blocks = block.get("data", {}).get(
-            "blocks", {}) or block.get("blocks", {})
+        sub_blocks = block.get("data", {}).get("blocks", {}) or block.get(
+            "blocks", {}
+        )
         flat_blocks.append(block)
         if sub_blocks:
             getAllBlocks(sub_blocks, flat_blocks)
@@ -166,8 +167,10 @@ class Indicator(object):
                 continue
 
             dataSources = (
-                block.get("metadata", {}).get(
-                    "dataSources", {}).get("value", []) or []
+                block.get("metadata", {})
+                .get("dataSources", {})
+                .get("value", []) or
+                []
             )
             res.extend(dataSources)
         return [x for x in dedupe_data(res)]
