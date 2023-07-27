@@ -149,8 +149,9 @@ class EnableDisableDiscussionActionExecutor(object):
         if choice is not None:
             setattr(obj, "allow_discussion", bool(choice))
 
-            logger.info("Discussions for %s set to %s",
-                        obj.absolute_url(), action)
+            logger.info(
+                "Discussions for %s set to %s", obj.absolute_url(), action
+            )
         else:
             logger.info(
                 "eea.dexterity.indicators.actions.EnableDisable"
