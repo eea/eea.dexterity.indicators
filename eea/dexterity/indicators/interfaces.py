@@ -164,7 +164,9 @@ class IIndicatorMetadata(model.Schema):
 
     consultation_members_emails = TextLine(
         title=_("Consultation members emails"),
-        description=_("List of consultation members emails, separated by commas."),
+        description=_(
+            "List of consultation members emails, separated by commas."
+        ),
         required=False,
     )
 
@@ -183,7 +185,9 @@ class IIndicatorLayout(model.Schema):
     #
     # Layout
     #
-    model.fieldset("layout", label=_("Layout"), fields=["blocks", "blocks_layout"])
+    model.fieldset(
+        "layout", label=_("Layout"), fields=["blocks", "blocks_layout"]
+    )
 
     blocks = JSONField(
         title=_("Blocks"),
@@ -216,8 +220,8 @@ class IIndicatorLayout(model.Schema):
                         },
                         "1c31c956-5086-476a-8694-9936cfa6c240": {
                             "@type": "description",
-                            'disableNewBlocks': True,
-                            'fixed': True,
+                            "disableNewBlocks": True,
+                            "fixed": True,
                             "placeholder": "Summary",
                             "instructions": {
                                 "data": "<p>The summary tells the reader about the indicator trend over the examined period and whether or not it helps to achieve the associated policy objective, which can be either quantitative or directional.</p><p>In the absence of a policy objective, it explains whether the trend is in the right or wrong direction in relation to the issue examined.</p><p>If there has been an important change over the most recent period of the time series, e.g. over the last year, this is indicated too.</p><p>Furthermore, if there is a quantitative target, it also indicates whether we are on track to meet it and if not what are the reasons preventing that, e.g. socio-economic drivers, implementation gap etc.</p>",
@@ -225,11 +229,11 @@ class IIndicatorLayout(model.Schema):
                                 "encoding": "utf8",
                             },
                         },
-                        '3cccc2bb-471a-44c7-b006-5595c4713ff2': {
-                            '@type': 'layoutSettings',
-                            'layout_size': 'narrow_view',
-                            'disableNewBlocks': True,
-                            'fixed': True,
+                        "3cccc2bb-471a-44c7-b006-5595c4713ff2": {
+                            "@type": "layoutSettings",
+                            "layout_size": "narrow_view",
+                            "disableNewBlocks": True,
+                            "fixed": True,
                             "required": True,
                             "readOnly": True,
                         },
@@ -266,7 +270,9 @@ class IIndicatorLayout(model.Schema):
                         "deb7e84d-d2c8-4491-90fa-3dc65fe02143": {
                             "plaintext": "",
                             "required": True,
-                            "value": [{"type": "p", "children": [{"text": ""}]}],
+                            "value": [
+                                {"type": "p", "children": [{"text": ""}]}
+                            ],
                             "fixed": True,
                             "@type": "slate",
                             "instructions": {
@@ -337,7 +343,9 @@ class IIndicatorLayout(model.Schema):
                             },
                             "@type": "accordionPanel",
                             "blocks_layout": {
-                                "items": ["d9aa8ed3-1c8a-4134-a324-663489a04473"]
+                                "items": [
+                                    "d9aa8ed3-1c8a-4134-a324-663489a04473"
+                                ]
                             },
                             "title": "References and footnotes",
                         },
@@ -413,7 +421,9 @@ class IIndicatorLayout(model.Schema):
                             },
                             "@type": "accordionPanel",
                             "blocks_layout": {
-                                "items": ["b5381428-5cae-4199-9ca8-b2e5fa4677d9"]
+                                "items": [
+                                    "b5381428-5cae-4199-9ca8-b2e5fa4677d9"
+                                ]
                             },
                             "title": "Supporting information",
                         },
@@ -583,7 +593,9 @@ class IIndicatorLayout(model.Schema):
                             },
                             "@type": "accordionPanel",
                             "blocks_layout": {
-                                "items": ["e047340c-c02e-4247-89ab-5fec73aeb5d3"]
+                                "items": [
+                                    "e047340c-c02e-4247-89ab-5fec73aeb5d3"
+                                ]
                             },
                             "title": "Metadata",
                         },
@@ -621,7 +633,9 @@ class IIndicatorLayout(model.Schema):
                         "d3d49723-14e5-4663-b346-37ee3572f28d": {
                             "plaintext": "",
                             "required": True,
-                            "value": [{"type": "p", "children": [{"text": ""}]}],
+                            "value": [
+                                {"type": "p", "children": [{"text": ""}]}
+                            ],
                             "fixed": True,
                             "@type": "slate",
                             "instructions": {
