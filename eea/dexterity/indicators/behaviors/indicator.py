@@ -159,8 +159,8 @@ class Indicator(object):
             dataSources = (
                 block.get("metadata", {})
                 .get("dataSources", {})
-                .get("value", [])
-                or []
+                .get("value", []) or
+                []
             )
             res.extend(dataSources)
         return [x for x in dedupe_data(res)]
@@ -177,8 +177,8 @@ class Indicator(object):
             institutionalMandate = (
                 block.get("metadata", {})
                 .get("institutionalMandate", {})
-                .get("value", [])
-                or []
+                .get("value", []) or
+                []
             )
             res.extend(institutionalMandate)
         return [x for x in dedupe_data(res)]
