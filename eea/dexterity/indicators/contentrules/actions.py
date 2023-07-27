@@ -174,4 +174,3 @@ class EnableDisableDiscussionEditForm(EditForm):
     label = "Edit Enable/Disable Discussion Action"
     description = "A Enable/Disable Discussion action."
     form_name = "Configure element"
-    
