@@ -1,9 +1,7 @@
 """ Short name
 """
-from Acquisition import aq_base
-from Acquisition import aq_inner
-from Acquisition import aq_parent
-from eea.dexterity.indicators import EEAMessageFactory as _
+import transaction
+from Acquisition import aq_base, aq_inner, aq_parent
 from plone.autoform import directives
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.locking.interfaces import ILockable
@@ -12,7 +10,7 @@ from zope import schema
 from zope.container.interfaces import INameChooser
 from zope.interface import provider
 
-import transaction
+from eea.dexterity.indicators import EEAMessageFactory as _
 
 
 @provider(IFormFieldProvider)

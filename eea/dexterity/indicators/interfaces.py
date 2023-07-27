@@ -1,15 +1,15 @@
 """Module where all interfaces, events and exceptions live."""
 # pylint: disable=line-too-long
+from eea.schema.slate.field import SlateJSONField
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
 from plone.schema import Email, JSONField
 from plone.supermodel import model
-from zope.interface import provider, Interface
+from zope.interface import Interface, provider
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int, TextLine
 
 from eea.dexterity.indicators import EEAMessageFactory as _
-from eea.schema.slate.field import SlateJSONField
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
@@ -216,8 +216,8 @@ class IIndicatorLayout(model.Schema):
                         },
                         "1c31c956-5086-476a-8694-9936cfa6c240": {
                             "@type": "description",
-                            'disableNewBlocks': True,
-                            'fixed': True,
+                            "disableNewBlocks": True,
+                            "fixed": True,
                             "placeholder": "Summary",
                             "instructions": {
                                 "data": "<p>The summary tells the reader about the indicator trend over the examined period and whether or not it helps to achieve the associated policy objective, which can be either quantitative or directional.</p><p>In the absence of a policy objective, it explains whether the trend is in the right or wrong direction in relation to the issue examined.</p><p>If there has been an important change over the most recent period of the time series, e.g. over the last year, this is indicated too.</p><p>Furthermore, if there is a quantitative target, it also indicates whether we are on track to meet it and if not what are the reasons preventing that, e.g. socio-economic drivers, implementation gap etc.</p>",
@@ -225,11 +225,11 @@ class IIndicatorLayout(model.Schema):
                                 "encoding": "utf8",
                             },
                         },
-                        '3cccc2bb-471a-44c7-b006-5595c4713ff2': {
-                            '@type': 'layoutSettings',
-                            'layout_size': 'narrow_view',
-                            'disableNewBlocks': True,
-                            'fixed': True,
+                        "3cccc2bb-471a-44c7-b006-5595c4713ff2": {
+                            "@type": "layoutSettings",
+                            "layout_size": "narrow_view",
+                            "disableNewBlocks": True,
+                            "fixed": True,
                             "required": True,
                             "readOnly": True,
                         },

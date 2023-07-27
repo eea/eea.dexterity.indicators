@@ -6,30 +6,25 @@ from zope.interface import implementer
 
 @implementer(INonInstallable)
 class HiddenProfiles(object):
-    """ Hidden profiles
-    """
+    """Hidden profiles"""
 
     def getNonInstallableProfiles(self):
-        """ Hide uninstall profile from site-creation and quickinstaller.
-        """
+        """Hide uninstall profile from site-creation and quickinstaller."""
         return [
-            'eea.dexterity.indicators:uninstall',
+            "eea.dexterity.indicators:uninstall",
         ]
 
 
 def post_install(context):
-    """ Post install script
-    """
+    """Post install script"""
     # Do something at the end of the installation of this package.
 
 
 def uninstall(context):
-    """ Uninstall script
-    """
+    """Uninstall script"""
     # Do something at the end of the uninstallation of this package.
 
 
 def post_upgrade(context):
-    """ Post upgrade script
-    """
+    """Post upgrade script"""
     # Do something at the end of the upgrade of this package.
