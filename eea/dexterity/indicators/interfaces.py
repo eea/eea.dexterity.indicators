@@ -609,7 +609,11 @@ class IIndicatorLayout(model.Schema):
                     },
                 },
                 "@type": "accordion",
-                "allowedBlocks": [],
+                "allowedBlocks": [
+                    "columnsBlock",
+                    "slateFootnotes",
+                    "metadataSection"
+                ],
             },
             "d060487d-88fc-4f7b-8ea4-003f14e0fb0c": {
                 "title": "Disaggregate level assessment",
