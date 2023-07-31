@@ -1,7 +1,7 @@
 Changelog
 =========
 
-7.1-dev0 - (unreleased)
+7.1 - (2023-07-31)
 ---------------------------
 * Bug fix: Fix accordion block allowed blocks
   [avoinea - refs #145772]
