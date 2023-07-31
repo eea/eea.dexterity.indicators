@@ -19,24 +19,30 @@ def getAllBlocks(blocks, flat_blocks):
     return flat_blocks
 
 
-def find_url(value, key):
+def find_url(data, url_list):
     """
     Get a deeply nested url from slate data tree
      >>> from eea.dexterity.indicators.behaviors.indicator import find_url
      >>> value={'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
      ... ,'type': 'p'}
-     >>> find_url(value ,'url')
+     >>> find_url(value ,['url'])
      'https://www.eea.europa.eu'
 
     """
-    stack = [value]
+
+    stack = [data]
     while stack:
         item = stack.pop()
-        if key in item:
-            return item[key]
-        for v in item.get("children", []):
-            if isinstance(v, dict):
-                stack.append(v)  # append only nested object to find url
+        for field, value in item.items():
+            if field in url_list:
+                return value
+            if isinstance(value, dict):
+                stack.append(value)
+            if isinstance(value, list):
+                for v in value:
+                    if isinstance(v, dict):
+                        # append only nested object to find url
+                        stack.append(v)
     return None
 
 
@@ -55,7 +61,7 @@ def remove_api_string(url):
 
 def dedupe_data(data):
     """
-    Remove duplication from metadata fields
+    Remove duplication from metadata fields on basis of url fields
 
     >>> from eea.dexterity.indicators.behaviors.indicator import dedupe_data
     >>> value=[{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
@@ -68,12 +74,16 @@ def dedupe_data(data):
 
     """
     existing = set()
+    # @id -> internal_link
+    # id -> hash link
+    url_list = ["url", "external_link", "@id", "id"]
     for value in data:
-        url = find_url(value, "url")
-        url = remove_api_string(url)
-        if url in existing:
-            continue
-        existing.add(url)
+        url = find_url(value, url_list)
+        if url:
+            url = remove_api_string(url)
+            if url in existing:
+                continue
+            existing.add(url)
         yield value
 
 
