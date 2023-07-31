@@ -5,6 +5,8 @@ Changelog
 ---------------------------
 * Bug fix: Fix accordion block allowed blocks
   [avoinea - refs #145772]
+* Bug fix: dedupe data sources and IMandate basis of urls 
+  [nileshgulia1 - refs #255438]
 
 7.0 - (2023-07-25)
 ---------------------------
