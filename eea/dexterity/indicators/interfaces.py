@@ -2,8 +2,10 @@
 # pylint: disable=line-too-long
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
-from plone.schema import Email, JSONField
+from plone.schema import Email, JSONField, Tuple, Choice
 from plone.supermodel import model
+from plone.autoform import directives
+from plone.app.z3cform.widgets.select import SelectFieldWidget
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int, TextLine
@@ -35,9 +37,19 @@ class IIndicatorMetadata(model.Schema):
         "metadata",
         label=_("Metadata"),
         fields=[
+            "topics",
             "temporal_coverage",
             "geo_coverage",
         ],
+    )
+
+    directives.widget("topics", SelectFieldWidget)
+    topics = Tuple(
+        title=_("Topics"),
+        description=_("Select from the official EEA topics"),
+        required=False,
+        value_type=Choice(vocabulary="topics_vocabulary"),
+        default=(),
     )
 
     temporal_coverage = JSONField(
@@ -525,7 +537,7 @@ class IIndicatorLayout(model.Schema):
                                                             {
                                                                 "field": {
                                                                     "widget": "array",
-                                                                    "id": "taxonomy_themes",
+                                                                    "id": "topics",
                                                                     "title": "Topics",
                                                                 },
                                                                 "showLabel": True,
