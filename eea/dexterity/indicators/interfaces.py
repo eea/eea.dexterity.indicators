@@ -1,17 +1,19 @@
 """Module where all interfaces, events and exceptions live."""
 # pylint: disable=line-too-long
+from eea.dexterity.indicators import EEAMessageFactory as _
+from eea.schema.slate.field import SlateJSONField
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
 from plone.schema import Email, JSONField, Tuple, Choice
 from plone.supermodel import model
 from plone.autoform import directives
-from plone.app.z3cform.widgets.select import SelectFieldWidget
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int, TextLine
-
-from eea.dexterity.indicators import EEAMessageFactory as _
-from eea.schema.slate.field import SlateJSONField
+try:
+    from plone.app.z3cform.widgets.select import SelectFieldWidget
+except ImportError:
+    from z3c.form.browser.select import SelectFieldWidget
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
