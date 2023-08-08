@@ -7,13 +7,13 @@ from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
 from plone.schema import Email, JSONField, Tuple, Choice
 from plone.supermodel import model
 from plone.autoform import directives
-from zope.interface import provider, Interface
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.schema import Int, TextLine
 try:
     from plone.app.z3cform.widgets.select import SelectFieldWidget
 except ImportError:
     from z3c.form.browser.select import SelectFieldWidget
+from zope.interface import provider, Interface
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+from zope.schema import Int, TextLine
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
