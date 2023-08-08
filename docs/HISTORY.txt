@@ -1,6 +1,11 @@
 Changelog
 =========
 
+7.2 - (2023-08-08)
+---------------------------
+* Refactor: Migrate taxonomy_themes to EEA Core metadata topics field
+  [avoinea - refs #256153]
+
 7.1 - (2023-07-31)
 ---------------------------
 * Bug fix: Fix accordion block allowed blocks

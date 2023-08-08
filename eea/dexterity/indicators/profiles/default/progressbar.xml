@@ -225,21 +225,6 @@
        name="labelEmpty">Please set the {label} of this {context.portal_type}</property>
     <property name="condition">python:value</property>
    </field>
-   <field name="taxonomy_themes">
-    <property name="iconEmpty">eea-icon eea-icon-edit</property>
-    <property name="states">
-     <element value="all"/>
-    </property>
-    <property name="iconReady">eea-icon eea-icon-check</property>
-    <property name="linkLabel">Add {label}</property>
-    <property
-       name="link">edit#fieldset-categorization-field-label-taxonomy_themes</property>
-    <property name="labelReady">You added the {label}</property>
-    <property name="hideReady">False</property>
-    <property
-       name="labelEmpty">Please set the {label} of this {context.portal_type}</property>
-    <property name="condition">python:value</property>
-   </field>
    <field name="taxonomy_hog_users">
     <property name="iconEmpty">eea-icon eea-icon-edit</property>
     <property name="states"/>

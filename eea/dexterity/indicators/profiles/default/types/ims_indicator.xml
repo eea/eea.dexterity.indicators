@@ -35,7 +35,6 @@
   <element value="eea.dexterity.indicators.blocks"/>
   <element value="volto.blocks.fixed.layout"/>
   <element value="collective.taxonomy.generated.hog_users"/>
-  <element value="collective.taxonomy.generated.themes"/>
   <element value="collective.taxonomy.generated.un_sdgs"/>
   <element value="collective.taxonomy.generated.typology"/>
   <element value="collective.taxonomy.generated.dpsir"/>
