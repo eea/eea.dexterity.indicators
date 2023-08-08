@@ -1,7 +1,7 @@
 Changelog
 =========
 
-7.2-dev0 - (unreleased)
+7.2 - (2023-08-08)
 ---------------------------
 * Refactor: Migrate taxonomy_themes to EEA Core metadata topics field
   [avoinea - refs #256153]
