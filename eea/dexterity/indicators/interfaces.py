@@ -91,7 +91,6 @@ class IIndicatorMetadata(model.Schema):
             "policy_relevance",
             "frequency_of_dissemination",
             "accuracy_and_reliability",
-            "institutional_mandate",
         ],
     )
 
@@ -155,15 +154,6 @@ class IIndicatorMetadata(model.Schema):
         required=False,
     )
 
-    institutional_mandate = SlateJSONField(
-        title=_("Institutional mandate"),
-        description=_(
-            "This property is read-only and it is automatically "
-            "extracted from this indicator's data visualizations"
-        ),
-        required=False,
-    )
-
     #
     # Workflow
     #
@@ -212,13 +202,15 @@ class IIndicatorLayout(model.Schema):
                 "styles": {"style_name": "environment-theme-bg"},
                 "fixedLayout": True,
                 "title": "Content header",
+                "maxChars": "500",
+                "ignoreSpaces": True,
                 "required": True,
                 "disableNewBlocks": True,
                 "as": "section",
                 "disableInnerButtons": True,
                 "readOnlySettings": True,
                 "instructions": {
-                    "data": "<p><br/></p>",
+                    "data": "<p>The summary tells the reader about the indicator trend over the examined period and whether or not it helps to achieve the associated policy objective, which can be either quantitative or directional.</p><p>In the absence of a policy objective, it explains whether the trend is in the right or wrong direction in relation to the issue examined.</p><p>If there has been an important change over the most recent period of the time series, e.g. over the last year, this is indicated too.</p><p>Furthermore, if there is a quantitative target, it also indicates whether we are on track to meet it and if not what are the reasons preventing that, e.g. socio-economic drivers, implementation gap etc.</p>",
                     "content-type": "text/html",
                     "encoding": "utf8",
                 },
@@ -236,6 +228,7 @@ class IIndicatorLayout(model.Schema):
                             "@type": "description",
                             "disableNewBlocks": True,
                             "fixed": True,
+                            "required": True,
                             "placeholder": "Summary",
                             "instructions": {
                                 "data": "<p>The summary tells the reader about the indicator trend over the examined period and whether or not it helps to achieve the associated policy objective, which can be either quantitative or directional.</p><p>In the absence of a policy objective, it explains whether the trend is in the right or wrong direction in relation to the issue examined.</p><p>If there has been an important change over the most recent period of the time series, e.g. over the last year, this is indicated too.</p><p>Furthermore, if there is a quantitative target, it also indicates whether we are on track to meet it and if not what are the reasons preventing that, e.g. socio-economic drivers, implementation gap etc.</p>",
@@ -412,15 +405,6 @@ class IIndicatorLayout(model.Schema):
                                             },
                                             "showLabel": True,
                                             "@id": "97ed11f5-4d31-4462-b3b0-2756a6880d31",
-                                        },
-                                        {
-                                            "field": {
-                                                "widget": "slate",
-                                                "id": "institutional_mandate",
-                                                "title": "Institutional mandate",
-                                            },
-                                            "showLabel": True,
-                                            "@id": "97ed11f5-4d31-4462-b3b0-2756a6880d32",
                                         },
                                     ],
                                     "required": True,

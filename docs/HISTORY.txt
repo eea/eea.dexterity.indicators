@@ -1,6 +1,15 @@
 Changelog
 =========
 
+8.0 - (2023-08-10)
+---------------------------
+* Refactor: Remove institutional_mandate
+  [avoinea - refs #256516]
+* Bug fix: Description maxChars, required
+  [avoinea - refs #253800]
+* Refactor: Cleanup ShortName behavior already in Plone 5+
+  [avoinea - refs #145772]
+
 7.2 - (2023-08-08)
 ---------------------------
 * Refactor: Migrate taxonomy_themes to EEA Core metadata topics field
@@ -10,7 +19,7 @@ Changelog
 ---------------------------
 * Bug fix: Fix accordion block allowed blocks
   [avoinea - refs #145772]
-* Bug fix: dedupe data sources and IMandate basis of urls 
+* Bug fix: dedupe data sources and IMandate basis of urls
   [nileshgulia1 - refs #255438]
 
 7.0 - (2023-07-25)

@@ -98,7 +98,6 @@ class Indicator(object):
             "temporal_coverage",
             "geo_coverage",
             "data_provenance",
-            "institutional_mandate",
         ]
 
     def __getattr__(self, name):  # pylint: disable=R1710
@@ -173,22 +172,4 @@ class Indicator(object):
                 []
             )
             res.extend(dataSources)
-        return [x for x in dedupe_data(res)]
-
-    @property
-    def institutional_mandate(self):
-        """Institutional mandate"""
-        res = []
-        blocks = getattr(self.context, "blocks", None) or {}
-        for block in getAllBlocks(blocks, []):
-            if block.get("@type", "") != "dataFigure":
-                continue
-
-            institutionalMandate = (
-                block.get("metadata", {})
-                .get("institutionalMandate", {})
-                .get("value", []) or
-                []
-            )
-            res.extend(institutionalMandate)
         return [x for x in dedupe_data(res)]
