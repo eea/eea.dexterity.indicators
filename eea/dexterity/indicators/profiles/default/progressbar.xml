@@ -155,19 +155,6 @@
        name="labelEmpty">Please set the {label} of this {context.portal_type}</property>
     <property name="condition">python:value</property>
    </field>
-   <field name="institutional_mandate">
-    <property name="iconEmpty">eea-icon eea-icon-edit</property>
-    <property name="states"/>
-    <property name="iconReady">eea-icon eea-icon-check</property>
-    <property name="linkLabel">Add {label}</property>
-    <property
-       name="link">edit#fieldset-supporting information-field-label-institutional_mandate</property>
-    <property name="labelReady">You added the {label}</property>
-    <property name="hideReady">False</property>
-    <property
-       name="labelEmpty">Please set the {label} of this {context.portal_type}</property>
-    <property name="condition">python:value</property>
-   </field>
    <field name="frequency_of_dissemination">
     <property name="iconEmpty">eea-icon eea-icon-edit</property>
     <property name="states">

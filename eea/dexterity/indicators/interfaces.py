@@ -91,7 +91,6 @@ class IIndicatorMetadata(model.Schema):
             "policy_relevance",
             "frequency_of_dissemination",
             "accuracy_and_reliability",
-            "institutional_mandate",
         ],
     )
 
@@ -151,15 +150,6 @@ class IIndicatorMetadata(model.Schema):
         title=_("Accuracy and uncertainties"),
         description=_(
             "Closeness of computations or estimates to the unknown exact or true values that the statistics were intended to measure; closeness of the initial estimated value to the subsequent estimated value. Includes, among others, comparability (geographical and over time)."
-        ),
-        required=False,
-    )
-
-    institutional_mandate = SlateJSONField(
-        title=_("Institutional mandate"),
-        description=_(
-            "This property is read-only and it is automatically "
-            "extracted from this indicator's data visualizations"
         ),
         required=False,
     )
@@ -412,15 +402,6 @@ class IIndicatorLayout(model.Schema):
                                             },
                                             "showLabel": True,
                                             "@id": "97ed11f5-4d31-4462-b3b0-2756a6880d31",
-                                        },
-                                        {
-                                            "field": {
-                                                "widget": "slate",
-                                                "id": "institutional_mandate",
-                                                "title": "Institutional mandate",
-                                            },
-                                            "showLabel": True,
-                                            "@id": "97ed11f5-4d31-4462-b3b0-2756a6880d32",
                                         },
                                     ],
                                     "required": True,

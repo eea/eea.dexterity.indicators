@@ -1,8 +1,10 @@
 Changelog
 =========
 
-7.3-dev0 - (unreleased)
+8.0-dev0 - (unreleased)
 ---------------------------
+* Refactor: Remove institutional_mandate
+  [avoinea - refs #256516]
 
 7.2 - (2023-08-08)
 ---------------------------
