@@ -36,14 +36,4 @@
     provides="eea.dexterity.indicators.interfaces.IIndicatorLayout"
     />
 
-  <!-- Short name: BBB To be removed in Plone 5 -->
-  <plone:behavior
-    zcml:condition="not-installed plone.app.dexterity.behaviors.id"
-    name="plone.shortname"
-    title="Short Name"
-    description="Gives the ability to rename an item from its edit form."
-    provides=".id.IShortName"
-    factory=".id.ShortName"
-    />
-
 </configure>

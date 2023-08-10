@@ -7,6 +7,8 @@ Changelog
   [avoinea - refs #256516]
 * Bug fix: Description maxChars, required
   [avoinea - refs #253800]
+* Refactor: Cleanup ShortName behavior already in Plone 5+
+  [avoinea - refs #145772]
 
 7.2 - (2023-08-08)
 ---------------------------
