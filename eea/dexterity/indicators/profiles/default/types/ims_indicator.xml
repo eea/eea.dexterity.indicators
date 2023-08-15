@@ -23,21 +23,21 @@
  <property name="add_permission">cmf.AddPortalContent</property>
  <property name="klass">plone.dexterity.content.Container</property>
  <property name="behaviors">
-  <element value="plone.dublincore"/>
-  <element value="plone.namefromtitle"/>
-  <element value="plone.leadimage"/>
-  <element value="plone.locking"/>
-  <element value="plone.allowdiscussion"/>
-  <element value="plone.shortname"/>
-  <element value="plone.versioning"/>
-  <element value="eea.dexterity.indicators.indicator"/>
-  <element value="eea.dexterity.indicators.metadata"/>
-  <element value="eea.dexterity.indicators.blocks"/>
-  <element value="volto.blocks.fixed.layout"/>
-  <element value="collective.taxonomy.generated.hog_users"/>
-  <element value="collective.taxonomy.generated.un_sdgs"/>
-  <element value="collective.taxonomy.generated.typology"/>
-  <element value="collective.taxonomy.generated.dpsir"/>
+   <element value="collective.taxonomy.generated.dpsir"/>
+   <element value="collective.taxonomy.generated.hog_users"/>
+   <element value="collective.taxonomy.generated.typology"/>
+   <element value="collective.taxonomy.generated.un_sdgs"/>
+   <element value="eea.dexterity.indicators.blocks"/>
+   <element value="eea.dexterity.indicators.indicator"/>
+   <element value="eea.dexterity.indicators.metadata"/>
+   <element value="plone.allowdiscussion"/>
+   <element value="plone.dublincore"/>
+   <element value="plone.leadimage"/>
+   <element value="plone.locking"/>
+   <element value="plone.namefromtitle"/>
+   <element value="plone.shortname"/>
+   <element value="plone.versioning"/>
+   <element value="volto.blocks.fixed.layout"/>
  </property>
  <property name="schema"></property>
  <property
