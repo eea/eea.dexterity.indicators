@@ -40,8 +40,8 @@ def dedupe_data(data):
     >>> value=[{"link": "https://www.eea.europa.eu", "title": "title"},
     ... {"link": "https://www.eea.europa.eu/", "title": "title 2"}]
     >>> result = dedupe_data(value)
-    >>> result[0]['link']
-    'https://www.eea.europa.eu'
+    >>> [ x['link'] for x in result]
+    ['https://www.eea.europa.eu']
 
     """
     existing = set()
