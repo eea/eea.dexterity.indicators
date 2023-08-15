@@ -19,33 +19,6 @@ def getAllBlocks(blocks, flat_blocks):
     return flat_blocks
 
 
-def find_url(data, url_list):
-    """
-    Get a deeply nested url from slate data tree
-     >>> from eea.dexterity.indicators.behaviors.indicator import find_url
-     >>> value={'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
-     ... ,'type': 'p'}
-     >>> find_url(value ,['url'])
-     'https://www.eea.europa.eu'
-
-    """
-
-    stack = [data]
-    while stack:
-        item = stack.pop()
-        for field, value in item.items():
-            if field in url_list:
-                return value
-            if isinstance(value, dict):
-                stack.append(value)
-            if isinstance(value, list):
-                for v in value:
-                    if isinstance(v, dict):
-                        # append only nested object to find url
-                        stack.append(v)
-    return None
-
-
 def remove_api_string(url):
     """
     Remove /api/SITE/ or ++api++ substring from url
@@ -54,8 +27,8 @@ def remove_api_string(url):
         url (str): url string
     """
     url = url.replace("/api/SITE/", "/")
-    # future use
-    # url = url.replace('/++api++/', '/')
+    url = url.replace('/++api++/', '/')
+    url = url.strip('/').strip("/view")
     return url
 
 
@@ -64,13 +37,11 @@ def dedupe_data(data):
     Remove duplication from metadata fields on basis of url fields
 
     >>> from eea.dexterity.indicators.behaviors.indicator import dedupe_data
-    >>> value=[{'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
-    ... ,'type': 'p'},
-    ... {'children':[{'text' : '', 'url': 'https://www.eea.europa.eu'}]
-    ... ,'type': 'p'}]
+    >>> value=[{"link": "https://www.eea.europa.eu", "title": "title"},
+    ... {"link": "https://www.eea.europa.eu/", "title": "title 2"}]
     >>> result = dedupe_data(value)
-    >>> len([x for x in result])
-    1
+    >>> result[0]['link']
+    'https://www.eea.europa.eu'
 
     """
     existing = set()
@@ -78,7 +49,7 @@ def dedupe_data(data):
     # id -> hash link
     url_list = ["url", "external_link", "@id", "id"]
     for value in data:
-        url = find_url(value, url_list)
+        url = value.get("link", "")
         if url:
             url = remove_api_string(url)
             if url in existing:
@@ -165,11 +136,13 @@ class Indicator(object):
             if block.get("@type", "") != "dataFigure":
                 continue
 
-            dataSources = (
-                block.get("metadata", {})
-                .get("dataSources", {})
-                .get("value", []) or
+            data_provenance = (
+                block.get("data_provenance", {})
+                .get("data", []) or
                 []
             )
-            res.extend(dataSources)
-        return [x for x in dedupe_data(res)]
+            res.extend(data_provenance)
+        return {
+            "readOnly": True,
+            "data": [x for x in dedupe_data(res)]
+        }

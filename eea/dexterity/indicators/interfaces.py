@@ -104,13 +104,14 @@ class IIndicatorMetadata(model.Schema):
         required=False,
     )
 
-    data_provenance = SlateJSONField(
+    data_provenance = JSONField(
         title=_("Data sources and providers"),
         description=_(
             "This property is read-only and it is automatically "
             "extracted from this indicator's data visualizations"
         ),
         required=False,
+        default={"readOnly": True, "data": []},
     )
 
     data_description = SlateJSONField(
@@ -399,7 +400,7 @@ class IIndicatorLayout(model.Schema):
                                         },
                                         {
                                             "field": {
-                                                "widget": "slate",
+                                                "widget": "data_provenance",
                                                 "id": "data_provenance",
                                                 "title": "Data sources and providers",
                                             },
