@@ -45,9 +45,6 @@ def dedupe_data(data):
 
     """
     existing = set()
-    # @id -> internal_link
-    # id -> hash link
-    url_list = ["url", "external_link", "@id", "id"]
     for value in data:
         url = value.get("link", "")
         if url:
