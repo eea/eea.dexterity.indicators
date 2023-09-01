@@ -1,6 +1,9 @@
 Changelog
 =========
 
+9.2-dev0 - (unreleased)
+---------------------------
+
 9.1 - (2023-09-01)
 ---------------------------
 * Bug fix: Enable / Disable Discussion Content Rule 
