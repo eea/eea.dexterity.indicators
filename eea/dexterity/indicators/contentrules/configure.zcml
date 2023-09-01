@@ -6,6 +6,8 @@
     <include package="plone.contentrules" file="meta.zcml" />
     <include package="plone.app.contentrules" />
 
+    <!-- Retract and rename old Indicator -->
+
     <adapter factory=".actions.RetractAndRenameOldVersionExecutor" />
 
     <browser:page
@@ -19,12 +21,14 @@
         name="eea.dexterity.indicators.retract_and_rename_old_version"
         title="IMSv4: Retract and rename old Indicator"
         description="IMSv4: Retract and rename old Indicator"
-        for="zope.interface.Interface"
-        event="zope.interface.Interface"
+        for="*"
+        event="zope.interface.interfaces.IObjectEvent"
         addview="eea.dexterity.indicators.retract_and_rename_old_version"
         schema=".actions.IRetractAndRenameOldVersionAction"
         factory=".actions.RetractAndRenameOldVersionAction"
         />
+
+    <!-- Enable/disable discussions -->
 
     <adapter factory=".actions.EnableDisableDiscussionActionExecutor" />
 
@@ -47,7 +51,7 @@
         title="Enable/disable discussions"
         description="Enable and disable discussions"
         for="*"
-        event="*"
+        event="zope.interface.interfaces.IObjectEvent"
         addview="eea.dexterity.indicators.EnableDisableDiscussion"
         editview="edit"
         schema=".actions.IEnableDisableDiscussionAction"
