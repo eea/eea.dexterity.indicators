@@ -12,9 +12,9 @@ from AccessControl.SecurityManagement import (
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
+from plone.app.contentrules.actions import ActionAddForm
+from plone.app.contentrules.actions import ActionEditForm
 from plone.app.contentrules.browser.formhelper import (
-    AddForm,
-    EditForm,
     NullAddForm,
 )
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
@@ -158,16 +158,17 @@ class EnableDisableDiscussionActionExecutor(object):
         return True
 
 
-class EnableDisableDiscussionAddForm(AddForm):
+class EnableDisableDiscussionAddForm(ActionAddForm):
     """Enable/Disable Discussion addform"""
 
     schema = IEnableDisableDiscussionAction
     label = "Add Enable/Disable Discussion Action"
     description = "A Enable/Disable Discussion action."
     form_name = "Configure element"
+    Type = EnableDisableDiscussionAction
 
 
-class EnableDisableDiscussionEditForm(EditForm):
+class EnableDisableDiscussionEditForm(ActionEditForm):
     """Enable/Disable Discussion editform"""
 
     schema = IEnableDisableDiscussionAction
