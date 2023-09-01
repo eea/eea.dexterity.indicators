@@ -1,8 +1,10 @@
 Changelog
 =========
 
-9.1-dev0 - (unreleased)
+9.1 - (2023-09-01)
 ---------------------------
+* Change: Bug fix: Enable / Disable Discussion Content Rule [avoinea - refs #256563]
+  [avoinea]
 
 9.0 - (2023-08-15)
 ---------------------------
