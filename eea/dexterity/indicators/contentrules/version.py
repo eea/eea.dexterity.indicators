@@ -1,6 +1,8 @@
+"""Copy action for content rules."""
 from Acquisition import aq_base
 from OFS.event import ObjectClonedEvent
 from OFS.SimpleItem import SimpleItem
+import OFS.subscribers
 from plone.app.contentrules import PloneMessageFactory as _
 from plone.app.contentrules.actions import ActionAddForm
 from plone.app.contentrules.actions import ActionEditForm
@@ -19,8 +21,6 @@ from zope.interface import implementer
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectCopiedEvent
 
-import OFS.subscribers
-
 
 class ICopyAction(Interface):
     """Interface for the configurable aspects of a move action.
@@ -37,7 +37,8 @@ class ICopyAction(Interface):
 
     change_note = schema.TextLine(
         title=_("Change note"),
-        description=_("Optional change note to be used when creating new version."),
+        description=_(
+            "Optional change note to be used when creating new version."),
         required=False,
     )
 
@@ -52,12 +53,16 @@ class CopyAction(SimpleItem):
 
     @property
     def summary(self):
-        return _("Copy to folder ${folder}.", mapping=dict(folder=self.target_folder))
+        """A summary of the element's configuration."""
+        return _(
+            "Copy to folder ${folder}.",
+            mapping=dict(folder=self.target_folder)
+        )
 
 
 @adapter(Interface, ICopyAction, Interface)
 @implementer(IExecutable)
-class CopyActionExecutor:
+class CopyActionExecutor(object):
     """The executor for this action."""
 
     def __init__(self, context, element, event):
@@ -84,7 +89,8 @@ class CopyActionExecutor:
         if target is None:
             self.error(
                 obj,
-                _("Target folder ${target} does not exist.", mapping={"target": path}),
+                _("Target folder ${target} does not exist.",
+                  mapping={"target": path}),
             )
             return False
 
@@ -121,6 +127,7 @@ class CopyActionExecutor:
         return True
 
     def error(self, obj, error):
+        """Report an error during the copy."""
         request = getattr(self.context, "REQUEST", None)
         if request is not None:
             title = pretty_title_or_id(obj, obj)
@@ -132,19 +139,16 @@ class CopyActionExecutor:
             IStatusMessage(request).addStatusMessage(message, type="error")
 
     def generate_id(self, target, old_id):
-        taken = getattr(aq_base(target), "has_key", None)
-        if taken is None:
-            item_ids = set(target.objectIds())
-
-            def taken(x):
-                return x in item_ids
+        """Generate a new id for the copied object."""
+        taken = getattr(aq_base(target), "has_key",
+                        lambda x: x in target.objectIds())
 
         if not taken(old_id):
             return old_id
         idx = 1
-        while taken(f"{old_id}.{idx}"):
+        while taken("{old_id}.{idx}".format(old_id=old_id, idx=idx)):
             idx += 1
-        return f"{old_id}.{idx}"
+        return "{old_id}.{idx}".format(old_id=old_id, idx=idx)
 
 
 class CopyAddForm(ActionAddForm):
@@ -157,6 +161,7 @@ class CopyAddForm(ActionAddForm):
 
 
 class CopyAddFormView(ContentRuleFormWrapper):
+    """A wrapper for the add form."""
     form = CopyAddForm
 
 
@@ -173,4 +178,5 @@ class CopyEditForm(ActionEditForm):
 
 
 class CopyEditFormView(ContentRuleFormWrapper):
+    """A wrapper for the edit form."""
     form = CopyEditForm
