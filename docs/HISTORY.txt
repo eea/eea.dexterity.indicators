@@ -3,6 +3,8 @@ Changelog
 
 9.2-dev0 - (unreleased)
 ---------------------------
+* Feature: Add custom Content Rule action for creating new indicator version
+  [avoinea - refs #257513]
 
 9.1 - (2023-09-01)
 ---------------------------
