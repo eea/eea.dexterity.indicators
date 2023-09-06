@@ -35,13 +35,20 @@ class ICopyAction(Interface):
         source=CatalogSource(is_folderish=True),
     )
 
+    change_note = schema.TextLine(
+        title=_("Change note"),
+        description=_("Optional change note to be used when creating new version."),
+        required=False,
+    )
+
 
 @implementer(ICopyAction, IRuleElementData)
 class CopyAction(SimpleItem):
     """The actual persistent implementation of the action element."""
 
     target_folder = ""
-    element = "plone.actions.Copy"
+    change_note = ""
+    element = "eea.dexterity.indicators.Copy"
 
     @property
     def summary(self):
@@ -66,6 +73,7 @@ class CopyActionExecutor:
         obj = self.event.object
 
         path = self.element.target_folder
+        change_note = self.element.change_note
         if len(path) > 1 and path[0] == "/":
             path = path[1:]
         target = portal_url.getPortalObject().unrestrictedTraverse(
@@ -106,6 +114,9 @@ class CopyActionExecutor:
         OFS.subscribers.compatibilityCall("manage_afterClone", obj, obj)
 
         notify(ObjectClonedEvent(obj))
+
+        pr = getToolByName(obj, 'portal_repository')
+        pr.save(obj=obj, comment=change_note)
 
         return True
 
