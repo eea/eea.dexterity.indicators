@@ -8,9 +8,13 @@ from plone.app.contentrules.actions import ActionAddForm
 from plone.app.contentrules.actions import ActionEditForm
 from plone.app.contentrules.browser.formhelper import ContentRuleFormWrapper
 from plone.app.vocabularies.catalog import CatalogSource
-from plone.base.utils import pretty_title_or_id
 from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
+try:
+    from plone.base.utils import pretty_title_or_id
+except ImportError:
+    # BBB Plone 5
+    from Products.CMFPlone.utils import pretty_title_or_id
 from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
 from ZODB.POSException import ConflictError

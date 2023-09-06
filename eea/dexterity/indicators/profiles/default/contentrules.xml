@@ -412,10 +412,6 @@
     <property name="recipients">antonio.demarinis@eea.europa.eu</property>
     <property name="exclude_actor">False</property>
    </action>
-   <action type="eea.dexterity.indicators.Copy">
-    <property name="target_folder">/en/analysis/indicators</property>
-    <property name="change_note">New version created</property>
-   </action>
   </actions>
  </rule>
  <assignment name="ims-workflow-change" bubbles="True" enabled="True" location=""/>
