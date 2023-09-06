@@ -1,10 +1,15 @@
 Changelog
 =========
 
+9.2 - (2023-09-06)
+---------------------------
+* Feature: Add custom Content Rule action for creating new indicator version
+  [avoinea - refs #257513]
+
 9.1 - (2023-09-01)
 ---------------------------
-* Change: Bug fix: Enable / Disable Discussion Content Rule [avoinea - refs #256563]
-  [avoinea]
+* Bug fix: Enable / Disable Discussion Content Rule 
+  [avoinea - refs #256563]
 
 9.0 - (2023-08-15)
 ---------------------------
