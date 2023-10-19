@@ -1,8 +1,10 @@
 Changelog
 =========
 
-9.3-dev0 - (unreleased)
+9.3 - (2023-10-19)
 ---------------------------
+* Bug fix: Properly reindex effective date when a new version of an indicator is published
+  [avoinea - refs #259296]
 
 9.2 - (2023-09-06)
 ---------------------------

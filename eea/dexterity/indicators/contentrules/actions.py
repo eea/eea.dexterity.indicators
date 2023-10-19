@@ -81,6 +81,7 @@ class RetractAndRenameOldVersionExecutor(object):
             api.content.rename(obj=old_version, new_id=new_id)
             api.content.rename(obj=obj, new_id=old_id)
             obj.setEffectiveDate(DateTime())
+            obj.reindexObject()
 
             # Switch back to the current user
             setSecurityManager(oldSecurityManager)
