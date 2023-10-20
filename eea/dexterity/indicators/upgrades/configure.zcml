@@ -21,7 +21,7 @@
     profile="eea.dexterity.indicators:default">
 
     <genericsetup:upgradeDepends
-       title="Add Data Provenance Indexer"
+       title="Add data_provenance & temporal_coverage Indexer"
     />
 
   </genericsetup:upgradeSteps>
