@@ -15,4 +15,16 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+    source="6.0"
+    destination="6.1"
+    profile="eea.dexterity.indicators:default">
+
+    <genericsetup:upgradeDepends
+       title="Add Data Provenance Indexer"
+    />
+
+  </genericsetup:upgradeSteps>
+
+
 </configure>
