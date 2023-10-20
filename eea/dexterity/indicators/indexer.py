@@ -3,6 +3,7 @@ from plone.indexer import indexer
 from eea.dexterity.indicators.interfaces import IIndicator
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 
+
 @indexer(IIndicator)
 def data_provenance_indexer(obj):
     """Data Provenance indexer"""
@@ -15,6 +16,7 @@ def data_provenance_indexer(obj):
         data[val["organisation"]] = val["organisation"]
 
     return data
+
 
 @indexer(IIndicator)
 def temporal_coverage_indexer(obj):
