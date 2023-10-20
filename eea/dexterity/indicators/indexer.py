@@ -22,7 +22,7 @@ def data_provenance_indexer(obj):
 def temporal_coverage_indexer(obj):
     """Temporal coverage indexer"""
 
-    temporal_coverage =  IIndicatorMetadata(obj).temporal_coverage
+    temporal_coverage = IIndicatorMetadata(obj).temporal_coverage
     if not temporal_coverage or "temporal" not in temporal_coverage:
         return None
 
