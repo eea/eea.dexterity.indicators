@@ -15,16 +15,4 @@
 
   </genericsetup:upgradeSteps>
 
-  <genericsetup:upgradeSteps
-    source="6.0"
-    destination="6.1"
-    profile="eea.dexterity.indicators:default">
-
-    <genericsetup:upgradeDepends
-       title="Add data_provenance and temporal_coverage Indexer"
-    />
-
-  </genericsetup:upgradeSteps>
-
-
 </configure>
