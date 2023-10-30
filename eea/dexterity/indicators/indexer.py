@@ -1,5 +1,6 @@
 """ indexer.py """
 from plone.indexer import indexer
+from zope.component import queryAdapter
 from eea.dexterity.indicators.interfaces import IIndicator
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 
@@ -7,14 +8,18 @@ from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 @indexer(IIndicator)
 def data_provenance_indexer(obj):
     """Data Provenance indexer"""
-    data_provenance = IIndicatorMetadata(obj).data_provenance
-
+    metadata = queryAdapter(obj, IIndicatorMetadata)
+    if not metadata:
+        return None
+    data_provenance = getattr(metadata, "data_provenance", {})
     if not data_provenance or "data" not in data_provenance:
         return None
+
     data = {}
     for val in data_provenance['data']:
-        data[val["organisation"]] = val["organisation"]
-
+        org = val.get("organisation", "")
+        if org:
+            data[org] = org
     return data
 
 
@@ -22,12 +27,17 @@ def data_provenance_indexer(obj):
 def temporal_coverage_indexer(obj):
     """Temporal coverage indexer"""
 
-    temporal_coverage = IIndicatorMetadata(obj).temporal_coverage
+    metadata = queryAdapter(obj, IIndicatorMetadata)
+    if not metadata:
+        return None
+    temporal_coverage = getattr(metadata, "temporal_coverage", {})
     if not temporal_coverage or "temporal" not in temporal_coverage:
         return None
 
     data = {}
     for val in temporal_coverage["temporal"]:
-        data[val["value"]] = val["label"]
-
+        value = val.get("value", "")
+        label = val.get("label", "")
+        if value and label:
+            data[value] = label
     return data
