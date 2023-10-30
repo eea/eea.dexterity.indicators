@@ -1,6 +1,11 @@
 Changelog
 =========
 
+9.4 - (2023-10-30)
+---------------------------
+* Feature: Custom Indicator @indexers for data_provenance and temportal_coverage
+  [dobri1408 - refs #258077]
+
 9.3 - (2023-10-19)
 ---------------------------
 * Bug fix: Properly reindex effective date when a new version of an indicator is published
