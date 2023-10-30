@@ -3,6 +3,8 @@ Changelog
 
 9.4-dev0 - (unreleased)
 ---------------------------
+* Feature: Custom Indicator @indexers for data_provenance and temportal_coverage
+  [dobri1408 - refs #258077]
 
 9.3 - (2023-10-19)
 ---------------------------
