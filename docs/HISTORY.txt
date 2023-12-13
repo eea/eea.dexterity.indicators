@@ -1,6 +1,11 @@
 Changelog
 =========
 
+9.5 - (2023-12-13)
+---------------------------
+* Feature: Custom add permissions for IMS Indicator content-type
+  [avoinea - refs #259400]
+
 9.4 - (2023-10-30)
 ---------------------------
 * Feature: Custom Indicator @indexers for data_provenance and temportal_coverage

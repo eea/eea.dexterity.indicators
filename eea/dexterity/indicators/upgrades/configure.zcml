@@ -15,4 +15,16 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+    source="6.0"
+    destination="9.5"
+    profile="eea.dexterity.indicators:default">
+
+    <genericsetup:upgradeDepends
+       title="Custom add permission for IMS indicator"
+       import_profile="eea.dexterity.indicators:upgrade_95"
+      />
+
+  </genericsetup:upgradeSteps>
+
 </configure>

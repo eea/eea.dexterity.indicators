@@ -27,7 +27,7 @@ Develop
     git checkout https://github.com/eea/eea.dexterity.indicators.git
     cd eea.dexterity.indicators
     git checkout develop
-    docker-compose up
+    docker compose up
 
 
 Install
