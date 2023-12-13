@@ -1,6 +1,9 @@
 Changelog
 =========
 
+9.6-dev0 - (unreleased)
+---------------------------
+
 9.5 - (2023-12-13)
 ---------------------------
 * Feature: Custom add permissions for IMS Indicator content-type
