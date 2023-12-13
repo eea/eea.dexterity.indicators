@@ -3,6 +3,8 @@ Changelog
 
 9.5-dev0 - (unreleased)
 ---------------------------
+* Feature: Custom add permissions for IMS Indicator content-type
+  [avoinea - refs #259400]
 
 9.4 - (2023-10-30)
 ---------------------------

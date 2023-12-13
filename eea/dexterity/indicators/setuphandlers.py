@@ -14,6 +14,7 @@ class HiddenProfiles(object):
         """
         return [
             'eea.dexterity.indicators:uninstall',
+            'eea.dexterity.indicators:upgrade_95',
         ]
 
 

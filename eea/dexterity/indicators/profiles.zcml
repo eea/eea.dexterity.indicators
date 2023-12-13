@@ -24,6 +24,14 @@
       post_handler=".setuphandlers.uninstall"
       />
 
+  <genericsetup:registerProfile
+      name="upgrade_95"
+      title="Upgrade profile for eea.dexterity.indicators 9.5"
+      description=""
+      directory="profiles/upgrades/to_95"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
   <utility
       factory=".setuphandlers.HiddenProfiles"
       name="eea.dexterity.indicators-hiddenprofiles"
