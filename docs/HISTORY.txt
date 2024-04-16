@@ -1,6 +1,11 @@
 Changelog
 =========
 
+9.6 - (2024-04-16)
+---------------------------
+* Refactor: Remove contact email metadata from Indicator content-type layout
+  [avoinea - refs #268179]
+
 9.5 - (2023-12-13)
 ---------------------------
 * Feature: Custom add permissions for IMS Indicator content-type
