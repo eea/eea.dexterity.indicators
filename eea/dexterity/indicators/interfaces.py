@@ -4,7 +4,7 @@ from eea.dexterity.indicators import EEAMessageFactory as _
 from eea.schema.slate.field import SlateJSONField
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
-from plone.schema import Email, JSONField, Tuple, Choice
+from plone.schema import JSONField, Tuple, Choice
 from plone.supermodel import model
 from plone.autoform import directives
 try:
