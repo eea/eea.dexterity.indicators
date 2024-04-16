@@ -3,6 +3,8 @@ Changelog
 
 9.6-dev0 - (unreleased)
 ---------------------------
+* Refactor: Remove contact email metadata from Indicator content-type layout
+  [avoinea - refs #268179]
 
 9.5 - (2023-12-13)
 ---------------------------

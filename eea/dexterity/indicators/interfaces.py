@@ -163,7 +163,6 @@ class IIndicatorMetadata(model.Schema):
         label=_("Workflow"),
         fields=[
             "consultation_members_emails",
-            "contact",
         ],
     )
 
@@ -172,13 +171,6 @@ class IIndicatorMetadata(model.Schema):
         description=_(
             "List of consultation members emails, separated by commas."
         ),
-        required=False,
-    )
-
-    contact = Email(
-        title=_("Contact"),
-        description=_("Contact info"),
-        default="info@eea.europa.eu",
         required=False,
     )
 
@@ -480,15 +472,6 @@ class IIndicatorLayout(model.Schema):
                                                                 },
                                                                 "showLabel": True,
                                                                 "@id": "089cd1a1-92d4-47e2-8f6e-4bdb358600fe",
-                                                            },
-                                                            {
-                                                                "field": {
-                                                                    "widget": "email",
-                                                                    "id": "contact",
-                                                                    "title": "Contact",
-                                                                },
-                                                                "showLabel": True,
-                                                                "@id": "fb4eb0a4-75d8-4d56-b457-45b40b314a84",
                                                             },
                                                         ],
                                                         "required": True,
