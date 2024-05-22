@@ -13,7 +13,7 @@ except ImportError:
     from z3c.form.browser.select import SelectFieldWidget
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.schema import Int, TextLine
+from zope.schema import Int
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
@@ -161,17 +161,7 @@ class IIndicatorMetadata(model.Schema):
     model.fieldset(
         "workflow",
         label=_("Workflow"),
-        fields=[
-            "consultation_members_emails",
-        ],
-    )
-
-    consultation_members_emails = TextLine(
-        title=_("Consultation members emails"),
-        description=_(
-            "List of consultation members emails, separated by commas."
-        ),
-        required=False,
+        fields=[],
     )
 
 

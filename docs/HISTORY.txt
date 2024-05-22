@@ -1,6 +1,11 @@
 Changelog
 =========
 
+9.7 - (2024-05-22)
+---------------------------
+* Refactor: Remove "Consultation members emails" from Indicator schema
+  [avoinea - refs #266991]
+
 9.6 - (2024-04-16)
 ---------------------------
 * Refactor: Remove contact email metadata from Indicator content-type layout
