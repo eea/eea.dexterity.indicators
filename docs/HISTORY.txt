@@ -1,8 +1,10 @@
 Changelog
 =========
 
-9.7-dev0 - (unreleased)
+9.7 - (2024-05-22)
 ---------------------------
+* Refactor: Remove "Consultation members emails" from Indicator schema
+  [avoinea - refs #266991]
 
 9.6 - (2024-04-16)
 ---------------------------

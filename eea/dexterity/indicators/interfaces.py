@@ -161,17 +161,7 @@ class IIndicatorMetadata(model.Schema):
     model.fieldset(
         "workflow",
         label=_("Workflow"),
-        fields=[
-            "consultation_members_emails",
-        ],
-    )
-
-    consultation_members_emails = TextLine(
-        title=_("Consultation members emails"),
-        description=_(
-            "List of consultation members emails, separated by commas."
-        ),
-        required=False,
+        fields=[],
     )
 
 
