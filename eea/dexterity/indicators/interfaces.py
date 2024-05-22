@@ -13,7 +13,7 @@ except ImportError:
     from z3c.form.browser.select import SelectFieldWidget
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.schema import Int, TextLine
+from zope.schema import Int
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
