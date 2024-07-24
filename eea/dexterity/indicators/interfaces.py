@@ -202,7 +202,7 @@ class IIndicatorLayout(model.Schema):
                 "section": False,
                 "spacing": "m",
                 "styles": {},
-            },  
+            },
             "677f7422-6da4-4c86-bca8-de732b7047b9": {
                 "@type": "dividerBlock",
                 "disableNewBlocks": True,
