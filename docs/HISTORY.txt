@@ -1,6 +1,11 @@
 Changelog
 =========
 
+9.8 - (2024-08-05)
+---------------------------
+* Change: Update interfaces.py to include dividers as default layout - refs 266147
+  [avoinea]
+
 9.7 - (2024-05-22)
 ---------------------------
 * Refactor: Remove "Consultation members emails" from Indicator schema
