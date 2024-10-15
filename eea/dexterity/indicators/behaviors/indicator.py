@@ -130,7 +130,7 @@ class Indicator(object):
         res = []
         blocks = getattr(self.context, "blocks", None) or {}
         for block in getAllBlocks(blocks, []):
-            if block.get("@type", "") != "dataFigure":
+            if block.get("@type", "") != "embed_content":
                 continue
 
             data_provenance = (
