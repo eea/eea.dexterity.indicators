@@ -1,9 +1,10 @@
 """Upgrade step to upgrade indicators to the new embed block"""
 
 import logging
+import json
 import transaction
 from zope.lifecycleevent import modified
-import json
+
 
 logger = logging.getLogger("upgrade_dataFigure")
 logger.setLevel(logging.INFO)
@@ -20,6 +21,7 @@ def upgrade_data_figure(portal):
                 "dataFigure", "embed_content"
             )
             obj.blocks = json.loads(blocks_string)
+            modified(obj)
             i = i + 1
             if not i % 100:
                 logger.info(i)
