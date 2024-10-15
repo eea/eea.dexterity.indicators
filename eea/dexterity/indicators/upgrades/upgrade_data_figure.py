@@ -15,12 +15,14 @@ def upgrade_data_figure(portal):
     for brain in portal.portal_catalog(portal_type=["ims_indicator"]):
         obj = brain.getObject()
         logger.info("Processing %s", obj.absolute_url())
-        if hasattr(obj,"blocks"):
-            blocks_string = json.dumps(obj.blocks).replace("dataFigure","embed_content")
+        if hasattr(obj, "blocks"):
+            blocks_string = json.dumps(obj.blocks).replace(
+                "dataFigure", "embed_content"
+            )
             obj.blocks = json.loads(blocks_string)
-            i = i+1
+            i = i + 1
             if not i % 100:
                 logger.info(i)
                 transaction.commit()
-    
+
     transaction.commit()
