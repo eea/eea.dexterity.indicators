@@ -5,6 +5,7 @@ from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
 from zope.interface import implementer
+from plone import api
 
 
 def getAllBlocks(blocks, flat_blocks):
@@ -93,6 +94,15 @@ class Indicator(object):
         temporal = []
         blocks = getattr(self.context, "blocks", None) or {}
         for block in getAllBlocks(blocks, []):
+            if block.get("@type", "") == "embed_content":
+                content = api.content.get(path = block.get('url',""))
+                temporal_coverage = getattr(content, 'temporal_coverage', {})
+                block_temporal = temporal_coverage.get("temporal", None)
+                if not block_temporal:
+                    continue
+                for item in block_temporal:
+                    if item not in temporal:
+                        temporal.append(item)
             block_temporal = block.get("temporal", [])
             if not block_temporal:
                 continue
@@ -110,9 +120,28 @@ class Indicator(object):
         geolocation = []
         blocks = getattr(self.context, "blocks", None) or {}
         for block in getAllBlocks(blocks, []):
+            print(block)
+            if block.get("@type", "") == "embed_content":
+                
+                content = api.content.get(path = block.get('url',""))
+                geo_coverage = getattr(content, 'geo_coverage', {})
+                block_geo = geo_coverage.get("geolocation", None)
+                if not block_geo:
+                    continue
+
+
+                for item in block_geo:
+                    geo_item = {
+                       "label": item.get("label", ""),
+                       "value": item.get("value", ""),
+                    }
+                    if geo_item not in geolocation:
+                        geolocation.append(geo_item)
             block_geolocation = block.get("geolocation", [])
+       
             if not block_geolocation:
                 continue
+            
             for item in block_geolocation:
                 geo_item = {
                     "label": item.get("label", ""),
@@ -130,15 +159,26 @@ class Indicator(object):
         res = []
         blocks = getattr(self.context, "blocks", None) or {}
         for block in getAllBlocks(blocks, []):
-            if block.get("@type", "") != "embed_content":
+            if block.get("@type", "") == "embed_content":
+                content = api.content.get(path = block.get('url',""))
+                data_provenance = getattr(content, 'data_provenance', {})
+                if data_provenance:
+                    data_provenance = (
+                        data_provenance
+                        .get("data", []) or
+                        []
+                    )
+                    res.extend(data_provenance)
+            if block.get("@type", "") != "dataFigure" and block.get("@type", "") != "embed_content":
                 continue
+            if 'data_provenance' in block:
+                data_provenance = (
+                    block.get("data_provenance", {})
+                    .get("data", []) or
+                    []
+                )
+                res.extend(data_provenance)
 
-            data_provenance = (
-                block.get("data_provenance", {})
-                .get("data", []) or
-                []
-            )
-            res.extend(data_provenance)
         return {
             "readOnly": True,
             "data": [x for x in dedupe_data(res)]
