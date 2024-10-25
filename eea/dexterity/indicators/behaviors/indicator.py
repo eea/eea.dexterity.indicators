@@ -1,6 +1,7 @@
 """ Custom behavior for Indicator
 
 """
+
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
@@ -11,9 +12,7 @@ from plone import api
 def getAllBlocks(blocks, flat_blocks):
     """Get a flat list from a tree of blocks"""
     for block in blocks.values():
-        sub_blocks = block.get("data", {}).get("blocks", {}) or block.get(
-            "blocks", {}
-        )
+        sub_blocks = block.get("data", {}).get("blocks", {}) or block.get("blocks", {})
         flat_blocks.append(block)
         if sub_blocks:
             getAllBlocks(sub_blocks, flat_blocks)
@@ -28,8 +27,8 @@ def remove_api_string(url):
         url (str): url string
     """
     url = url.replace("/api/SITE/", "/")
-    url = url.replace('/++api++/', '/')
-    url = url.strip('/').strip("/view")
+    url = url.replace("/++api++/", "/")
+    url = url.strip("/").strip("/view")
     return url
 
 
@@ -95,8 +94,8 @@ class Indicator(object):
         blocks = getattr(self.context, "blocks", None) or {}
         for block in getAllBlocks(blocks, []):
             if block.get("@type", "") == "embed_content":
-                content = api.content.get(path = block.get('url',""))
-                temporal_coverage = getattr(content, 'temporal_coverage', {})
+                content = api.content.get(path=block.get("url", ""))
+                temporal_coverage = getattr(content, "temporal_coverage", {})
                 block_temporal = temporal_coverage.get("temporal", None)
                 if not block_temporal:
                     continue
@@ -122,26 +121,25 @@ class Indicator(object):
         for block in getAllBlocks(blocks, []):
             print(block)
             if block.get("@type", "") == "embed_content":
-                
-                content = api.content.get(path = block.get('url',""))
-                geo_coverage = getattr(content, 'geo_coverage', {})
+
+                content = api.content.get(path=block.get("url", ""))
+                geo_coverage = getattr(content, "geo_coverage", {})
                 block_geo = geo_coverage.get("geolocation", None)
                 if not block_geo:
                     continue
 
-
                 for item in block_geo:
                     geo_item = {
-                       "label": item.get("label", ""),
-                       "value": item.get("value", ""),
+                        "label": item.get("label", ""),
+                        "value": item.get("value", ""),
                     }
                     if geo_item not in geolocation:
                         geolocation.append(geo_item)
             block_geolocation = block.get("geolocation", [])
-       
+
             if not block_geolocation:
                 continue
-            
+
             for item in block_geolocation:
                 geo_item = {
                     "label": item.get("label", ""),
@@ -160,26 +158,18 @@ class Indicator(object):
         blocks = getattr(self.context, "blocks", None) or {}
         for block in getAllBlocks(blocks, []):
             if block.get("@type", "") == "embed_content":
-                content = api.content.get(path = block.get('url',""))
-                data_provenance = getattr(content, 'data_provenance', {})
+                content = api.content.get(path=block.get("url", ""))
+                data_provenance = getattr(content, "data_provenance", {})
                 if data_provenance:
-                    data_provenance = (
-                        data_provenance
-                        .get("data", []) or
-                        []
-                    )
+                    data_provenance = data_provenance.get("data", []) or []
                     res.extend(data_provenance)
-            if block.get("@type", "") != "dataFigure" and block.get("@type", "") != "embed_content":
+            if (
+                block.get("@type", "") != "dataFigure"
+                and block.get("@type", "") != "embed_content"
+            ):
                 continue
-            if 'data_provenance' in block:
-                data_provenance = (
-                    block.get("data_provenance", {})
-                    .get("data", []) or
-                    []
-                )
+            if "data_provenance" in block:
+                data_provenance = block.get("data_provenance", {}).get("data", []) or []
                 res.extend(data_provenance)
 
-        return {
-            "readOnly": True,
-            "data": [x for x in dedupe_data(res)]
-        }
+        return {"readOnly": True, "data": [x for x in dedupe_data(res)]}
