@@ -12,7 +12,8 @@ from plone import api
 def getAllBlocks(blocks, flat_blocks):
     """Get a flat list from a tree of blocks"""
     for block in blocks.values():
-        sub_blocks = block.get("data", {}).get("blocks", {}) or block.get("blocks", {})
+        sub_blocks = block.get("data", {}).get(
+            "blocks", {}) or block.get("blocks", {})
         flat_blocks.append(block)
         if sub_blocks:
             getAllBlocks(sub_blocks, flat_blocks)
@@ -169,7 +170,8 @@ class Indicator(object):
             ):
                 continue
             if "data_provenance" in block:
-                data_provenance = block.get("data_provenance", {}).get("data", []) or []
+                data_provenance = block.get(
+                    "data_provenance", {}).get("data", []) or []
                 res.extend(data_provenance)
 
         return {"readOnly": True, "data": [x for x in dedupe_data(res)]}
