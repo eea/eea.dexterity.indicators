@@ -1,7 +1,6 @@
 """Upgrade step to upgrade indicators to the new embed block"""
 
 import logging
-import json
 import transaction
 from zope.lifecycleevent import modified
 from plone.restapi.blocks import visit_blocks
