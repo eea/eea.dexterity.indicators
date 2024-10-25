@@ -120,7 +120,6 @@ class Indicator(object):
         geolocation = []
         blocks = getattr(self.context, "blocks", None) or {}
         for block in getAllBlocks(blocks, []):
-            print(block)
             if block.get("@type", "") == "embed_content":
 
                 content = api.content.get(path=block.get("url", ""))
@@ -165,8 +164,8 @@ class Indicator(object):
                     data_provenance = data_provenance.get("data", []) or []
                     res.extend(data_provenance)
             if (
-                block.get("@type", "") != "dataFigure"
-                and block.get("@type", "") != "embed_content"
+                block.get("@type", "") != "dataFigure" and
+                block.get("@type", "") != "embed_content"
             ):
                 continue
             if "data_provenance" in block:
