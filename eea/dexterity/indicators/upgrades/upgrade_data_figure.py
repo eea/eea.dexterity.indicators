@@ -45,4 +45,3 @@ def upgrade_data_figure(portal):
             logger.info(i)
             transaction.commit()
     transaction.commit()
-
