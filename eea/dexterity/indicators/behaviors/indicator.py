@@ -3,10 +3,10 @@
 """
 
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
-from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
 from zope.interface import implementer
 from plone import api
+from plone.dexterity.interfaces import IDexterityContent
 
 
 def getAllBlocks(blocks, flat_blocks):
