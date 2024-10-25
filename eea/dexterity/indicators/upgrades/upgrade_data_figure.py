@@ -9,6 +9,13 @@ from zope.lifecycleevent import modified
 logger = logging.getLogger("upgrade_dataFigure")
 logger.setLevel(logging.INFO)
 
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)  # or str(obj)
+        return super(DecimalEncoder, self).default(obj)
+
+
 
 def upgrade_data_figure(portal):
     """Upgrade SVG dimensions"""
@@ -17,7 +24,7 @@ def upgrade_data_figure(portal):
         obj = brain.getObject()
         logger.info("Processing %s", obj.absolute_url())
         if hasattr(obj, "blocks"):
-            blocks_string = json.dumps(obj.blocks).replace(
+            blocks_string = json.dumps(obj.blocks,cls=DecimalEncoder).replace(
                 "dataFigure", "embed_content"
             )
             obj.blocks = json.loads(blocks_string)
