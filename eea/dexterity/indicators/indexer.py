@@ -1,8 +1,29 @@
 """ indexer.py """
 from plone.indexer import indexer
+from plone.base.utils import safe_text
+from plone.app.contenttypes.indexers import SearchableText
 from zope.component import queryAdapter
 from eea.dexterity.indicators.interfaces import IIndicator
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
+
+
+def _unicode_save_string_concat(*args):
+    """
+    concats args with spaces between and returns utf-8 string, it does not
+    matter if input was text or bytes
+    """
+    result = ""
+    for value in args:
+        if isinstance(value, bytes):
+            value = safe_text(value)
+        result = " ".join((result, value))
+    return result
+
+
+@indexer(IIndicator)
+def searchable_text_indexer(obj):
+    """SearchableText indexer"""
+    return _unicode_save_string_concat(SearchableText(obj))
 
 
 @indexer(IIndicator)

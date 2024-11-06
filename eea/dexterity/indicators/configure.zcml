@@ -13,6 +13,7 @@
   <include package=".restapi" />
   <include package=".upgrades" />
 
+  <adapter factory=".indexer.searchable_text_indexer" name="SearchableText" />
   <adapter factory=".indexer.data_provenance_indexer" name="data_provenance" />
   <adapter factory=".indexer.temporal_coverage_indexer" name="temporal_coverage" />
 
