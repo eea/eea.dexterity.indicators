@@ -1,4 +1,3 @@
-
 """ Upgrade to 9.9 """
 from Products.CMFCore.utils import getToolByName
 from Products.ZCatalog.ProgressHandler import ZLogHandler
