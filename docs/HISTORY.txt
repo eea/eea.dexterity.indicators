@@ -1,8 +1,10 @@
 Changelog
 =========
 
-9.9-dev0 - (unreleased)
+9.9 - (2024-11-06)
 ---------------------------
+* Bug fix: SearchableText for ims_indicator to include tags 
+  [avoinea - refs #279540]
 
 9.8 - (2024-08-05)
 ---------------------------
