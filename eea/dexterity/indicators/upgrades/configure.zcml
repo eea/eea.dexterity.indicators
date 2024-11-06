@@ -29,7 +29,7 @@
 
   <genericsetup:upgradeStep
     title="Reindex IMS Indicator SearchableText to include tags"
-    description="Reindex IMS Indicator SearchableText to include tags"
+    description=""
     source="9.5"
     destination="9.9"
     handler=".evolve99.to_99"
