@@ -7,17 +7,7 @@ from zope.component import adapter
 from zope.interface import implementer
 from plone import api
 from plone.dexterity.interfaces import IDexterityContent
-
-
-def getAllBlocks(blocks, flat_blocks):
-    """Get a flat list from a tree of blocks"""
-    for block in blocks.values():
-        sub_blocks = block.get("data", {}).get(
-            "blocks", {}) or block.get("blocks", {})
-        flat_blocks.append(block)
-        if sub_blocks:
-            getAllBlocks(sub_blocks, flat_blocks)
-    return flat_blocks
+from plone.restapi.blocks import visit_blocks
 
 
 def remove_api_string(url):
@@ -54,6 +44,21 @@ def dedupe_data(data):
                 continue
             existing.add(url)
         yield value
+
+
+def get_embed_content(block):
+    """ Get related content from block """
+    path = block.get("url", "")
+    if not path:
+        return None
+    if path.startswith("http"):
+        return None
+    if path.startswith("/api/SITE/"):
+        return None
+    if "resolveuid/" in path:
+        uid = path.split("resolveuid/")[-1]
+        return api.content.get(UID=uid)
+    return api.content.get(path=path)
 
 
 @implementer(IIndicatorMetadata)
@@ -93,22 +98,21 @@ class Indicator(object):
         res = {"readOnly": True, "temporal": []}
         temporal = []
         blocks = getattr(self.context, "blocks", None) or {}
-        for block in getAllBlocks(blocks, []):
-            if block.get("@type", "") == "embed_content":
-                content = api.content.get(path=block.get("url", ""))
-                temporal_coverage = getattr(content, "temporal_coverage", {})
-                block_temporal = temporal_coverage.get("temporal", None)
-                if not block_temporal:
-                    continue
+        for block in visit_blocks(self.context, blocks):
+            block_temporal = block.get("temporal", None)
+            if block_temporal is not None:
                 for item in block_temporal:
                     if item not in temporal:
                         temporal.append(item)
-            block_temporal = block.get("temporal", [])
-            if not block_temporal:
                 continue
-            for item in block_temporal:
-                if item not in temporal:
-                    temporal.append(item)
+
+            if block.get("@type", "") == "embed_content":
+                content = get_embed_content(block)
+                temporal_coverage = getattr(content, "temporal_coverage", {})
+                block_temporal = temporal_coverage.get("temporal", [])
+                for item in block_temporal:
+                    if item not in temporal:
+                        temporal.append(item)
 
         res["temporal"] = sorted(temporal, key=lambda x: x.get("label"))
         return res
@@ -119,10 +123,20 @@ class Indicator(object):
         res = {"readOnly": True, "geolocation": []}
         geolocation = []
         blocks = getattr(self.context, "blocks", None) or {}
-        for block in getAllBlocks(blocks, []):
-            if block.get("@type", "") == "embed_content":
+        for block in visit_blocks(self.context, blocks):
+            block_geolocation = block.get("geolocation", None)
+            if block_geolocation is not None:
+                for item in block_geolocation:
+                    geo_item = {
+                        "label": item.get("label", ""),
+                        "value": item.get("value", ""),
+                    }
+                    if geo_item not in geolocation:
+                        geolocation.append(geo_item)
+                continue
 
-                content = api.content.get(path=block.get("url", ""))
+            if block.get("@type", "") == "embed_content":
+                content = get_embed_content(block)
                 geo_coverage = getattr(content, "geo_coverage", {})
                 block_geo = geo_coverage.get("geolocation", None)
                 if not block_geo:
@@ -135,18 +149,6 @@ class Indicator(object):
                     }
                     if geo_item not in geolocation:
                         geolocation.append(geo_item)
-            block_geolocation = block.get("geolocation", [])
-
-            if not block_geolocation:
-                continue
-
-            for item in block_geolocation:
-                geo_item = {
-                    "label": item.get("label", ""),
-                    "value": item.get("value", ""),
-                }
-                if geo_item not in geolocation:
-                    geolocation.append(geo_item)
 
         res["geolocation"] = sorted(geolocation, key=lambda x: x.get("label"))
         return res
@@ -156,16 +158,21 @@ class Indicator(object):
         """Data sources and providers"""
         res = []
         blocks = getattr(self.context, "blocks", None) or {}
-        for block in getAllBlocks(blocks, []):
-            if block.get("@type", "") == "embed_content":
-                content = api.content.get(path=block.get("url", ""))
-                data_provenance = getattr(content, "data_provenance", {})
-                if data_provenance:
-                    data_provenance = data_provenance.get("data", []) or []
-                    res.extend(data_provenance)
+        for block in visit_blocks(self.context, blocks):
             if "data_provenance" in block:
                 data_provenance = block.get(
                     "data_provenance", {}).get("data", []) or []
                 res.extend(data_provenance)
+                continue
 
-        return {"readOnly": True, "data": [x for x in dedupe_data(res)]}
+            if block.get("@type", "") == "embed_content":
+                content = get_embed_content(block)
+                data_provenance = getattr(content, "data_provenance", {})
+                if data_provenance:
+                    data_provenance = data_provenance.get("data", []) or []
+                    res.extend(data_provenance)
+
+        return {
+            "readOnly": True,
+            "data": list(dedupe_data(res))
+        }

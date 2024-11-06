@@ -41,7 +41,7 @@
     description=""
     source="9.9"
     destination="10.0"
-    handler=".evolve100.upgrade_data_figure"
+    handler=".evolve100.to_100"
     profile="eea.dexterity.indicators:default"
     />
 
