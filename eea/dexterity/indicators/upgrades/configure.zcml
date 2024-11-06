@@ -27,15 +27,22 @@
 
   </genericsetup:upgradeSteps>
 
- <genericsetup:upgradeSteps
+  <genericsetup:upgradeStep
+    title="Reindex IMS Indicator SearchableText to include tags"
+    description=""
     source="9.5"
-    destination="10"
-    profile="eea.dexterity.indicators:default">
+    destination="9.9"
+    handler=".evolve99.to_99"
+    profile="eea.dexterity.indicators:default"
+    />
 
-   <genericsetup:upgradeStep
-      title="Upgrade step to upgrade indicators to the new embed block"
-      handler="eea.dexterity.indicators.upgrades.upgrade_data_figure.upgrade_data_figure"
-      />
+  <genericsetup:upgradeStep
+    title="Upgrade step to upgrade indicators to the new embed block"
+    description=""
+    source="9.9"
+    destination="10.0"
+    handler=".evolve100.upgrade_data_figure"
+    profile="eea.dexterity.indicators:default"
+    />
 
-  </genericsetup:upgradeSteps>
 </configure>
