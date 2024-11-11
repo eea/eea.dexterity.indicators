@@ -25,4 +25,4 @@ class BackportJSONSummarySerializer(DefaultJSONSummarySerializer):
             query = json_body(self.request)
             self.request.form['metadata_fields'] = query.get(
                 "metadata_fields", [])
-        return super(BackportJSONSummarySerializer, self).metadata_fields()
+        return super().metadata_fields()

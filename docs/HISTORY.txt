@@ -6,6 +6,11 @@ Changelog
 ---------------------------
 * Refactor: Switch indicator figure blocks to embed_content
   [dobri1408 - refs #274326]
+10.0 - (2024-11-11)
+---------------------------
+* Bug fix: Add serializer IndicatorObjectPrimaryFieldTarget to resolve links to marked_for_deletion indicators
+  [avoinea - refs #280157]
+
 
 9.9 - (2024-11-06)
 ---------------------------

@@ -63,7 +63,7 @@ def get_embed_content(block):
 
 @implementer(IIndicatorMetadata)
 @adapter(IDexterityContent)
-class Indicator(object):
+class Indicator:
     """Automatically extract metadata from blocks"""
 
     def __init__(self, context):
