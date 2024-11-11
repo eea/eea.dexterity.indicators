@@ -57,7 +57,7 @@ def dedupe_data(data):
 
 @implementer(IIndicatorMetadata)
 @adapter(IDexterityContent)
-class Indicator(object):
+class Indicator:
     """Automatically extract metadata from blocks"""
 
     def __init__(self, context):
@@ -141,5 +141,5 @@ class Indicator(object):
             res.extend(data_provenance)
         return {
             "readOnly": True,
-            "data": [x for x in dedupe_data(res)]
+            "data": list(dedupe_data(res))
         }

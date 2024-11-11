@@ -7,6 +7,10 @@ from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import applyProfile
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import setRoles
+import plone.app.dexterity
+import eea.api.layout
+import eea.schema.slate
+import eea.dexterity.indicators
 
 
 class EEAFixture(PloneSandboxLayer):
@@ -15,13 +19,9 @@ class EEAFixture(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         """ Setup Zope
         """
-        import plone.app.dexterity
         self.loadZCML(package=plone.app.dexterity)
-        import eea.api.layout
         self.loadZCML(package=eea.api.layout)
-        import eea.schema.slate
         self.loadZCML(package=eea.schema.slate)
-        import eea.dexterity.indicators
         self.loadZCML(package=eea.dexterity.indicators)
         z2.installProduct(app, 'eea.dexterity.indicators')
 
