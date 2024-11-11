@@ -1,6 +1,11 @@
 Changelog
 =========
 
+10.1 - (2024-11-11)
+---------------------------
+* Bug fix: Indicator new version should not create .2, .3 copies it should always point to .1 version if it exists
+  [avoinea - refs #279130]
+
 10.0 - (2024-11-11)
 ---------------------------
 * Bug fix: Add serializer IndicatorObjectPrimaryFieldTarget to resolve links to marked_for_deletion indicators

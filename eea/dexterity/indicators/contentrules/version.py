@@ -98,6 +98,12 @@ class CopyActionExecutor:
             )
             return False
 
+        old_id = obj.getId()
+        new_id = self.generate_id(target, old_id)
+        if not new_id.endswith('.1'):
+            # Version already exists, redirect to it - refs #279130
+            return True
+
         try:
             obj._notifyOfCopyTo(target, op=0)
         except ConflictError:
@@ -105,9 +111,6 @@ class CopyActionExecutor:
         except Exception as e:
             self.error(obj, str(e))
             return False
-
-        old_id = obj.getId()
-        new_id = self.generate_id(target, old_id)
 
         orig_obj = obj
         obj = obj._getCopy(target)
