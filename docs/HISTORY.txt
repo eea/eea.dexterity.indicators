@@ -1,8 +1,11 @@
 Changelog
 =========
 
-10.0-dev0 - (unreleased)
+10.0 - (2024-11-11)
 ---------------------------
+* Bug fix: Add serializer IndicatorObjectPrimaryFieldTarget to resolve links to marked_for_deletion indicators
+  [avoinea - refs #280157]
+
 
 9.9 - (2024-11-06)
 ---------------------------

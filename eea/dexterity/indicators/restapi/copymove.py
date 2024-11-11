@@ -10,7 +10,7 @@ class Copy(BaseCopy):
     def get_object(self, key):
         """ Get object by key
         """
-        obj = super(Copy, self).get_object(key)
+        obj = super().get_object(key)
         if obj:
             return obj
 
@@ -24,7 +24,7 @@ class Move(BaseMove):
     def get_object(self, key):
         """ Get object by key
         """
-        obj = super(Move, self).get_object(key)
+        obj = super().get_object(key)
         if obj:
             return obj
 
