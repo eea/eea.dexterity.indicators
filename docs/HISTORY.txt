@@ -1,6 +1,9 @@
 Changelog
 =========
 
+10.2-dev0 - (unreleased)
+---------------------------
+
 10.1 - (2024-11-11)
 ---------------------------
 * Bug fix: Indicator new version should not create .2, .3 copies it should always point to .1 version if it exists
