@@ -36,4 +36,13 @@
     profile="eea.dexterity.indicators:default"
     />
 
+  <genericsetup:upgradeStep
+    title="Upgrade step to upgrade indicators to the new embed block"
+    description=""
+    source="9.9"
+    destination="11.0"
+    handler=".evolve110.to_110"
+    profile="eea.dexterity.indicators:default"
+    />
+
 </configure>

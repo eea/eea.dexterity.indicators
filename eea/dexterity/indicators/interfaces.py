@@ -319,7 +319,7 @@ class IIndicatorLayout(model.Schema):
                             "required": True,
                             "fixed": True,
                             "disableNewBlocks": True,
-                            "@type": "dataFigure",
+                            "@type": "embed_content",
                             "instructions": {
                                 "data": "<p>figure instructions goes here</p>",
                                 "content-type": "text/html",
@@ -668,7 +668,7 @@ class IIndicatorLayout(model.Schema):
                             "required": True,
                             "fixed": True,
                             "disableNewBlocks": True,
-                            "@type": "dataFigure",
+                            "@type": "embed_content",
                             "instructions": {
                                 "data": "<p><br/></p>",
                                 "content-type": "text/html",

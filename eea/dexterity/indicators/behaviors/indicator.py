@@ -1,22 +1,13 @@
 """ Custom behavior for Indicator
 
 """
+
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
-from plone.dexterity.interfaces import IDexterityContent
 from zope.component import adapter
 from zope.interface import implementer
-
-
-def getAllBlocks(blocks, flat_blocks):
-    """Get a flat list from a tree of blocks"""
-    for block in blocks.values():
-        sub_blocks = block.get("data", {}).get("blocks", {}) or block.get(
-            "blocks", {}
-        )
-        flat_blocks.append(block)
-        if sub_blocks:
-            getAllBlocks(sub_blocks, flat_blocks)
-    return flat_blocks
+from plone import api
+from plone.dexterity.interfaces import IDexterityContent
+from plone.restapi.blocks import visit_blocks
 
 
 def remove_api_string(url):
@@ -27,8 +18,8 @@ def remove_api_string(url):
         url (str): url string
     """
     url = url.replace("/api/SITE/", "/")
-    url = url.replace('/++api++/', '/')
-    url = url.strip('/').strip("/view")
+    url = url.replace("/++api++/", "/")
+    url = url.strip("/").strip("/view")
     return url
 
 
@@ -53,6 +44,21 @@ def dedupe_data(data):
                 continue
             existing.add(url)
         yield value
+
+
+def get_embed_content(block):
+    """ Get related content from block """
+    path = block.get("url", "")
+    if not path:
+        return None
+    if path.startswith("http"):
+        return None
+    if path.startswith("/api/SITE/"):
+        return None
+    if "resolveuid/" in path:
+        uid = path.split("resolveuid/")[-1]
+        return api.content.get(UID=uid)
+    return api.content.get(path=path)
 
 
 @implementer(IIndicatorMetadata)
@@ -92,13 +98,21 @@ class Indicator:
         res = {"readOnly": True, "temporal": []}
         temporal = []
         blocks = getattr(self.context, "blocks", None) or {}
-        for block in getAllBlocks(blocks, []):
-            block_temporal = block.get("temporal", [])
-            if not block_temporal:
+        for block in visit_blocks(self.context, blocks):
+            block_temporal = block.get("temporal", None)
+            if block_temporal is not None:
+                for item in block_temporal:
+                    if item not in temporal:
+                        temporal.append(item)
                 continue
-            for item in block_temporal:
-                if item not in temporal:
-                    temporal.append(item)
+
+            if block.get("@type", "") == "embed_content":
+                content = get_embed_content(block)
+                temporal_coverage = getattr(content, "temporal_coverage", {})
+                block_temporal = temporal_coverage.get("temporal", [])
+                for item in block_temporal:
+                    if item not in temporal:
+                        temporal.append(item)
 
         res["temporal"] = sorted(temporal, key=lambda x: x.get("label"))
         return res
@@ -109,17 +123,32 @@ class Indicator:
         res = {"readOnly": True, "geolocation": []}
         geolocation = []
         blocks = getattr(self.context, "blocks", None) or {}
-        for block in getAllBlocks(blocks, []):
-            block_geolocation = block.get("geolocation", [])
-            if not block_geolocation:
+        for block in visit_blocks(self.context, blocks):
+            block_geolocation = block.get("geolocation", None)
+            if block_geolocation is not None:
+                for item in block_geolocation:
+                    geo_item = {
+                        "label": item.get("label", ""),
+                        "value": item.get("value", ""),
+                    }
+                    if geo_item not in geolocation:
+                        geolocation.append(geo_item)
                 continue
-            for item in block_geolocation:
-                geo_item = {
-                    "label": item.get("label", ""),
-                    "value": item.get("value", ""),
-                }
-                if geo_item not in geolocation:
-                    geolocation.append(geo_item)
+
+            if block.get("@type", "") == "embed_content":
+                content = get_embed_content(block)
+                geo_coverage = getattr(content, "geo_coverage", {})
+                block_geo = geo_coverage.get("geolocation", None)
+                if not block_geo:
+                    continue
+
+                for item in block_geo:
+                    geo_item = {
+                        "label": item.get("label", ""),
+                        "value": item.get("value", ""),
+                    }
+                    if geo_item not in geolocation:
+                        geolocation.append(geo_item)
 
         res["geolocation"] = sorted(geolocation, key=lambda x: x.get("label"))
         return res
@@ -129,16 +158,20 @@ class Indicator:
         """Data sources and providers"""
         res = []
         blocks = getattr(self.context, "blocks", None) or {}
-        for block in getAllBlocks(blocks, []):
-            if block.get("@type", "") != "dataFigure":
+        for block in visit_blocks(self.context, blocks):
+            if "data_provenance" in block:
+                data_provenance = block.get(
+                    "data_provenance", {}).get("data", []) or []
+                res.extend(data_provenance)
                 continue
 
-            data_provenance = (
-                block.get("data_provenance", {})
-                .get("data", []) or
-                []
-            )
-            res.extend(data_provenance)
+            if block.get("@type", "") == "embed_content":
+                content = get_embed_content(block)
+                data_provenance = getattr(content, "data_provenance", {})
+                if data_provenance:
+                    data_provenance = data_provenance.get("data", []) or []
+                    res.extend(data_provenance)
+
         return {
             "readOnly": True,
             "data": list(dedupe_data(res))
