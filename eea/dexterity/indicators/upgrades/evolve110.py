@@ -4,7 +4,7 @@ from Products.ZCatalog.ProgressHandler import ZLogHandler
 from plone.restapi.blocks import visit_blocks
 
 
-def to_100(context):
+def to_110(context):
     """Upgrade all dataFigure blocks to embed_content"""
     ctool = getToolByName(context, "portal_catalog")
     brains = ctool.unrestrictedSearchResults(portal_type="ims_indicator")
