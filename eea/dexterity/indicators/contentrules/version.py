@@ -66,7 +66,7 @@ class CopyAction(SimpleItem):
 
 @adapter(Interface, ICopyAction, Interface)
 @implementer(IExecutable)
-class CopyActionExecutor(object):
+class CopyActionExecutor:
     """The executor for this action."""
 
     def __init__(self, context, element, event):

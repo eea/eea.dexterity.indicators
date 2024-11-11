@@ -42,7 +42,7 @@ class RetractAndRenameOldVersionAction(SimpleItem):
 
 @implementer(IExecutable)
 @adapter(Interface, IRetractAndRenameOldVersionAction, Interface)
-class RetractAndRenameOldVersionExecutor(object):
+class RetractAndRenameOldVersionExecutor:
     """Retract and rename old version executor"""
 
     def __init__(self, context, element, event):
@@ -126,7 +126,7 @@ class EnableDisableDiscussionAction(SimpleItem):
 
 @implementer(IExecutable)
 @adapter(Interface, IEnableDisableDiscussionAction, Interface)
-class EnableDisableDiscussionActionExecutor(object):
+class EnableDisableDiscussionActionExecutor:
     """Enable/Disable Discussion Action executor"""
 
     def __init__(self, context, element, event):
