@@ -152,6 +152,22 @@ class CopyActionExecutor:
 
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         obj_blocks = obj.blocks
+        for block_data in obj_blocks.values():
+            if block_data.get("@type") == "group" and "data" in block_data:
+                for inner_block_data in block_data["data"][
+                    "blocks"
+                ].values():
+                    if inner_block_data.get("@type") == "dataFigure":
+                        url = uid_to_url(inner_block_data["url"])
+                        if previous_obj_path in url:
+                            url = url.replace(
+                                previous_obj_path, previous_obj_path + ".1"
+                            )
+                            url = path2uid(
+                                context=self.context,
+                                link=getLink(url)
+                            )
+                        inner_block_data["url"] = url
 
         modified(obj)
         transaction.commit()
