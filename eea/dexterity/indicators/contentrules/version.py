@@ -2,7 +2,6 @@
 
 from urllib.parse import urlparse
 import transaction
-from zope.lifecycleevent import modified
 from Acquisition import aq_base
 from OFS.event import ObjectClonedEvent
 from OFS.SimpleItem import SimpleItem
@@ -30,7 +29,7 @@ from zope.component import adapter
 from zope.event import notify
 from zope.interface import implementer
 from zope.interface import Interface
-from zope.lifecycleevent import ObjectCopiedEvent
+from zope.lifecycleevent import ObjectCopiedEvent, modified
 
 
 def getLink(path):
@@ -155,10 +154,9 @@ class CopyActionExecutor:
 
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         obj_blocks = obj.blocks
-        data_figure_blocks = []
-        for block_id, block_data in obj_blocks.items():
+        for _, block_data in obj_blocks.items():
             if block_data.get("@type") == "group" and "data" in block_data:
-                for inner_block_id, inner_block_data in block_data["data"][
+                for _, inner_block_data in block_data["data"][
                     "blocks"
                 ].items():
                     if inner_block_data.get("@type") == "dataFigure":
