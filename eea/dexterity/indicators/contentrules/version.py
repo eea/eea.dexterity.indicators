@@ -153,7 +153,7 @@ class CopyActionExecutor:
         pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
 
-        #CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
+        # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         obj_blocks = obj.blocks
         data_figure_blocks = []
         for block_id, block_data in obj_blocks.items():
@@ -167,7 +167,10 @@ class CopyActionExecutor:
                             url = url.replace(
                                 previous_obj_path, previous_obj_path + ".1"
                             )
-                            url = path2uid(context=self.context, link=getLink(url))
+                            url = path2uid(
+                                context=self.context, 
+                                link=getLink(url)
+                            )
                         inner_block_data["url"] = url
 
         modified(obj)
