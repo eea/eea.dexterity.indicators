@@ -115,7 +115,8 @@ class CopyActionExecutor:
         if target is None:
             self.error(
                 obj,
-                _("Target folder ${target} does not exist.", mapping={"target": path}),
+                _("Target folder ${target} does not exist.",
+                  mapping={"target": path}),
             )
             return False
 
@@ -152,7 +153,7 @@ class CopyActionExecutor:
         pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
 
-        ###CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
+        #CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         obj_blocks = obj.blocks
         data_figure_blocks = []
         for block_id, block_data in obj_blocks.items():
