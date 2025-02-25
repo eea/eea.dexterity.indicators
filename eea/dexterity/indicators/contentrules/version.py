@@ -30,7 +30,6 @@ from zope.interface import implementer
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectCopiedEvent, modified
 
-
 def getLink(path):
     """
     Get link
@@ -229,5 +228,4 @@ class CopyEditForm(ActionEditForm):
 
 class CopyEditFormView(ContentRuleFormWrapper):
     """A wrapper for the edit form."""
-
     form = CopyEditForm
