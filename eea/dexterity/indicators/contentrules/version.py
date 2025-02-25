@@ -15,7 +15,6 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
-
 try:
     from plone.base.utils import pretty_title_or_id
 except ImportError:
@@ -103,7 +102,6 @@ class CopyActionExecutor:
 
         path = self.element.target_folder
         change_note = self.element.change_note
-
         if len(path) > 1 and path[0] == "/":
             path = path[1:]
         target = portal_url.getPortalObject().unrestrictedTraverse(
@@ -121,7 +119,7 @@ class CopyActionExecutor:
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith(".1"):
+        if not new_id.endswith(''.1'):
             # Version already exists, redirect to it - refs #279130
             return True
 
@@ -149,7 +147,7 @@ class CopyActionExecutor:
 
         notify(ObjectClonedEvent(obj))
 
-        pr = getToolByName(obj, "portal_repository")
+        pr = getToolByName(obj, 'portal_repository')
         pr.save(obj=obj, comment=change_note)
 
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
@@ -214,7 +212,6 @@ class CopyAddForm(ActionAddForm):
 
 class CopyAddFormView(ContentRuleFormWrapper):
     """A wrapper for the add form."""
-
     form = CopyAddForm
 
 
