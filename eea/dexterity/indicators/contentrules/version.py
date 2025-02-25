@@ -192,8 +192,8 @@ class CopyActionExecutor:
     def generate_id(self, target, old_id):
         """Generate a new id for the copied object."""
         taken = getattr(
-              aq_base(target), 
-              "has_key", 
+              aq_base(target),
+              "has_key",
               lambda x: x in target.objectIds()
         )
 
