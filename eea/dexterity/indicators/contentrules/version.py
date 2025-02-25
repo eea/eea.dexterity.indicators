@@ -60,7 +60,8 @@ class ICopyAction(Interface):
 
     change_note = schema.TextLine(
         title=_("Change note"),
-        description=_("Optional change note to be used when creating new version."),
+        description=_(
+            "Optional change note to be used when creating new version."),
         required=False,
     )
 
@@ -76,7 +77,10 @@ class CopyAction(SimpleItem):
     @property
     def summary(self):
         """A summary of the element's configuration."""
-        return _("Copy to folder ${folder}.", mapping=dict(folder=self.target_folder))
+        return _(
+            "Copy to folder ${folder}.",
+            mapping=dict(folder=self.target_folder)
+        )
 
 
 @adapter(Interface, ICopyAction, Interface)
