@@ -168,7 +168,7 @@ class CopyActionExecutor:
                                 previous_obj_path, previous_obj_path + ".1"
                             )
                             url = path2uid(
-                                context=self.context, 
+                                context=self.context,
                                 link=getLink(url)
                             )
                         inner_block_data["url"] = url
@@ -191,7 +191,11 @@ class CopyActionExecutor:
 
     def generate_id(self, target, old_id):
         """Generate a new id for the copied object."""
-        taken = getattr(aq_base(target), "has_key", lambda x: x in target.objectIds())
+        taken = getattr(
+              aq_base(target), 
+              "has_key", 
+              lambda x: x in target.objectIds()
+        )
 
         if not taken(old_id):
             return old_id
