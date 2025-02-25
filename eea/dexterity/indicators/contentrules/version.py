@@ -119,7 +119,7 @@ class CopyActionExecutor:
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith(''.1'):
+        if not new_id.endswith('.1'):
             # Version already exists, redirect to it - refs #279130
             return True
 
