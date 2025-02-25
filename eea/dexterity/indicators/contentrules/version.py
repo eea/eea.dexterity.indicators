@@ -1,4 +1,7 @@
 """Copy action for content rules."""
+from urllib.parse import urlparse
+import transaction
+from zope.lifecycleevent import modified
 from Acquisition import aq_base
 from OFS.event import ObjectClonedEvent
 from OFS.SimpleItem import SimpleItem
@@ -10,6 +13,8 @@ from plone.app.contentrules.browser.formhelper import ContentRuleFormWrapper
 from plone.app.vocabularies.catalog import CatalogSource
 from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
+from plone.restapi.serializer.utils import uid_to_url
+from plone.restapi.deserializer.utils import path2uid
 try:
     from plone.base.utils import pretty_title_or_id
 except ImportError:
@@ -26,11 +31,23 @@ from zope.interface import Interface
 from zope.lifecycleevent import ObjectCopiedEvent
 
 
+def getLink(path):
+    """
+      Get link
+      """
+
+    URL = urlparse(path)
+
+    if URL.netloc.startswith('localhost') and URL.scheme:
+        return path.replace(URL.scheme + "://" + URL.netloc, "")
+    return path
+
 class ICopyAction(Interface):
     """Interface for the configurable aspects of a move action.
 
     This is also used to create add and edit forms, below.
     """
+
 
     target_folder = schema.Choice(
         title=_("Target folder"),
@@ -75,14 +92,18 @@ class CopyActionExecutor:
         self.event = event
 
     def __call__(self):
+
+
         portal_url = getToolByName(self.context, "portal_url", None)
         if portal_url is None:
             return False
 
         obj = self.event.object
+        previous_obj_path = obj.absolute_url_path();
 
         path = self.element.target_folder
         change_note = self.element.change_note
+
         if len(path) > 1 and path[0] == "/":
             path = path[1:]
         target = portal_url.getPortalObject().unrestrictedTraverse(
@@ -130,7 +151,23 @@ class CopyActionExecutor:
 
         pr = getToolByName(obj, 'portal_repository')
         pr.save(obj=obj, comment=change_note)
-
+        
+        ###CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
+        obj_blocks = obj.blocks
+        data_figure_blocks = [];
+        for block_id, block_data in obj_blocks.items():
+            if block_data.get("@type") == "group" and "data" in block_data:
+                for inner_block_id, inner_block_data in block_data["data"]["blocks"].items():
+                    if inner_block_data.get("@type") == "dataFigure":
+                        url = uid_to_url(inner_block_data['url']);
+                        if previous_obj_path in url:
+                            url = url.replace(previous_obj_path,previous_obj_path+'.1')
+                            url = path2uid(
+                            context=self.context, link=getLink(url))
+                        inner_block_data['url']= url;
+       
+        modified(obj)
+        transaction.commit()
         return True
 
     def error(self, obj, error):
