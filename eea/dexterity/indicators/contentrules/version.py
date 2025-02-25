@@ -30,6 +30,7 @@ from zope.interface import implementer
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectCopiedEvent, modified
 
+
 def getLink(path):
     """
     Get link
