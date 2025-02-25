@@ -112,7 +112,7 @@ class CopyActionExecutor:
         if target is None:
             self.error(
                 obj,
-                _("Target folder ${target} does not exist.",
+                 _("Target folder ${target} does not exist.",
                   mapping={"target": path}),
             )
             return False
