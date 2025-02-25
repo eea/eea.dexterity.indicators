@@ -1,4 +1,5 @@
 """Copy action for content rules."""
+
 from urllib.parse import urlparse
 import transaction
 from zope.lifecycleevent import modified
@@ -15,6 +16,7 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
+
 try:
     from plone.base.utils import pretty_title_or_id
 except ImportError:
@@ -33,21 +35,21 @@ from zope.lifecycleevent import ObjectCopiedEvent
 
 def getLink(path):
     """
-      Get link
-      """
+    Get link
+    """
 
     URL = urlparse(path)
 
-    if URL.netloc.startswith('localhost') and URL.scheme:
+    if URL.netloc.startswith("localhost") and URL.scheme:
         return path.replace(URL.scheme + "://" + URL.netloc, "")
     return path
+
 
 class ICopyAction(Interface):
     """Interface for the configurable aspects of a move action.
 
     This is also used to create add and edit forms, below.
     """
-
 
     target_folder = schema.Choice(
         title=_("Target folder"),
@@ -58,8 +60,7 @@ class ICopyAction(Interface):
 
     change_note = schema.TextLine(
         title=_("Change note"),
-        description=_(
-            "Optional change note to be used when creating new version."),
+        description=_("Optional change note to be used when creating new version."),
         required=False,
     )
 
@@ -75,10 +76,7 @@ class CopyAction(SimpleItem):
     @property
     def summary(self):
         """A summary of the element's configuration."""
-        return _(
-            "Copy to folder ${folder}.",
-            mapping=dict(folder=self.target_folder)
-        )
+        return _("Copy to folder ${folder}.", mapping=dict(folder=self.target_folder))
 
 
 @adapter(Interface, ICopyAction, Interface)
@@ -93,13 +91,12 @@ class CopyActionExecutor:
 
     def __call__(self):
 
-
         portal_url = getToolByName(self.context, "portal_url", None)
         if portal_url is None:
             return False
 
         obj = self.event.object
-        previous_obj_path = obj.absolute_url_path();
+        previous_obj_path = obj.absolute_url_path()
 
         path = self.element.target_folder
         change_note = self.element.change_note
@@ -114,14 +111,13 @@ class CopyActionExecutor:
         if target is None:
             self.error(
                 obj,
-                _("Target folder ${target} does not exist.",
-                  mapping={"target": path}),
+                _("Target folder ${target} does not exist.", mapping={"target": path}),
             )
             return False
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith('.1'):
+        if not new_id.endswith(".1"):
             # Version already exists, redirect to it - refs #279130
             return True
 
@@ -149,23 +145,26 @@ class CopyActionExecutor:
 
         notify(ObjectClonedEvent(obj))
 
-        pr = getToolByName(obj, 'portal_repository')
+        pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
-        
+
         ###CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         obj_blocks = obj.blocks
-        data_figure_blocks = [];
+        data_figure_blocks = []
         for block_id, block_data in obj_blocks.items():
             if block_data.get("@type") == "group" and "data" in block_data:
-                for inner_block_id, inner_block_data in block_data["data"]["blocks"].items():
+                for inner_block_id, inner_block_data in block_data["data"][
+                    "blocks"
+                ].items():
                     if inner_block_data.get("@type") == "dataFigure":
-                        url = uid_to_url(inner_block_data['url']);
+                        url = uid_to_url(inner_block_data["url"])
                         if previous_obj_path in url:
-                            url = url.replace(previous_obj_path,previous_obj_path+'.1')
-                            url = path2uid(
-                            context=self.context, link=getLink(url))
-                        inner_block_data['url']= url;
-       
+                            url = url.replace(
+                                previous_obj_path, previous_obj_path + ".1"
+                            )
+                            url = path2uid(context=self.context, link=getLink(url))
+                        inner_block_data["url"] = url
+
         modified(obj)
         transaction.commit()
         return True
@@ -184,8 +183,7 @@ class CopyActionExecutor:
 
     def generate_id(self, target, old_id):
         """Generate a new id for the copied object."""
-        taken = getattr(aq_base(target), "has_key",
-                        lambda x: x in target.objectIds())
+        taken = getattr(aq_base(target), "has_key", lambda x: x in target.objectIds())
 
         if not taken(old_id):
             return old_id
@@ -206,6 +204,7 @@ class CopyAddForm(ActionAddForm):
 
 class CopyAddFormView(ContentRuleFormWrapper):
     """A wrapper for the add form."""
+
     form = CopyAddForm
 
 
@@ -223,4 +222,5 @@ class CopyEditForm(ActionEditForm):
 
 class CopyEditFormView(ContentRuleFormWrapper):
     """A wrapper for the edit form."""
+
     form = CopyEditForm
