@@ -160,7 +160,7 @@ class CopyActionExecutor:
                 url = uid_to_url(block_data["url"])
                 if previous_obj_path in url:
                     url = url.replace(
-                        previous_obj_path, 
+                        previous_obj_path,
                         previous_obj_path + ".1"
                     )
                     url = path2uid(context=self.context, link=getLink(url))
