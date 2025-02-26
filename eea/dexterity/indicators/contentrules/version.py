@@ -159,7 +159,10 @@ class CopyActionExecutor:
                 new_block = copy.deepcopy(block_data)
                 url = uid_to_url(block_data["url"])
                 if previous_obj_path in url:
-                    url = url.replace(previous_obj_path, previous_obj_path + ".1")
+                    url = url.replace(
+                        previous_obj_path, 
+                        previous_obj_path + ".1"
+                    )
                     url = path2uid(context=self.context, link=getLink(url))
                     new_block["url"] = url
                 block_data.clear()
@@ -182,7 +185,8 @@ class CopyActionExecutor:
 
     def generate_id(self, target, old_id):
         """Generate a new id for the copied object."""
-        taken = getattr(aq_base(target), "has_key", lambda x: x in target.objectIds())
+        taken = getattr(aq_base(target), "has_key",
+                        lambda x: x in target.objectIds())
 
         if not taken(old_id):
             return old_id
