@@ -1,4 +1,5 @@
 """Copy action for content rules."""
+
 import copy
 from urllib.parse import urlparse
 import transaction
@@ -16,6 +17,7 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
+
 try:
     from plone.base.utils import pretty_title_or_id
 except ImportError:
@@ -59,8 +61,7 @@ class ICopyAction(Interface):
 
     change_note = schema.TextLine(
         title=_("Change note"),
-        description=_(
-            "Optional change note to be used when creating new version."),
+        description=_("Optional change note to be used when creating new version."),
         required=False,
     )
 
@@ -76,10 +77,7 @@ class CopyAction(SimpleItem):
     @property
     def summary(self):
         """A summary of the element's configuration."""
-        return _(
-            "Copy to folder ${folder}.",
-            mapping=dict(folder=self.target_folder)
-        )
+        return _("Copy to folder ${folder}.", mapping=dict(folder=self.target_folder))
 
 
 @adapter(Interface, ICopyAction, Interface)
@@ -113,14 +111,13 @@ class CopyActionExecutor:
         if target is None:
             self.error(
                 obj,
-                _("Target folder ${target} does not exist.",
-                  mapping={"target": path}),
+                _("Target folder ${target} does not exist.", mapping={"target": path}),
             )
             return False
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith('.1'):
+        if not new_id.endswith(".1"):
             # Version already exists, redirect to it - refs #279130
             return True
 
@@ -148,25 +145,20 @@ class CopyActionExecutor:
 
         notify(ObjectClonedEvent(obj))
 
-        pr = getToolByName(obj, 'portal_repository')
+        pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
 
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
-        for block_data in visit_blocks(obj,obj.blocks):
-            if block_data.get("@type") == "dataFigure" and 'url' in block_data:
-                    new_block = copy.deepcopy(block_data)
-                    url = uid_to_url(block_data["url"])
-                    if previous_obj_path in url:
-                            url = url.replace(
-                                previous_obj_path, previous_obj_path + ".1"
-                            )
-                            url = path2uid(
-                                context=self.context,
-                                link=getLink(url)
-                            )
-                            new_block["url"] = url
-                    block_data.clear();
-                    block_data.update(new_block);
+        for block_data in visit_blocks(obj, obj.blocks):
+            if block_data.get("@type") == "dataFigure" and "url" in block_data:
+                new_block = copy.deepcopy(block_data)
+                url = uid_to_url(block_data["url"])
+                if previous_obj_path in url:
+                    url = url.replace(previous_obj_path, previous_obj_path + ".1")
+                    url = path2uid(context=self.context, link=getLink(url))
+                    new_block["url"] = url
+                block_data.clear()
+                block_data.update(new_block)
         modified(obj)
         transaction.commit()
         return True
@@ -185,11 +177,7 @@ class CopyActionExecutor:
 
     def generate_id(self, target, old_id):
         """Generate a new id for the copied object."""
-        taken = getattr(
-              aq_base(target),
-              "has_key",
-              lambda x: x in target.objectIds()
-        )
+        taken = getattr(aq_base(target), "has_key", lambda x: x in target.objectIds())
 
         if not taken(old_id):
             return old_id
@@ -210,6 +198,7 @@ class CopyAddForm(ActionAddForm):
 
 class CopyAddFormView(ContentRuleFormWrapper):
     """A wrapper for the add form."""
+
     form = CopyAddForm
 
 
@@ -227,4 +216,5 @@ class CopyEditForm(ActionEditForm):
 
 class CopyEditFormView(ContentRuleFormWrapper):
     """A wrapper for the edit form."""
+
     form = CopyEditForm
