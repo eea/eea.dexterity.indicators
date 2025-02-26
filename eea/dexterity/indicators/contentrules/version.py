@@ -1,11 +1,12 @@
 """Copy action for content rules."""
-
+import copy
 from urllib.parse import urlparse
 import transaction
 from Acquisition import aq_base
 from OFS.event import ObjectClonedEvent
 from OFS.SimpleItem import SimpleItem
 import OFS.subscribers
+from plone.restapi.blocks import visit_blocks
 from plone.app.contentrules import PloneMessageFactory as _
 from plone.app.contentrules.actions import ActionAddForm
 from plone.app.contentrules.actions import ActionEditForm
@@ -151,15 +152,11 @@ class CopyActionExecutor:
         pr.save(obj=obj, comment=change_note)
 
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
-        obj_blocks = obj.blocks
-        for block_data in obj_blocks.values():
-            if block_data.get("@type") == "group" and "data" in block_data:
-                for inner_block_data in block_data["data"][
-                    "blocks"
-                ].values():
-                    if inner_block_data.get("@type") == "dataFigure":
-                        url = uid_to_url(inner_block_data["url"])
-                        if previous_obj_path in url:
+        for block_data in visit_blocks(obj,obj.blocks):
+            if block_data.get("@type") == "dataFigure" and 'url' in block_data:
+                    new_block = copy.deepcopy(block_data)
+                    url = uid_to_url(block_data["url"])
+                    if previous_obj_path in url:
                             url = url.replace(
                                 previous_obj_path, previous_obj_path + ".1"
                             )
@@ -167,8 +164,9 @@ class CopyActionExecutor:
                                 context=self.context,
                                 link=getLink(url)
                             )
-                        inner_block_data["url"] = url
-
+                            new_block["url"] = url
+                    block_data.clear();
+                    block_data.update(new_block);
         modified(obj)
         transaction.commit()
         return True
