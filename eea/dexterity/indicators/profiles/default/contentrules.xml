@@ -211,6 +211,10 @@
      To publish: login and change the state to "publish".
      to see all indicators pending publication go here  https://www.eea.europa.eu/ims/contents
 
+     This email has been sent to the following people:
+     ${taxonomy_hog_users}
+     ${user_email}
+
      ------
      IMSv4
      This is an auto-generated email. Please do not reply to it. For any questions please contact andy.martin@eea.europa.eu.</property>
