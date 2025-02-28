@@ -35,7 +35,7 @@
     <property
        name="subject">[IMSv4] Indicator state change ${review_state_title} for ${title}</property>
     <property
-       name="recipients">${creators_emails}, andy.martin@eea.europa.eu</property>
+       name="recipients">${creators_emails}</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -87,7 +87,7 @@
     <property
        name="subject">[IMSv4] Indicator ready for HoG approval</property>
     <property
-       name="recipients">${taxonomy_hog_users}, ${user_email}, penelope.attard@eea.europa.eu</property>
+       name="recipients">${taxonomy_hog_users}, ${user_email}</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -177,7 +177,7 @@
     <property
        name="subject">[IMSv4] Indicator's text and figures to be finalised</property>
     <property
-       name="recipients">andy.martin@eea.europa.eu, irune.axpe@eea.europa.eu, penelope.attard@eea.europa.eu, inigo.hernandez@geograma.com</property>
+       name="recipients">${taxonomy_hog_users}, ${user_email}</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -212,9 +212,8 @@
      to see all indicators pending publication go here  https://www.eea.europa.eu/ims/contents
 
      This email has been sent to the following people:
-     andrew.martin@eea.europa.eu
-     gulcin.karadeniz@eea.europa.eu
-     penelope.attard@eea.europa.eu
+     ${taxonomy_hog_users}
+     ${user_email}
 
      ------
      IMSv4
@@ -222,7 +221,7 @@
     <property
        name="subject">[IMSv4] Indicator ready for publication</property>
     <property
-       name="recipients">andy.martin@eea.europa.eu, gulcin.karadeniz@eea.europa.eu, penelope.attard@eea.europa.eu</property>
+       name="recipients">${taxonomy_hog_users}, ${user_email}</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -259,7 +258,7 @@
     <property
        name="subject">[IMSv4] Data and metadata finalised for ${title}</property>
     <property
-       name="recipients">demarinis@eea.europa.eu, andy.martin@eea.europa.eu</property>
+       name="recipients">${taxonomy_hog_users}, ${user_email}</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -297,7 +296,7 @@
      NOTE: Please do not submit for publishing yet. You need to receive the notification about "Data and metadata QC is done".</property>
     <property name="subject">[IMSv4] Figures finalised for ${title}</property>
     <property
-       name="recipients">penelope.attard@eea.europa.eu, andy.martin@eea.europa.eu</property>
+       name="recipients">${taxonomy_hog_users}, ${user_email}</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -328,7 +327,7 @@
      has just been published by ${user_fullname}
 
      This mail has been sent to:
-     ${creator_email},  ${taxonomy_hog_users}, gulcin.karadeniz@eea.europa.eu, andrew.martin@eea.europa.eu, roberta.pignatelli@eea.europa.eu,  Penelope.Attard@eea.europa.eu, aphrodite.mourelatou@eea.europa.eu, laura.cernahoschi@eea.europa.eu
+     ${creator_email},  ${taxonomy_hog_users}
 
      Best
      ------
@@ -336,7 +335,7 @@
      This is an auto-generated email. Please do not reply to it. For any questions please contact andy.martin@eea.europa.eu.</property>
     <property name="subject">[IMSv4] Indicator published</property>
     <property
-       name="recipients">${creator_email},  ${taxonomy_hog_users}, gulcin.karadeniz@eea.europa.eu, andrew.martin@eea.europa.eu, roberta.pignatelli@eea.europa.eu, antonio.demarinis@eea.europa.eu, Penelope.Attard@eea.europa.eu, aphrodite.mourelatou@eea.europa.eu, laura.cernahoschi@eea.europa.eu</property>
+       name="recipients">${creator_email},  ${taxonomy_hog_users} </property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
@@ -409,7 +408,7 @@
           -----------</property>
     <property
        name="subject">[IMSv4] A new indicator has been created</property>
-    <property name="recipients">antonio.demarinis@eea.europa.eu</property>
+    <property name="recipients">${taxonomy_hog_users}, ${user_email}</property>
     <property name="exclude_actor">False</property>
    </action>
   </actions>
