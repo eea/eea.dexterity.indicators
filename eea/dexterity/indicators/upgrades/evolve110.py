@@ -16,5 +16,9 @@ def to_110(context):
         for block in visit_blocks(doc, doc.blocks):
             if block.get("@type", False) and block["@type"] == "dataFigure":
                 block['@type'] = 'embed_content'
+                href = block.get("href", "")
+                if href and "/resolveuid/" in href:
+                    block["old_url"] = block.get('url', '')
+                    block["url"] = href
                 doc.reindexObject()
     pghandler.finish()
