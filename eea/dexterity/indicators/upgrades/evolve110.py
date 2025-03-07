@@ -14,8 +14,13 @@ def to_110(context):
         pghandler.report(idx)
         doc = brain.getObject()
         for block in visit_blocks(doc, doc.blocks):
-            if block.get("@type", False) and block["@type"] == "dataFigure":
+            block_type = block.get("@type", "")
+            if block_type == "dataFigure":
+                block['old_type'] = block_type
                 block['@type'] = 'embed_content'
+                block["with_metadata_section"] = True
+                block["svg_as_img"] = True
+                block['with_notes'] = False
                 href = block.get("href", "")
                 if href and "/resolveuid/" in href:
                     block["old_url"] = block.get('url', '')
