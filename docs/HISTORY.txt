@@ -2,11 +2,11 @@ Changelog
 =========
 
 
-11.0-dev - (unreleased)
+11.0 - (2025-04-11)
 ---------------------------
 * Refactor: Switch indicator figure blocks to embed_content
   [dobri1408 - refs #274326]
-10.3-dev0 - (unreleased)
+10.3 - (2025-04-11)
 ---------------------------
 
 10.2 - (2025-02-28)
