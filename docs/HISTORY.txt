@@ -6,6 +6,18 @@ Changelog
 ---------------------------
 * Refactor: Switch indicator figure blocks to embed_content
   [dobri1408 - refs #274326]
+10.3-dev0 - (unreleased)
+---------------------------
+
+10.2 - (2025-02-28)
+---------------------------
+* Change: Release
+  [avoinea]
+
+10.1 - (2024-11-11)
+---------------------------
+* Bug fix: Indicator new version should not create .2, .3 copies it should always point to .1 version if it exists
+  [avoinea - refs #279130]
 
 10.0 - (2024-11-11)
 ---------------------------
