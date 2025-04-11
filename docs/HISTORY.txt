@@ -6,8 +6,6 @@ Changelog
 ---------------------------
 * Refactor: Switch indicator figure blocks to embed_content
   [dobri1408 - refs #274326]
-10.3-dev0 - (unreleased)
----------------------------
 
 10.2 - (2025-02-28)
 ---------------------------
