@@ -3,6 +3,13 @@ Changelog
 
 
 11.0-dev - (unreleased)
+11.1-dev0 - (unreleased)
+---------------------------
+* Refactor: Switch indicator figure blocks to embed_content
+  [dobri1408 - refs #274326]
+
+
+11.0 - (2025-04-11)
 ---------------------------
 * Refactor: Switch indicator figure blocks to embed_content
   [dobri1408 - refs #274326]
