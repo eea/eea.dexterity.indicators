@@ -1,8 +1,19 @@
 Changelog
 =========
 
-10.2-dev0 - (unreleased)
+11.1-dev0 - (unreleased)
 ---------------------------
+
+
+11.0 - (2025-04-11)
+---------------------------
+* Refactor: Switch indicator figure blocks to embed_content
+  [dobri1408 - refs #274326]
+
+10.2 - (2025-02-28)
+---------------------------
+* Change: Release
+  [avoinea]
 
 10.1 - (2024-11-11)
 ---------------------------
@@ -14,10 +25,9 @@ Changelog
 * Bug fix: Add serializer IndicatorObjectPrimaryFieldTarget to resolve links to marked_for_deletion indicators
   [avoinea - refs #280157]
 
-
 9.9 - (2024-11-06)
 ---------------------------
-* Bug fix: SearchableText for ims_indicator to include tags 
+* Bug fix: SearchableText for ims_indicator to include tags
   [avoinea - refs #279540]
 
 9.8 - (2024-08-05)
@@ -57,7 +67,7 @@ Changelog
 
 9.1 - (2023-09-01)
 ---------------------------
-* Bug fix: Enable / Disable Discussion Content Rule 
+* Bug fix: Enable / Disable Discussion Content Rule
   [avoinea - refs #256563]
 
 9.0 - (2023-08-15)
