@@ -1,8 +1,6 @@
 """Copy action for content rules."""
 
-import copy
 from urllib.parse import urlparse
-import transaction
 from Acquisition import aq_base
 from OFS.event import ObjectClonedEvent
 from OFS.SimpleItem import SimpleItem
