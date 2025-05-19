@@ -154,9 +154,11 @@ class CopyActionExecutor:
         pr.save(obj=obj, comment=change_note)
 
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
+    
+        
         for block_data in visit_blocks(obj, obj.blocks):
-            if block_data.get("@type") == "dataFigure" and "url" in block_data:
-                new_block = copy.deepcopy(block_data)
+            if (block_data.get("@type") == "embed_content" 
+                and "url" in block_data):
                 url = uid_to_url(block_data["url"])
                 if previous_obj_path in url:
                     url = url.replace(
@@ -164,11 +166,8 @@ class CopyActionExecutor:
                         previous_obj_path + ".1"
                     )
                     url = path2uid(context=self.context, link=getLink(url))
-                    new_block["url"] = url
-                block_data.clear()
-                block_data.update(new_block)
+                    block_data["url"] = url
         modified(obj)
-        transaction.commit()
         return True
 
     def error(self, obj, error):
