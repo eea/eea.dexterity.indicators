@@ -158,7 +158,7 @@ class CopyActionExecutor:
         
         for block_data in visit_blocks(obj, obj.blocks):
             if (block_data.get("@type") == "embed_content" and
-                "url" in block_data):
+                    "url" in block_data):
                 new_block = copy.deepcopy(block_data)
                 url = uid_to_url(block_data["url"])
                 if previous_obj_path in url:
