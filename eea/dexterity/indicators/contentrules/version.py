@@ -15,6 +15,9 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
+from z3c.relationfield.relation import RelationValue
 
 try:
     from plone.base.utils import pretty_title_or_id
@@ -143,14 +146,25 @@ class CopyActionExecutor:
         obj.wl_clearLocks()
 
         obj._postCopy(target, op=0)
+        try:
+            intids = getUtility(IIntIds)
+            relation = RelationValue(intids.getId(orig_obj))
 
+            obj.relatedItems = [relation]
+
+            obj.reindexObject(idxs=["relatedItems"])
+
+        except Exception as e:
+            self.error(obj, f"Failed to relate copied object to original: {e}")
+        import pdb;
+        pdb.set_trace()
         OFS.subscribers.compatibilityCall("manage_afterClone", obj, obj)
 
         notify(ObjectClonedEvent(obj))
 
         pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
-
+      
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         for block_data in visit_blocks(obj, obj.blocks):
             if (block_data.get("@type") == "embed_content" and
