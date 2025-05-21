@@ -15,9 +15,6 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
-from zope.component import getUtility
-from zope.intid.interfaces import IIntIds
-from z3c.relationfield.relation import RelationValue
 
 try:
     from plone.base.utils import pretty_title_or_id
@@ -28,12 +25,12 @@ from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
 from ZODB.POSException import ConflictError
 from zope import schema
-from zope.component import adapter
+from zope.component import adapter, getUtility
 from zope.event import notify
-from zope.interface import implementer
-from zope.interface import Interface
+from zope.interface import implementer, Interface
 from zope.lifecycleevent import ObjectCopiedEvent, modified
-
+from zope.intid.interfaces import IIntIds
+from z3c.relationfield.relation import RelationValue
 
 def getLink(path):
     """
@@ -45,7 +42,6 @@ def getLink(path):
     if URL.netloc.startswith("localhost") and URL.scheme:
         return path.replace(URL.scheme + "://" + URL.netloc, "")
     return path
-
 
 class ICopyAction(Interface):
     """Interface for the configurable aspects of a move action.
