@@ -150,7 +150,7 @@ class CopyActionExecutor:
             obj.relatedItems = [relation]
             obj.reindexObject(idxs=["relatedItems"])
         except Exception as e:
-            self.error(obj, f"Failed to relate copied object to original: {e}")
+            self.error(obj, str(e))
 
         OFS.subscribers.compatibilityCall("manage_afterClone", obj, obj)
 
