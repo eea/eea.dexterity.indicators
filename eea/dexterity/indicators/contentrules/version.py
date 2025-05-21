@@ -160,7 +160,6 @@ class CopyActionExecutor:
 
         pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
-      
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         for block_data in visit_blocks(obj, obj.blocks):
             if (block_data.get("@type") == "embed_content" and
