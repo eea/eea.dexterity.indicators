@@ -25,11 +25,12 @@ from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
 from ZODB.POSException import ConflictError
 from zope import schema
-from zope.component import adapter
+from zope.component import adapter, getUtility
 from zope.event import notify
-from zope.interface import implementer
-from zope.interface import Interface
+from zope.interface import implementer, Interface
 from zope.lifecycleevent import ObjectCopiedEvent, modified
+from zope.intid.interfaces import IIntIds
+from z3c.relationfield.relation import RelationValue
 
 
 def getLink(path):
@@ -143,6 +144,13 @@ class CopyActionExecutor:
         obj.wl_clearLocks()
 
         obj._postCopy(target, op=0)
+        try:
+            intids = getUtility(IIntIds)
+            relation = RelationValue(intids.getId(orig_obj))
+            obj.relatedItems = [relation]
+            obj.reindexObject(idxs=["relatedItems"])
+        except Exception as e:
+            self.error(obj, str(e))
 
         OFS.subscribers.compatibilityCall("manage_afterClone", obj, obj)
 
@@ -150,7 +158,6 @@ class CopyActionExecutor:
 
         pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
-
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         for block_data in visit_blocks(obj, obj.blocks):
             if (block_data.get("@type") == "embed_content" and
