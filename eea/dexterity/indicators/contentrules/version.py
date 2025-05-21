@@ -149,15 +149,11 @@ class CopyActionExecutor:
         try:
             intids = getUtility(IIntIds)
             relation = RelationValue(intids.getId(orig_obj))
-
             obj.relatedItems = [relation]
-
             obj.reindexObject(idxs=["relatedItems"])
-
         except Exception as e:
             self.error(obj, f"Failed to relate copied object to original: {e}")
-        import pdb;
-        pdb.set_trace()
+
         OFS.subscribers.compatibilityCall("manage_afterClone", obj, obj)
 
         notify(ObjectClonedEvent(obj))

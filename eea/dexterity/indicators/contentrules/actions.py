@@ -62,12 +62,15 @@ class RetractAndRenameOldVersionExecutor:
         elif oid.endswith(".1"):
             old_id = oid.replace(".1", "", 1)
             new_id = old_id + "-%d" % time()
-
         if not (old_id and new_id):
             return True
-
         try:
-            old_version = parent[old_id]
+            if old_id not in parent:
+                old_version = obj.relatedItems[0].to_object
+                obj.relatedItems = []
+                obj.reindexObject(idxs=["relatedItems"])
+            else:
+                old_version = parent[old_id]
             api.content.transition(
                 obj=old_version,
                 transition="markForDeletion",
