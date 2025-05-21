@@ -32,6 +32,7 @@ from zope.lifecycleevent import ObjectCopiedEvent, modified
 from zope.intid.interfaces import IIntIds
 from z3c.relationfield.relation import RelationValue
 
+
 def getLink(path):
     """
     Get link
@@ -42,6 +43,7 @@ def getLink(path):
     if URL.netloc.startswith("localhost") and URL.scheme:
         return path.replace(URL.scheme + "://" + URL.netloc, "")
     return path
+
 
 class ICopyAction(Interface):
     """Interface for the configurable aspects of a move action.
