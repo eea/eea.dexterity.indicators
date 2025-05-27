@@ -65,10 +65,16 @@ class RetractAndRenameOldVersionExecutor:
         if not (old_id and new_id):
             return True
         try:
-            if old_id not in parent:
-                old_version = obj.relatedItems[0].to_object
-                obj.relatedItems = []
-                obj.reindexObject(idxs=["relatedItems"])
+            if (
+                old_id not in parent
+                and hasattr(obj, 'original_parent')
+                and obj.original_parent
+                and hasattr(obj.original_parent[0], 'to_object')
+                and obj.original_parent[0].to_object
+            ):
+                old_version = obj.original_parent[0].to_object
+                obj.original_parent = []
+                obj.reindexObject(idxs=["original_parent"])
             else:
                 old_version = parent[old_id]
             api.content.transition(
