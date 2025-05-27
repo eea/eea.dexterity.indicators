@@ -15,6 +15,7 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
+from plone import api
 
 try:
     from plone.base.utils import pretty_title_or_id
@@ -44,6 +45,25 @@ def getLink(path):
         return path.replace(URL.scheme + "://" + URL.netloc, "")
     return path
 
+def draftExistsFor(originalObj):
+    catalog = api.portal.get_tool("portal_catalog")
+    intids = getUtility(IIntIds)
+    orig_id = intids.getId(originalObj)
+
+    results = catalog.searchResults(portal_type="ims_indicator")
+    for brain in results:
+        obj = brain.getObject()
+        if obj == originalObj:
+            continue
+
+        val = getattr(obj, "original_parent", None)
+        if not val:
+            continue
+
+        if any(rel.to_id == orig_id for rel in val if rel):
+            return True
+
+    return False
 
 class ICopyAction(Interface):
     """Interface for the configurable aspects of a move action.
@@ -121,7 +141,7 @@ class CopyActionExecutor:
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith(".1"):
+        if not new_id.endswith(".1") or draftExistsFor(obj):
             # Version already exists, redirect to it - refs #279130
             return True
 
@@ -147,8 +167,8 @@ class CopyActionExecutor:
         try:
             intids = getUtility(IIntIds)
             relation = RelationValue(intids.getId(orig_obj))
-            obj.relatedItems = [relation]
-            obj.reindexObject(idxs=["relatedItems"])
+            obj.original_parent = [relation]
+            obj.reindexObject(idxs=["original_parent"])
         except Exception as e:
             self.error(obj, str(e))
 

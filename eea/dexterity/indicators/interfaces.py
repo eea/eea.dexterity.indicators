@@ -7,6 +7,7 @@ from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
 from plone.schema import JSONField, Tuple, Choice
 from plone.supermodel import model
 from plone.autoform import directives
+from plone.app.z3cform.widget import RelatedItemsFieldWidget
 try:
     from plone.app.z3cform.widgets.select import SelectFieldWidget
 except ImportError:
@@ -15,6 +16,7 @@ from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int
 
+from z3c.relationfield.schema import RelationList, RelationChoice
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
     """Marker interface that defines a browser layer."""
@@ -42,6 +44,7 @@ class IIndicatorMetadata(model.Schema):
             "topics",
             "temporal_coverage",
             "geo_coverage",
+            "original_parent"
         ],
     )
 
@@ -76,6 +79,23 @@ class IIndicatorMetadata(model.Schema):
         default={"readOnly": True, "geolocation": []},
     )
 
+    original_parent = RelationList(
+        title=_("Original parent"),
+        value_type=RelationChoice(
+            title="Related", vocabulary="plone.app.vocabularies.Catalog"
+        ),
+        required=False,
+        missing_value=[],
+
+    )
+
+    directives.widget(
+        "original_parent",
+        RelatedItemsFieldWidget,
+        pattern_options={
+            "mode": "view",
+        },
+    )
     #
     # Supporting information
     #
