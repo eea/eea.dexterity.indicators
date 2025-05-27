@@ -45,6 +45,7 @@ def getLink(path):
         return path.replace(URL.scheme + "://" + URL.netloc, "")
     return path
 
+
 def draftExistsFor(originalObj):
     """
     Check if an indicator has a draft aleardy created
@@ -67,6 +68,7 @@ def draftExistsFor(originalObj):
             return True
 
     return False
+
 
 class ICopyAction(Interface):
     """Interface for the configurable aspects of a move action.
