@@ -46,6 +46,9 @@ def getLink(path):
     return path
 
 def draftExistsFor(originalObj):
+    """
+    Check if an indicator has a draft aleardy created
+    """
     catalog = api.portal.get_tool("portal_catalog")
     intids = getUtility(IIntIds)
     orig_id = intids.getId(originalObj)
