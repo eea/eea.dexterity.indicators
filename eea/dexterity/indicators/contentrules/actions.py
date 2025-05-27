@@ -66,11 +66,11 @@ class RetractAndRenameOldVersionExecutor:
             return True
         try:
             if (
-                old_id not in parent
-                and hasattr(obj, 'original_parent')
-                and obj.original_parent
-                and hasattr(obj.original_parent[0], 'to_object')
-                and obj.original_parent[0].to_object
+                old_id not in parent and
+                hasattr(obj, 'original_parent') and
+                obj.original_parent and
+                hasattr(obj.original_parent[0], 'to_object') and
+                obj.original_parent[0].to_object
             ):
                 old_version = obj.original_parent[0].to_object
                 obj.original_parent = []
