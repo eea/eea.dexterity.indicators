@@ -26,12 +26,9 @@ from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
 from ZODB.POSException import ConflictError
 from zope import schema
-from zope.component import adapter, getUtility
 from zope.event import notify
 from zope.interface import implementer, Interface
 from zope.lifecycleevent import ObjectCopiedEvent, modified
-from zope.intid.interfaces import IIntIds
-from z3c.relationfield.relation import RelationValue
 
 
 def getLink(path):
@@ -53,8 +50,6 @@ def draftExistsFor(originalObj):
     catalog = api.portal.get_tool("portal_catalog")
 
     origUid = originalObj.UID()
-    import pdb
-    pdb.set_trace()
     results = catalog.searchResults(
         portal_type="ims_indicator",
         copied_from=origUid,
