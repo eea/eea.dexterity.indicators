@@ -48,25 +48,21 @@ def getLink(path):
 
 def draftExistsFor(originalObj):
     """
-    Check if an indicator has a draft aleardy created
+    Check if an indicator has a draft already created.
     """
     catalog = api.portal.get_tool("portal_catalog")
-    intids = getUtility(IIntIds)
-    orig_id = intids.getId(originalObj)
 
-    results = catalog.searchResults(portal_type="ims_indicator")
+    origUid = originalObj.UID()
+    import pdb
+    pdb.set_trace()
+    results = catalog.searchResults(
+        portal_type="ims_indicator",
+        copied_from=origUid,
+    )
+
     for brain in results:
-        obj = brain.getObject()
-        if obj == originalObj:
-            continue
-
-        val = getattr(obj, "original_parent", None)
-        if not val:
-            continue
-
-        if any(rel.to_id == orig_id for rel in val if rel):
+        if brain.UID != origUid and brain.getObject().copied_from == origUid:
             return True
-
     return False
 
 
@@ -170,10 +166,7 @@ class CopyActionExecutor:
 
         obj._postCopy(target, op=0)
         try:
-            intids = getUtility(IIntIds)
-            relation = RelationValue(intids.getId(orig_obj))
-            obj.original_parent = [relation]
-            obj.reindexObject(idxs=["original_parent"])
+            obj.copied_from = orig_obj.UID()
         except Exception as e:
             self.error(obj, str(e))
 

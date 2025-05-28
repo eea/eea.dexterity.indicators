@@ -16,6 +16,7 @@ from z3c.relationfield.schema import RelationList, RelationChoice
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int
+from zope import schema
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
@@ -44,7 +45,7 @@ class IIndicatorMetadata(model.Schema):
             "topics",
             "temporal_coverage",
             "geo_coverage",
-            "original_parent"
+            "copied_from"
         ],
     )
 
@@ -79,23 +80,12 @@ class IIndicatorMetadata(model.Schema):
         default={"readOnly": True, "geolocation": []},
     )
 
-    original_parent = RelationList(
-        title=_("Original parent"),
-        value_type=RelationChoice(
-            title="Related", vocabulary="plone.app.vocabularies.Catalog"
-        ),
+    copied_from = schema.TextLine(
+        title=_("Original Parent UID"),
         required=False,
-        missing_value=[],
-
     )
 
-    directives.widget(
-        "original_parent",
-        RelatedItemsFieldWidget,
-        pattern_options={
-            "mode": "view",
-        },
-    )
+    directives.omitted("copied_from")
     #
     # Supporting information
     #
