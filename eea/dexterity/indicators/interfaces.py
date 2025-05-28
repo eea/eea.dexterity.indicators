@@ -7,12 +7,10 @@ from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
 from plone.schema import JSONField, Tuple, Choice
 from plone.supermodel import model
 from plone.autoform import directives
-from plone.app.z3cform.widget import RelatedItemsFieldWidget
 try:
     from plone.app.z3cform.widgets.select import SelectFieldWidget
 except ImportError:
     from z3c.form.browser.select import SelectFieldWidget
-from z3c.relationfield.schema import RelationList, RelationChoice
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int
