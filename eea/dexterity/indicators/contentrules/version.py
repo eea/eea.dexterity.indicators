@@ -26,6 +26,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
 from ZODB.POSException import ConflictError
 from zope import schema
+from zope.component import adapter
 from zope.event import notify
 from zope.interface import implementer, Interface
 from zope.lifecycleevent import ObjectCopiedEvent, modified
