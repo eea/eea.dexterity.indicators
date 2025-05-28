@@ -57,8 +57,10 @@ def draftExistsFor(originalObj):
     )
 
     for brain in results:
-        if brain.UID != origUid and brain.getObject().copied_from == origUid:
-            return True
+        if hasattr(brain, 'UID') and brain.UID != origUid:
+            obj = brain.getObject()
+            if hasattr(obj, 'copied_from') and obj.copied_from == origUid:
+                return True
     return False
 
 
