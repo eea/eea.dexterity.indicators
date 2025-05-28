@@ -17,6 +17,7 @@ from plone.app.contentrules.actions import ActionEditForm
 from plone.app.contentrules.browser.formhelper import (
     NullAddForm,
 )
+from plone.app.uuid.utils import uuidToObject
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
 from zope import schema
 from zope.component import adapter
@@ -65,10 +66,13 @@ class RetractAndRenameOldVersionExecutor:
         if not (old_id and new_id):
             return True
         try:
-            if old_id not in parent:
-                old_version = obj.relatedItems[0].to_object
-                obj.relatedItems = []
-                obj.reindexObject(idxs=["relatedItems"])
+            if (
+                old_id not in parent and
+                hasattr(obj, 'copied_from') and
+                obj.copied_from
+            ):
+                old_version = uuidToObject(obj.copied_from)
+                obj.copied_from = ""
             else:
                 old_version = parent[old_id]
             api.content.transition(

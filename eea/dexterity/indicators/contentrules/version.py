@@ -15,6 +15,7 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
+from plone import api
 
 try:
     from plone.base.utils import pretty_title_or_id
@@ -25,12 +26,10 @@ from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
 from ZODB.POSException import ConflictError
 from zope import schema
-from zope.component import adapter, getUtility
+from zope.component import adapter
 from zope.event import notify
 from zope.interface import implementer, Interface
 from zope.lifecycleevent import ObjectCopiedEvent, modified
-from zope.intid.interfaces import IIntIds
-from z3c.relationfield.relation import RelationValue
 
 
 def getLink(path):
@@ -43,6 +42,26 @@ def getLink(path):
     if URL.netloc.startswith("localhost") and URL.scheme:
         return path.replace(URL.scheme + "://" + URL.netloc, "")
     return path
+
+
+def draftExistsFor(originalObj):
+    """
+    Check if an indicator has a draft already created.
+    """
+    catalog = api.portal.get_tool("portal_catalog")
+
+    origUid = originalObj.UID()
+    results = catalog.searchResults(
+        portal_type="ims_indicator",
+        copied_from=origUid,
+    )
+
+    for brain in results:
+        if hasattr(brain, 'UID') and brain.UID != origUid:
+            obj = brain.getObject()
+            if hasattr(obj, 'copied_from') and obj.copied_from == origUid:
+                return True
+    return False
 
 
 class ICopyAction(Interface):
@@ -121,7 +140,7 @@ class CopyActionExecutor:
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith(".1"):
+        if not new_id.endswith(".1") or draftExistsFor(obj):
             # Version already exists, redirect to it - refs #279130
             return True
 
@@ -145,10 +164,7 @@ class CopyActionExecutor:
 
         obj._postCopy(target, op=0)
         try:
-            intids = getUtility(IIntIds)
-            relation = RelationValue(intids.getId(orig_obj))
-            obj.relatedItems = [relation]
-            obj.reindexObject(idxs=["relatedItems"])
+            obj.copied_from = orig_obj.UID()
         except Exception as e:
             self.error(obj, str(e))
 

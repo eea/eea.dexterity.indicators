@@ -14,6 +14,7 @@ except ImportError:
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int
+from zope import schema
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
@@ -42,6 +43,7 @@ class IIndicatorMetadata(model.Schema):
             "topics",
             "temporal_coverage",
             "geo_coverage",
+            "copied_from"
         ],
     )
 
@@ -76,6 +78,12 @@ class IIndicatorMetadata(model.Schema):
         default={"readOnly": True, "geolocation": []},
     )
 
+    copied_from = schema.TextLine(
+        title=_("Original Parent UID"),
+        required=False,
+    )
+
+    directives.omitted("copied_from")
     #
     # Supporting information
     #
