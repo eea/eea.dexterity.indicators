@@ -1,7 +1,7 @@
 Changelog
 =========
 
-11.1-dev0 - (unreleased)
+11.1 - (2025-06-12)
 ---------------------------
 * Bug fix: update links to figures on new versions of indicators
   [dobri1408 - refs #282960]
