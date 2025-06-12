@@ -1,8 +1,11 @@
 """Copy action for content rules."""
+
+from urllib.parse import urlparse
 from Acquisition import aq_base
 from OFS.event import ObjectClonedEvent
 from OFS.SimpleItem import SimpleItem
 import OFS.subscribers
+from plone.restapi.blocks import visit_blocks
 from plone.app.contentrules import PloneMessageFactory as _
 from plone.app.contentrules.actions import ActionAddForm
 from plone.app.contentrules.actions import ActionEditForm
@@ -10,6 +13,10 @@ from plone.app.contentrules.browser.formhelper import ContentRuleFormWrapper
 from plone.app.vocabularies.catalog import CatalogSource
 from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
+from plone.restapi.serializer.utils import uid_to_url
+from plone.restapi.deserializer.utils import path2uid
+from plone.uuid.interfaces import IUUID
+
 try:
     from plone.base.utils import pretty_title_or_id
 except ImportError:
@@ -21,9 +28,31 @@ from ZODB.POSException import ConflictError
 from zope import schema
 from zope.component import adapter
 from zope.event import notify
-from zope.interface import implementer
-from zope.interface import Interface
-from zope.lifecycleevent import ObjectCopiedEvent
+from zope.interface import implementer, Interface
+from zope.lifecycleevent import ObjectCopiedEvent, modified
+
+
+def getLink(path):
+    """
+    Get link
+    """
+
+    URL = urlparse(path)
+
+    if URL.netloc.startswith("localhost") and URL.scheme:
+        return path.replace(URL.scheme + "://" + URL.netloc, "")
+    return path
+
+
+def draftExistsFor(originalObj, new_id=None):
+    """
+    Check if an indicator has a draft already created.
+    """
+    if new_id and not new_id.endswith(".1"):
+        return True
+    if getattr(originalObj, 'copied_to', None):
+        return True
+    return False
 
 
 class ICopyAction(Interface):
@@ -75,11 +104,13 @@ class CopyActionExecutor:
         self.event = event
 
     def __call__(self):
+
         portal_url = getToolByName(self.context, "portal_url", None)
         if portal_url is None:
             return False
 
         obj = self.event.object
+        previous_obj_path = obj.absolute_url_path()
 
         path = self.element.target_folder
         change_note = self.element.change_note
@@ -100,7 +131,7 @@ class CopyActionExecutor:
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith('.1'):
+        if draftExistsFor(obj, new_id):
             # Version already exists, redirect to it - refs #279130
             return True
 
@@ -123,14 +154,31 @@ class CopyActionExecutor:
         obj.wl_clearLocks()
 
         obj._postCopy(target, op=0)
+        try:
+            orig_obj.copied_to = IUUID(obj)
+            obj.copied_from = IUUID(orig_obj)
+        except Exception as e:
+            self.error(obj, str(e))
 
         OFS.subscribers.compatibilityCall("manage_afterClone", obj, obj)
 
         notify(ObjectClonedEvent(obj))
 
-        pr = getToolByName(obj, 'portal_repository')
+        pr = getToolByName(obj, "portal_repository")
         pr.save(obj=obj, comment=change_note)
-
+        # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
+        for block_data in visit_blocks(obj, obj.blocks):
+            if (block_data.get("@type") == "embed_content" and
+                    "url" in block_data):
+                url = uid_to_url(block_data["url"])
+                if previous_obj_path in url:
+                    url = url.replace(
+                        previous_obj_path,
+                        previous_obj_path + ".1"
+                    )
+                    url = path2uid(context=self.context, link=getLink(url))
+                    block_data["url"] = url
+        modified(obj)
         return True
 
     def error(self, obj, error):
