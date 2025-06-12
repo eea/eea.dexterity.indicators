@@ -63,27 +63,33 @@ class RetractAndRenameOldVersionExecutor:
         elif oid.endswith(".1"):
             old_id = oid.replace(".1", "", 1)
             new_id = old_id + "-%d" % time()
+
         if not (old_id and new_id):
             return True
+
         try:
-            if (
-                old_id not in parent and
-                hasattr(obj, 'copied_from') and
-                obj.copied_from
-            ):
-                old_version = uuidToObject(obj.copied_from)
-                obj.copied_from = ""
-            else:
+            old_version = None
+            if old_id in parent:
                 old_version = parent[old_id]
-            api.content.transition(
-                obj=old_version,
-                transition="markForDeletion",
-                comment="Auto archive item due to new version being published",
-            )
+            else:
+                copied_from = getattr(obj, 'copied_from', None)
+                if copied_from:
+                    obj.copied_from = ""
+                    old_version = uuidToObject(copied_from, True)
+
+            if old_version is None:
+                return True
 
             # Bypass user roles in order to rename old version
             oldSecurityManager = getSecurityManager()
             newSecurityManager(None, SpecialUsers.system)
+
+            api.content.transition(
+                obj=old_version,
+                transition="markForDeletion",
+                comment=("Auto archive item due to "
+                         "new version being published"),
+            )
 
             api.content.rename(obj=old_version, new_id=new_id)
             api.content.rename(obj=obj, new_id=old_id)
