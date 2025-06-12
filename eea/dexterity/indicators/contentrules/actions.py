@@ -17,6 +17,7 @@ from plone.app.contentrules.actions import ActionEditForm
 from plone.app.contentrules.browser.formhelper import (
     NullAddForm,
 )
+from plone.app.uuid.utils import uuidToObject
 from plone.contentrules.rule.interfaces import IExecutable, IRuleElementData
 from zope import schema
 from zope.component import adapter
@@ -63,15 +64,29 @@ class RetractAndRenameOldVersionExecutor:
             old_id = oid.replace(".1", "", 1)
             new_id = old_id + "-%d" % time()
 
-        if not (old_id and new_id):
-            return True
-
         try:
-            old_version = parent[old_id]
+            old_version = None
+            if old_id in parent:
+                old_version = parent[old_id]
+            else:
+                copied_from = getattr(obj, 'copied_from', None)
+                if copied_from:
+                    old_version = uuidToObject(copied_from, True)
+
+            if old_version is None:
+                return True
+
+            if not old_id:
+                old_id = old_version.getId()
+
+            if not new_id:
+                new_id = old_id + "-%d" % time()
+
             api.content.transition(
                 obj=old_version,
                 transition="markForDeletion",
-                comment="Auto archive item due to new version being published",
+                comment=("Auto archive item due to "
+                         "new version being published"),
             )
 
             # Bypass user roles in order to rename old version
