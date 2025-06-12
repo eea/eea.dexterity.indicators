@@ -15,7 +15,7 @@ from plone.contentrules.rule.interfaces import IExecutable
 from plone.contentrules.rule.interfaces import IRuleElementData
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
-from plone import api
+from plone.uuid.interfaces import IUUID
 
 try:
     from plone.base.utils import pretty_title_or_id
@@ -44,23 +44,14 @@ def getLink(path):
     return path
 
 
-def draftExistsFor(originalObj):
+def draftExistsFor(originalObj, new_id=None):
     """
     Check if an indicator has a draft already created.
     """
-    catalog = api.portal.get_tool("portal_catalog")
-
-    origUid = originalObj.UID()
-    results = catalog.searchResults(
-        portal_type="ims_indicator",
-        copied_from=origUid,
-    )
-
-    for brain in results:
-        if hasattr(brain, 'UID') and brain.UID != origUid:
-            obj = brain.getObject()
-            if hasattr(obj, 'copied_from') and obj.copied_from == origUid:
-                return True
+    if new_id and not new_id.endswith(".1"):
+        return True
+    if getattr(originalObj, 'copied_to', None):
+        return True
     return False
 
 
@@ -140,7 +131,7 @@ class CopyActionExecutor:
 
         old_id = obj.getId()
         new_id = self.generate_id(target, old_id)
-        if not new_id.endswith(".1") or draftExistsFor(obj):
+        if draftExistsFor(obj, new_id):
             # Version already exists, redirect to it - refs #279130
             return True
 
@@ -164,7 +155,8 @@ class CopyActionExecutor:
 
         obj._postCopy(target, op=0)
         try:
-            obj.copied_from = orig_obj.UID()
+            orig_obj.copied_to = IUUID(obj)
+            obj.copied_from = IUUID(orig_obj)
         except Exception as e:
             self.error(obj, str(e))
 
@@ -225,7 +217,6 @@ class CopyAddForm(ActionAddForm):
 
 class CopyAddFormView(ContentRuleFormWrapper):
     """A wrapper for the add form."""
-
     form = CopyAddForm
 
 
@@ -243,5 +234,4 @@ class CopyEditForm(ActionEditForm):
 
 class CopyEditFormView(ContentRuleFormWrapper):
     """A wrapper for the edit form."""
-
     form = CopyEditForm
