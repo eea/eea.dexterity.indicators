@@ -62,19 +62,19 @@ def add_dividers_to_indicators(context):
         """Add divider to a group if it doesn't exist"""
         if not group or "data" not in group:
             return False
-        
+
         group_data = group["data"]
         if "blocks" not in group_data:
             return False
-            
+
         blocks = group_data["blocks"]
-        
+
         # Add divider if it doesn't exist
         if divider_id in blocks:
             return False
-            
+
         blocks[divider_id] = new_dividers[divider_id]
-        
+
         # Add to layout if present
         if ("blocks_layout" in group_data and
                 "items" in group_data["blocks_layout"]):
@@ -86,7 +86,7 @@ def add_dividers_to_indicators(context):
                     layout_items.insert(embed_index + 1, divider_id)
                 else:
                     layout_items.append(divider_id)
-        
+
         return True
 
     for idx, brain in enumerate(brains):
@@ -105,11 +105,11 @@ def add_dividers_to_indicators(context):
         aggregate_group = find_group_by_id_or_title(
             doc.blocks, aggregate_id, aggregate_title
         )
-        
+
         divider_id1 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881d"
         embed_id1 = "b0279dde-1ceb-4137-a7f1-5ab7b46a782c"
-        if add_divider_to_group(aggregate_group, divider_id1, embed_id1, 
-                               new_dividers):
+        if add_divider_to_group(aggregate_group, divider_id1, embed_id1,
+                                new_dividers):
             blocks_modified = True
 
         # Find and update Disaggregate level assessment group
@@ -118,11 +118,11 @@ def add_dividers_to_indicators(context):
         disaggregate_group = find_group_by_id_or_title(
             doc.blocks, disaggregate_id, disaggregate_title
         )
-        
+
         divider_id2 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881e"
         embed_id2 = "02ba4a04-fcfe-4968-806f-1dac3119cfef"
         if add_divider_to_group(disaggregate_group, divider_id2, embed_id2,
-                               new_dividers):
+                                new_dividers):
             blocks_modified = True
 
         if blocks_modified:
