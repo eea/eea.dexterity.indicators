@@ -48,15 +48,46 @@ def add_dividers_to_indicators(context):
         """Find group block by ID first, then by title"""
         # First try to find by ID
         if group_id in blocks:
-            return group_id, blocks[group_id]
+            return blocks[group_id]
 
         # If not found by ID, search by title
-        for block_id, block_data in blocks.items():
+        for block_data in blocks.values():
             if (isinstance(block_data, dict) and
                     block_data.get("title") == group_title):
-                return block_id, block_data
+                return block_data
 
-        return None, None
+        return None
+
+    def add_divider_to_group(group, divider_id, embed_id, new_dividers):
+        """Add divider to a group if it doesn't exist"""
+        if not group or "data" not in group:
+            return False
+        
+        group_data = group["data"]
+        if "blocks" not in group_data:
+            return False
+            
+        blocks = group_data["blocks"]
+        
+        # Add divider if it doesn't exist
+        if divider_id in blocks:
+            return False
+            
+        blocks[divider_id] = new_dividers[divider_id]
+        
+        # Add to layout if present
+        if ("blocks_layout" in group_data and
+                "items" in group_data["blocks_layout"]):
+            layout_items = group_data["blocks_layout"]["items"]
+            if divider_id not in layout_items:
+                # Insert after the embed_content block
+                if embed_id in layout_items:
+                    embed_index = layout_items.index(embed_id)
+                    layout_items.insert(embed_index + 1, divider_id)
+                else:
+                    layout_items.append(divider_id)
+        
+        return True
 
     for idx, brain in enumerate(brains):
         pghandler.report(idx)
@@ -68,69 +99,31 @@ def add_dividers_to_indicators(context):
 
         blocks_modified = False
 
-        # Find the Aggregate level assessment group and add the first divider
+        # Find and update Aggregate level assessment group
         aggregate_id = "1bc4379d-cddb-4120-84ad-5ab025533b12"
         aggregate_title = "Aggregate level assessment"
-        aggregate_group_id, aggregate_group = find_group_by_id_or_title(
+        aggregate_group = find_group_by_id_or_title(
             doc.blocks, aggregate_id, aggregate_title
         )
+        
+        divider_id1 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881d"
+        embed_id1 = "b0279dde-1ceb-4137-a7f1-5ab7b46a782c"
+        if add_divider_to_group(aggregate_group, divider_id1, embed_id1, 
+                               new_dividers):
+            blocks_modified = True
 
-        if (aggregate_group and "data" in aggregate_group and
-                "blocks" in aggregate_group["data"]):
-            aggregate_blocks = aggregate_group["data"]["blocks"]
-
-            # Add the first divider if it doesn't exist
-            divider_id = "43df8fab-b278-4b0e-a62c-ce6b8e0a881d"
-            if divider_id not in aggregate_blocks:
-                aggregate_blocks[divider_id] = new_dividers[divider_id]
-
-                # Add to layout if not present
-                agg_data = aggregate_group["data"]
-                if ("blocks_layout" in agg_data and
-                        "items" in agg_data["blocks_layout"]):
-                    layout_items = agg_data["blocks_layout"]["items"]
-                    if divider_id not in layout_items:
-                        # Insert after the embed_content block
-                        embed_id = "b0279dde-1ceb-4137-a7f1-5ab7b46a782c"
-                        if embed_id in layout_items:
-                            embed_index = layout_items.index(embed_id)
-                            layout_items.insert(embed_index + 1, divider_id)
-                        else:
-                            layout_items.append(divider_id)
-
-                blocks_modified = True
-
-        # Find the Disaggregate level assessment group and add divider
+        # Find and update Disaggregate level assessment group
         disaggregate_id = "d060487d-88fc-4f7b-8ea4-003f14e0fb0c"
         disaggregate_title = "Disaggregate level assessment"
-        disaggregate_group_id, disaggregate_group = find_group_by_id_or_title(
+        disaggregate_group = find_group_by_id_or_title(
             doc.blocks, disaggregate_id, disaggregate_title
         )
-
-        if (disaggregate_group and "data" in disaggregate_group and
-                "blocks" in disaggregate_group["data"]):
-            disaggregate_blocks = disaggregate_group["data"]["blocks"]
-
-            # Add the second divider if it doesn't exist
-            divider_id2 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881e"
-            if divider_id2 not in disaggregate_blocks:
-                disaggregate_blocks[divider_id2] = new_dividers[divider_id2]
-
-                # Add to layout if not present
-                dis_data = disaggregate_group["data"]
-                if ("blocks_layout" in dis_data and
-                        "items" in dis_data["blocks_layout"]):
-                    layout_items = dis_data["blocks_layout"]["items"]
-                    if divider_id2 not in layout_items:
-                        # Insert after the embed_content block
-                        embed_id2 = "02ba4a04-fcfe-4968-806f-1dac3119cfef"
-                        if embed_id2 in layout_items:
-                            embed_index = layout_items.index(embed_id2)
-                            layout_items.insert(embed_index + 1, divider_id2)
-                        else:
-                            layout_items.append(divider_id2)
-
-                blocks_modified = True
+        
+        divider_id2 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881e"
+        embed_id2 = "02ba4a04-fcfe-4968-806f-1dac3119cfef"
+        if add_divider_to_group(disaggregate_group, divider_id2, embed_id2,
+                               new_dividers):
+            blocks_modified = True
 
         if blocks_modified:
             doc.reindexObject()
