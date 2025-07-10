@@ -5,7 +5,11 @@ from Products.ZCatalog.ProgressHandler import ZLogHandler
 
 
 def add_dividers_to_indicators(context):
-    """Add new dividers 43df8fab-b278-4b0e-a62c-ce6b8e0a881d and 43df8fab-b278-4b0e-a62c-ce6b8e0a881e to all indicators"""
+    """Add new dividers to all indicators.
+    
+    Adds 43df8fab-b278-4b0e-a62c-ce6b8e0a881d and 
+    43df8fab-b278-4b0e-a62c-ce6b8e0a881e to all indicators.
+    """
     ctool = getToolByName(context, "portal_catalog")
     brains = ctool.unrestrictedSearchResults(portal_type="ims_indicator")
     pghandler = ZLogHandler(100)
@@ -48,7 +52,8 @@ def add_dividers_to_indicators(context):
 
         # If not found by ID, search by title
         for block_id, block_data in blocks.items():
-            if isinstance(block_data, dict) and block_data.get("title") == group_title:
+            if (isinstance(block_data, dict) and 
+                    block_data.get("title") == group_title):
                 return block_id, block_data
 
         return None, None
@@ -78,10 +83,9 @@ def add_dividers_to_indicators(context):
             aggregate_blocks = aggregate_group["data"]["blocks"]
 
             # Add the first divider if it doesn't exist
-            if "43df8fab-b278-4b0e-a62c-ce6b8e0a881d" not in aggregate_blocks:
-                aggregate_blocks["43df8fab-b278-4b0e-a62c-ce6b8e0a881d"] = new_dividers[
-                    "43df8fab-b278-4b0e-a62c-ce6b8e0a881d"
-                ]
+            divider_id = "43df8fab-b278-4b0e-a62c-ce6b8e0a881d"
+            if divider_id not in aggregate_blocks:
+                aggregate_blocks[divider_id] = new_dividers[divider_id]
 
                 # Add to layout if not present
                 if (
@@ -89,16 +93,14 @@ def add_dividers_to_indicators(context):
                     and "items" in aggregate_group["data"]["blocks_layout"]
                 ):
                     layout_items = aggregate_group["data"]["blocks_layout"]["items"]
-                    if "43df8fab-b278-4b0e-a62c-ce6b8e0a881d" not in layout_items:
+                    if divider_id not in layout_items:
                         # Insert after the embed_content block
-                        embed_block_id = "b0279dde-1ceb-4137-a7f1-5ab7b46a782c"
-                        if embed_block_id in layout_items:
-                            embed_index = layout_items.index(embed_block_id)
-                            layout_items.insert(
-                                embed_index + 1, "43df8fab-b278-4b0e-a62c-ce6b8e0a881d"
-                            )
+                        embed_id = "b0279dde-1ceb-4137-a7f1-5ab7b46a782c"
+                        if embed_id in layout_items:
+                            embed_index = layout_items.index(embed_id)
+                            layout_items.insert(embed_index + 1, divider_id)
                         else:
-                            layout_items.append("43df8fab-b278-4b0e-a62c-ce6b8e0a881d")
+                            layout_items.append(divider_id)
 
                 blocks_modified = True
 
@@ -117,10 +119,9 @@ def add_dividers_to_indicators(context):
             disaggregate_blocks = disaggregate_group["data"]["blocks"]
 
             # Add the second divider if it doesn't exist
-            if "43df8fab-b278-4b0e-a62c-ce6b8e0a881e" not in disaggregate_blocks:
-                disaggregate_blocks["43df8fab-b278-4b0e-a62c-ce6b8e0a881e"] = (
-                    new_dividers["43df8fab-b278-4b0e-a62c-ce6b8e0a881e"]
-                )
+            divider_id2 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881e"
+            if divider_id2 not in disaggregate_blocks:
+                disaggregate_blocks[divider_id2] = new_dividers[divider_id2]
 
                 # Add to layout if not present
                 if (
@@ -128,16 +129,14 @@ def add_dividers_to_indicators(context):
                     and "items" in disaggregate_group["data"]["blocks_layout"]
                 ):
                     layout_items = disaggregate_group["data"]["blocks_layout"]["items"]
-                    if "43df8fab-b278-4b0e-a62c-ce6b8e0a881e" not in layout_items:
+                    if divider_id2 not in layout_items:
                         # Insert after the embed_content block
-                        embed_block_id = "02ba4a04-fcfe-4968-806f-1dac3119cfef"
-                        if embed_block_id in layout_items:
-                            embed_index = layout_items.index(embed_block_id)
-                            layout_items.insert(
-                                embed_index + 1, "43df8fab-b278-4b0e-a62c-ce6b8e0a881e"
-                            )
+                        embed_id2 = "02ba4a04-fcfe-4968-806f-1dac3119cfef"
+                        if embed_id2 in layout_items:
+                            embed_index = layout_items.index(embed_id2)
+                            layout_items.insert(embed_index + 1, divider_id2)
                         else:
-                            layout_items.append("43df8fab-b278-4b0e-a62c-ce6b8e0a881e")
+                            layout_items.append(divider_id2)
 
                 blocks_modified = True
 
