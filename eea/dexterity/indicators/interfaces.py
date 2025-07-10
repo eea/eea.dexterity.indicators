@@ -673,6 +673,7 @@ class IIndicatorLayout(model.Schema):
                             "hidden": True,
                             "readOnly": True,
                             "required": True,
+                            "styles": {},
                             "spacing": "s",
                             "fitted": False,
                         },
