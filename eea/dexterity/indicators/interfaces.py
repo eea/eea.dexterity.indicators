@@ -326,10 +326,21 @@ class IIndicatorLayout(model.Schema):
                                 "encoding": "utf8",
                             },
                         },
+                         "43df8fab-b278-4b0e-a62c-ce6b8e0a881d": {
+  "@type": "dividerBlock",
+  "section": False,
+  "short": True,
+  "block": "461671a2-218e-42ba-82ee-4bb660aeb379",
+  "@layout": "c720983c-5056-4822-9d57-150c8e120383",
+  "styles": {},
+  "spacing": "s",
+  "fitted": False
+ },
                     },
                     "blocks_layout": {
                         "items": [
                             "b0279dde-1ceb-4137-a7f1-5ab7b46a782c",
+                            "43df8fab-b278-4b0e-a62c-ce6b8e0a881d",
                             "deb7e84d-d2c8-4491-90fa-3dc65fe02143",
                         ]
                     },
@@ -664,6 +675,16 @@ class IIndicatorLayout(model.Schema):
                                 "encoding": "utf8",
                             },
                         },
+                        "43df8fab-b278-4b0e-a62c-ce6b8e0a881e": {
+  "@type": "dividerBlock",
+  "section": False,
+  "short": True,
+  "block": "461671a2-218e-42ba-82ee-4bb660aeb379",
+  "@layout": "c720983c-5056-4822-9d57-150c8e120383",
+  "styles": {},
+  "spacing": "s",
+  "fitted": False
+ },
                         "02ba4a04-fcfe-4968-806f-1dac3119cfef": {
                             "required": True,
                             "fixed": True,
@@ -675,10 +696,12 @@ class IIndicatorLayout(model.Schema):
                                 "encoding": "utf8",
                             },
                         },
+                        
                     },
                     "blocks_layout": {
                         "items": [
                             "02ba4a04-fcfe-4968-806f-1dac3119cfef",
+                            "43df8fab-b278-4b0e-a62c-ce6b8e0a881e",
                             "d3d49723-14e5-4663-b346-37ee3572f28d",
                         ]
                     },
