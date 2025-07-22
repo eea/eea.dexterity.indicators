@@ -1,4 +1,5 @@
 """Module where all interfaces, events and exceptions live."""
+
 # pylint: disable=line-too-long
 from eea.dexterity.indicators import EEAMessageFactory as _
 from eea.schema.slate.field import SlateJSONField
@@ -7,6 +8,7 @@ from plone.restapi.behaviors import BLOCKS_SCHEMA, LAYOUT_SCHEMA
 from plone.schema import JSONField, Tuple, Choice
 from plone.supermodel import model
 from plone.autoform import directives
+
 try:
     from plone.app.z3cform.widgets.select import SelectFieldWidget
 except ImportError:
@@ -172,16 +174,14 @@ class IIndicatorLayout(model.Schema):
     #
     # Layout
     #
-    model.fieldset(
-        "layout", label=_("Layout"), fields=["blocks", "blocks_layout"]
-    )
+    model.fieldset("layout", label=_("Layout"), fields=["blocks", "blocks_layout"])
 
     blocks = JSONField(
         title=_("Blocks"),
         description=_("The JSON representation of the object blocks."),
         schema=BLOCKS_SCHEMA,
         default={
-             "2dc79b22-b2c8-450a-8044-ef04bfd044cf": {
+            "2dc79b22-b2c8-450a-8044-ef04bfd044cf": {
                 "@type": "dividerBlock",
                 "disableNewBlocks": True,
                 "fixed": True,
@@ -304,9 +304,7 @@ class IIndicatorLayout(model.Schema):
                         "deb7e84d-d2c8-4491-90fa-3dc65fe02143": {
                             "plaintext": "",
                             "required": True,
-                            "value": [
-                                {"type": "p", "children": [{"text": ""}]}
-                            ],
+                            "value": [{"type": "p", "children": [{"text": ""}]}],
                             "fixed": True,
                             "@type": "slate",
                             "instructions": {
@@ -326,10 +324,24 @@ class IIndicatorLayout(model.Schema):
                                 "encoding": "utf8",
                             },
                         },
+                        "43df8fab-b278-4b0e-a62c-ce6b8e0a881d": {
+                            "@type": "dividerBlock",
+                            "section": False,
+                            "short": True,
+                            "disableNewBlocks": True,
+                            "fixed": True,
+                            "hidden": True,
+                            "readOnly": True,
+                            "required": True,
+                            "styles": {},
+                            "spacing": "s",
+                            "fitted": False,
+                        },
                     },
                     "blocks_layout": {
                         "items": [
                             "b0279dde-1ceb-4137-a7f1-5ab7b46a782c",
+                            "43df8fab-b278-4b0e-a62c-ce6b8e0a881d",
                             "deb7e84d-d2c8-4491-90fa-3dc65fe02143",
                         ]
                     },
@@ -377,9 +389,7 @@ class IIndicatorLayout(model.Schema):
                             },
                             "@type": "accordionPanel",
                             "blocks_layout": {
-                                "items": [
-                                    "d9aa8ed3-1c8a-4134-a324-663489a04473"
-                                ]
+                                "items": ["d9aa8ed3-1c8a-4134-a324-663489a04473"]
                             },
                             "title": "References and footnotes",
                         },
@@ -446,9 +456,7 @@ class IIndicatorLayout(model.Schema):
                             },
                             "@type": "accordionPanel",
                             "blocks_layout": {
-                                "items": [
-                                    "b5381428-5cae-4199-9ca8-b2e5fa4677d9"
-                                ]
+                                "items": ["b5381428-5cae-4199-9ca8-b2e5fa4677d9"]
                             },
                             "title": "Supporting information",
                         },
@@ -609,9 +617,7 @@ class IIndicatorLayout(model.Schema):
                             },
                             "@type": "accordionPanel",
                             "blocks_layout": {
-                                "items": [
-                                    "e047340c-c02e-4247-89ab-5fec73aeb5d3"
-                                ]
+                                "items": ["e047340c-c02e-4247-89ab-5fec73aeb5d3"]
                             },
                             "title": "Metadata",
                         },
@@ -625,11 +631,7 @@ class IIndicatorLayout(model.Schema):
                     },
                 },
                 "@type": "accordion",
-                "allowedBlocks": [
-                    "columnsBlock",
-                    "slateFootnotes",
-                    "metadataSection"
-                ],
+                "allowedBlocks": ["columnsBlock", "slateFootnotes", "metadataSection"],
             },
             "d060487d-88fc-4f7b-8ea4-003f14e0fb0c": {
                 "title": "Disaggregate level assessment",
@@ -653,9 +655,7 @@ class IIndicatorLayout(model.Schema):
                         "d3d49723-14e5-4663-b346-37ee3572f28d": {
                             "plaintext": "",
                             "required": True,
-                            "value": [
-                                {"type": "p", "children": [{"text": ""}]}
-                            ],
+                            "value": [{"type": "p", "children": [{"text": ""}]}],
                             "fixed": True,
                             "@type": "slate",
                             "instructions": {
@@ -663,6 +663,19 @@ class IIndicatorLayout(model.Schema):
                                 "content-type": "text/html",
                                 "encoding": "utf8",
                             },
+                        },
+                        "43df8fab-b278-4b0e-a62c-ce6b8e0a881e": {
+                            "@type": "dividerBlock",
+                            "section": False,
+                            "short": True,
+                            "disableNewBlocks": True,
+                            "fixed": True,
+                            "hidden": True,
+                            "readOnly": True,
+                            "required": True,
+                            "styles": {},
+                            "spacing": "s",
+                            "fitted": False,
                         },
                         "02ba4a04-fcfe-4968-806f-1dac3119cfef": {
                             "required": True,
@@ -679,6 +692,7 @@ class IIndicatorLayout(model.Schema):
                     "blocks_layout": {
                         "items": [
                             "02ba4a04-fcfe-4968-806f-1dac3119cfef",
+                            "43df8fab-b278-4b0e-a62c-ce6b8e0a881e",
                             "d3d49723-14e5-4663-b346-37ee3572f28d",
                         ]
                     },

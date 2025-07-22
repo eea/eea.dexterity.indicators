@@ -1,6 +1,11 @@
 Changelog
 =========
 
+12.0 - (2025-07-14)
+---------------------------
+* Bug fix: Fix spacing around figures by adding extra dividers
+  [dobri1408 - refs #289543]
+
 11.1 - (2025-06-12)
 ---------------------------
 * Bug fix: update links to figures on new versions of indicators

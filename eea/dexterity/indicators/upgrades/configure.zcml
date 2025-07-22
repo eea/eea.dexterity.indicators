@@ -45,4 +45,13 @@
     profile="eea.dexterity.indicators:default"
     />
 
+  <genericsetup:upgradeStep
+    title="Add new dividers to all indicators"
+    description="Add dividers 43df8fab-b278-4b0e-a62c-ce6b8e0a881d and 43df8fab-b278-4b0e-a62c-ce6b8e0a881e to existing indicators"
+    source="11.0"
+    destination="12.0"
+    handler=".add_dividers.add_dividers_to_indicators"
+    profile="eea.dexterity.indicators:default"
+    />
+
 </configure>
