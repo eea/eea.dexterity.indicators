@@ -334,7 +334,7 @@ class IIndicatorLayout(model.Schema):
                             "readOnly": True,
                             "required": True,
                             "styles": {},
-                            "spacing": "s",
+                            "spacing": "m",
                             "fitted": False,
                         },
                     },
@@ -674,7 +674,7 @@ class IIndicatorLayout(model.Schema):
                             "readOnly": True,
                             "required": True,
                             "styles": {},
-                            "spacing": "s",
+                            "spacing": "m",
                             "fitted": False,
                         },
                         "02ba4a04-fcfe-4968-806f-1dac3119cfef": {

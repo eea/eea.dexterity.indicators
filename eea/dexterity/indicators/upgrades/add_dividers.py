@@ -27,7 +27,7 @@ def add_dividers_to_indicators(context):
             "readOnly": True,
             "required": True,
             "styles": {},
-            "spacing": "s",
+            "spacing": "m",
             "fitted": False,
         },
         "43df8fab-b278-4b0e-a62c-ce6b8e0a881e": {
@@ -39,7 +39,7 @@ def add_dividers_to_indicators(context):
             "hidden": True,
             "readOnly": True,
             "required": True,
-            "spacing": "s",
+            "spacing": "m",
             "fitted": False,
         },
     }

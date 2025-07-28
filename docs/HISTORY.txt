@@ -1,6 +1,11 @@
 Changelog
 =========
 
+12.1 - (2025-07-28)
+---------------------------
+* Bug fix: Normalize all divider spacing to M size
+  [avoinea - refs #289543]
+
 12.0 - (2025-07-14)
 ---------------------------
 * Bug fix: Fix spacing around figures by adding extra dividers
