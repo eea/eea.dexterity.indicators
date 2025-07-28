@@ -1,6 +1,9 @@
 Changelog
 =========
 
+12.2-dev0 - (unreleased)
+---------------------------
+
 12.1 - (2025-07-28)
 ---------------------------
 * Bug fix: Normalize all divider spacing to M size
