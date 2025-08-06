@@ -15,9 +15,9 @@ class IndicatorObjectPrimaryFieldTarget:
         self.request = request
 
     def __call__(self):
-        if api.content.get_state(self.context) != 'marked_for_deletion' or api.content.get_state(self.context) != 'archived':
+        state = api.content.get_state(self.context)
+        if state not in ('marked_for_deletion', 'archived'):
             return None
-
         url = self.context.absolute_url()
         old_version = url.split("-")[-1]
         try:
