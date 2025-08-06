@@ -77,7 +77,7 @@ class RetractAndRenameOldVersionExecutor:
                 old_version = parent[old_id]
             api.content.transition(
                 obj=old_version,
-                transition="markForDeletion",
+                transition="archived",
                 comment="Auto archive item due to new version being published",
             )
 
