@@ -2,8 +2,6 @@
 
 import logging
 from Products.CMFCore.utils import getToolByName
-from Products.GenericSetup.context import SetupEnviron
-from Products.GenericSetup.tool import SetupTool
 
 logger = logging.getLogger("eea.dexterity.indicators.upgrades")
 
@@ -35,19 +33,20 @@ def to_121(context):
         wf_tool.updateRoleMappings()
 
         logger.info(
-            f"Updated workflow {workflow_id} - archived state should now be available"
+            "Updated workflow %s - archived state should now be available",
+            workflow_id
         )
 
         # Log available transitions for verification
         if hasattr(workflow, "transitions"):
             available_transitions = list(workflow.transitions.keys())
-            logger.info(f"Available transitions: {available_transitions}")
+            logger.info("Available transitions: %s", available_transitions)
             if "archived" in available_transitions:
                 logger.info("SUCCESS: archived transition is now available")
             else:
                 logger.error("FAILED: archived transition still not available")
     else:
-        logger.warning(f"Workflow {workflow_id} not found in workflow tool")
+        logger.warning("Workflow %s not found in workflow tool", workflow_id)
 
     # Clear any cached workflow information
     if hasattr(wf_tool, "_v_wf_cache"):
