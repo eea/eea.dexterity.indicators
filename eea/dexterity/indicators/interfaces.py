@@ -160,6 +160,14 @@ class IIndicatorMetadata(model.Schema):
     #
     # Workflow
     #
+        #
+    # Workflow
+    #
+    model.fieldset(
+        "workflow",
+        label=_("Workflow"),
+        fields=[],
+    )
     model.fieldset(
         "default",
         fields=["copied_from", "copied_to"],
