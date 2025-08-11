@@ -1,4 +1,4 @@
-""" dxfields serializers and deserializers """
+"""dxfields serializers and deserializers"""
 
 from zope.component import adapter
 from zope.interface import implementer
@@ -20,25 +20,25 @@ class IndicatorSerializer(SerializeToJson):
 
     def __call__(self, version=None, include_items=True):
         result = super().__call__(version=version, include_items=include_items)
-       
+
         # Convert copied_from UUID to URL
-        if 'copied_from' in result and result['copied_from']:
-            uid = result['copied_from']
+        if "copied_from" in result and result["copied_from"]:
+            uid = result["copied_from"]
             brain = uuidToCatalogBrain(uid)
             if brain:
-                result['copied_from'] = brain.getURL()
+                result["copied_from"] = brain.getURL()
             else:
-                result['copied_from'] = uid_to_url(f'resolveuid/{uid}')
-            
-        # Convert copied_to UUID to URL  
-        if 'copied_to' in result and result['copied_to']:
-            uid = result['copied_to']
+                result["copied_from"] = uid_to_url(f"resolveuid/{uid}")
+
+        # Convert copied_to UUID to URL
+        if "copied_to" in result and result["copied_to"]:
+            uid = result["copied_to"]
             brain = uuidToCatalogBrain(uid)
             if brain:
-                result['copied_to'] = brain.getURL()
+                result["copied_to"] = brain.getURL()
             else:
-                result['copied_to'] = uid_to_url(f'resolveuid/{uid}')
-        
+                result["copied_to"] = uid_to_url(f"resolveuid/{uid}")
+
         return result
 
 
@@ -49,23 +49,26 @@ class IndicatorDeserializer(DeserializeFromJson):
 
     def __call__(self, validate_all=False, create=False):
         # Get the data before processing
-        data = self.request.get('BODY', {})
+        data = self.request.get("BODY", {})
         if isinstance(data, bytes):
-            data = data.decode('utf-8')
+            data = data.decode("utf-8")
         if isinstance(data, str):
             import json
+
             try:
                 data = json.loads(data)
             except (ValueError, TypeError):
                 data = {}
-        
+
         # Convert copied_from URL back to UUID
-        if 'copied_from' in data and data['copied_from']:
-            data['copied_from'] = path2uid(context=self.context, link=data['copied_from'])
-            
+        if "copied_from" in data and data["copied_from"]:
+            data["copied_from"] = path2uid(
+                context=self.context, link=data["copied_from"]
+            )
+
         # Convert copied_to URL back to UUID
-        if 'copied_to' in data and data['copied_to']:
-            data['copied_to'] = path2uid(context=self.context, link=data['copied_to'])
-        
+        if "copied_to" in data and data["copied_to"]:
+            data["copied_to"] = path2uid(context=self.context, link=data["copied_to"])
+
         # Continue with normal deserialization
         return super().__call__(validate_all=validate_all, create=create)
