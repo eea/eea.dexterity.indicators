@@ -29,7 +29,7 @@ class IndicatorSerializer(SerializeToJson):
             if brain:
                 result["copied_from"] = brain.getURL()
             else:
-                result["copied_from"] = uid_to_url(f"resolveuid/{uid}")
+                result["copied_from"] = uid_to_url("resolveuid/{}".format(uid))
 
         # Convert copied_to UUID to URL
         if "copied_to" in result and result["copied_to"]:
@@ -38,7 +38,7 @@ class IndicatorSerializer(SerializeToJson):
             if brain:
                 result["copied_to"] = brain.getURL()
             else:
-                result["copied_to"] = uid_to_url(f"resolveuid/{uid}")
+                result["copied_to"] = uid_to_url("resolveuid/{}".format(uid))
 
         return result
 
