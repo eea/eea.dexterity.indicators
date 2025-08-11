@@ -16,7 +16,8 @@ from eea.dexterity.indicators.interfaces import IIndicator
 @implementer(ISerializeToJson)
 @adapter(IIndicator, IBrowserRequest)
 class IndicatorSerializer(SerializeToJson):
-    """Custom serializer for Indicator to convert UUID to URLs for copied_from/copied_to"""
+    """Custom serializer for Indicator to convert UUID to URLs for
+    copied_from/copied_to"""
 
     def __call__(self, version=None, include_items=True):
         result = super().__call__(version=version, include_items=include_items)
@@ -45,7 +46,8 @@ class IndicatorSerializer(SerializeToJson):
 @implementer(IDeserializeFromJson)
 @adapter(IIndicator, IBrowserRequest)
 class IndicatorDeserializer(DeserializeFromJson):
-    """Custom deserializer for Indicator to convert URLs back to UUIDs for copied_from/copied_to"""
+    """Custom deserializer for Indicator to convert URLs back to UUIDs for
+    copied_from/copied_to"""
 
     def __call__(self, validate_all=False, create=False):
         # Get the data before processing
@@ -68,7 +70,9 @@ class IndicatorDeserializer(DeserializeFromJson):
 
         # Convert copied_to URL back to UUID
         if "copied_to" in data and data["copied_to"]:
-            data["copied_to"] = path2uid(context=self.context, link=data["copied_to"])
+            data["copied_to"] = path2uid(
+                context=self.context, link=data["copied_to"]
+            )
 
         # Continue with normal deserialization
         return super().__call__(validate_all=validate_all, create=create)
