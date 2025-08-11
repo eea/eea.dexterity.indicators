@@ -54,4 +54,13 @@
     profile="eea.dexterity.indicators:default"
     />
 
+  <genericsetup:upgradeStep
+    title="Update workflow tools for archived state"
+    description="Update workflow tools to ensure archived state is properly recognized after restart"
+    source="12.1"
+    destination="12.2"
+    handler=".evolve121.to_121"
+    profile="eea.dexterity.indicators:default"
+    />
+
 </configure>
