@@ -1,9 +1,9 @@
 """dxfields serializers and deserializers"""
 
+import json
 from zope.component import adapter
 from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserRequest
-from plone.dexterity.interfaces import IDexterityContent
 from plone.restapi.interfaces import ISerializeToJson, IDeserializeFromJson
 from plone.restapi.serializer.dxcontent import SerializeToJson
 from plone.restapi.deserializer.dxcontent import DeserializeFromJson
@@ -55,8 +55,6 @@ class IndicatorDeserializer(DeserializeFromJson):
         if isinstance(data, bytes):
             data = data.decode("utf-8")
         if isinstance(data, str):
-            import json
-
             try:
                 data = json.loads(data)
             except (ValueError, TypeError):
