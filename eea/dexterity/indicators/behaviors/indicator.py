@@ -25,7 +25,8 @@ def remove_api_string(url):
 
 def dedupe_data(data):
     """
-    Remove duplication from metadata fields on basis of url fields or title for items without links
+    Remove duplication from metadata fields on basis of url fields or title
+    for items without links
 
     >>> from eea.dexterity.indicators.behaviors.indicator import dedupe_data
     >>> value=[{"link": "https://www.eea.europa.eu", "title": "title"},
@@ -37,11 +38,11 @@ def dedupe_data(data):
     """
     existing_urls = set()
     existing_titles = set()
-    
+
     for value in data:
         url = value.get("link", "")
         title = value.get("title", "")
-        
+
         if url:
             url = remove_api_string(url)
             if url in existing_urls:
@@ -51,7 +52,7 @@ def dedupe_data(data):
             if title in existing_titles:
                 continue
             existing_titles.add(title)
-        
+
         yield value
 
 
