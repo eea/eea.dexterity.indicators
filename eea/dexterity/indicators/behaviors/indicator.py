@@ -48,9 +48,10 @@ def dedupe_data(data):
             if url in existing_urls:
                 continue
             existing_urls.add(url)
-        elif title:
-            if title in existing_titles:
-                continue
+        elif title and title in existing_titles:
+            continue
+
+        if title:
             existing_titles.add(title)
 
         yield value

@@ -3,6 +3,8 @@ Changelog
 
 12.2-dev0 - (unreleased)
 ---------------------------
+* Bug fix: Fix dedupe_data to handle also data sources without link
+  [dobri1408 - refs ##292196]
 
 12.1 - (2025-07-28)
 ---------------------------
