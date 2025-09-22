@@ -64,5 +64,8 @@ class IndicatorDeserializer(DeserializeFromJson):
                 context=self.context, link=data["copied_to"]
             )
 
+        # Update the request body with the modified data
+        self.request["BODY"] = json.dumps(data)
+
         # Continue with normal deserialization
         return super().__call__(validate_all=validate_all, create=create)

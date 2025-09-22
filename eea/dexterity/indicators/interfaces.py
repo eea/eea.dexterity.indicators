@@ -160,9 +160,6 @@ class IIndicatorMetadata(model.Schema):
     #
     # Workflow
     #
-        #
-    # Workflow
-    #
     model.fieldset(
         "workflow",
         label=_("Workflow"),
