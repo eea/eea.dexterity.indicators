@@ -1,5 +1,6 @@
 """Upgrade step to add archived state to workflow without overwriting web changes"""
 from Products.CMFCore.utils import getToolByName
+from Products.DCWorkflow.Guard import Guard
 import logging
 
 logger = logging.getLogger("eea.dexterity.indicators")
@@ -49,8 +50,14 @@ def update_workflow_for_archived_state(context):
         transition.description = 'Mark this content to be archived.'
         transition.actbox_name = 'Archived'
         transition.actbox_category = 'workflow'
-        transition.guard.permissions = ()
-        transition.guard.groups = ('indicatorsCopyEditors', 'WebReviewers')
+        
+        # Create and set guard - same as markForDeletion transition
+        guard = Guard()
+        guard.permissions = ()
+        guard.roles = ()
+        guard.groups = ('indicatorsCopyEditors', 'WebReviewers')
+        transition.guard = guard
+        
         logger.info("Added archived transition to workflow")
     
     # Ensure published and retracted states have exit transition to archived
