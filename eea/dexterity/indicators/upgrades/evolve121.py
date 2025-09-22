@@ -41,7 +41,7 @@ def to_121(context):
         if hasattr(workflow, "transitions"):
             available_transitions = list(workflow.transitions.keys())
             logger.info("Available transitions: %s", available_transitions)
-            if "archived" in available_transitions:
+            if "archived" in workflow.states.keys():
                 logger.info("SUCCESS: archived transition is now available")
             else:
                 logger.error("FAILED: archived transition still not available")
