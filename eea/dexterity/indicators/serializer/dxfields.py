@@ -22,23 +22,15 @@ class IndicatorSerializer(SerializeToJson):
     def __call__(self, version=None, include_items=True):
         result = super().__call__(version=version, include_items=include_items)
 
-        # Convert copied_from UUID to URL
-        if "copied_from" in result and result["copied_from"]:
-            uid = result["copied_from"]
-            brain = uuidToCatalogBrain(uid)
-            if brain:
-                result["copied_from"] = brain.getURL()
-            else:
-                result["copied_from"] = uid_to_url("resolveuid/{}".format(uid))
-
-        # Convert copied_to UUID to URL
-        if "copied_to" in result and result["copied_to"]:
-            uid = result["copied_to"]
-            brain = uuidToCatalogBrain(uid)
-            if brain:
-                result["copied_to"] = brain.getURL()
-            else:
-                result["copied_to"] = uid_to_url("resolveuid/{}".format(uid))
+        # Convert UUIDs to URLs for copied fields
+        for field in ["copied_from", "copied_to"]:
+            if field in result and result[field]:
+                uid = result[field]
+                brain = uuidToCatalogBrain(uid)
+                if brain:
+                    result[field] = brain.getURL()
+                else:
+                    result[field] = uid_to_url("resolveuid/{}".format(uid))
 
         return result
 
