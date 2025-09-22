@@ -54,13 +54,13 @@
     profile="eea.dexterity.indicators:default"
     />
 
-  <genericsetup:upgradeDepends
-    title="Update workflow tools for archived state"
-    description="Update workflow tools to ensure archived state is properly recognized after restart"
+  <genericsetup:upgradeStep
+    title="Update workflow for archived state"
+    description="Add archived state to workflow without overwriting web-configured changes"
     source="12.0"
     destination="12.1"
+    handler=".evolve121.update_workflow_for_archived_state"
     profile="eea.dexterity.indicators:default"
-    import_steps="workflow"
     />
 
 </configure>
