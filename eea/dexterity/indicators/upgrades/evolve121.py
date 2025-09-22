@@ -1,19 +1,22 @@
-"""Upgrade step to add archived state to workflow without overwriting web changes"""
+"""Upgrade step to add archived state to workflow without web changes"""
+
+import logging
 
 from Products.CMFCore.utils import getToolByName
 from Products.DCWorkflow.Guard import Guard
-import logging
 
 logger = logging.getLogger("eea.dexterity.indicators")
 
 
 def update_workflow_for_archived_state(context):
-    """Update workflow to ensure archived state is available without overwriting web changes"""
+    """Update workflow to ensure archived state is available
+    without overwriting web changes
+    """
     portal_workflow = getToolByName(context, "portal_workflow")
 
     workflow_id = "ims_indicator_workflow"
     if workflow_id not in portal_workflow:
-        logger.warning(f"Workflow {workflow_id} not found")
+        logger.warning("Workflow %s not found", workflow_id)
         return
 
     workflow = portal_workflow[workflow_id]
@@ -29,7 +32,9 @@ def update_workflow_for_archived_state(context):
         state.description = "This item has been archived"
 
         # Set permissions for archived state
-        state.setPermission("Access contents information", 0, ["Manager", "Reader"])
+        state.setPermission(
+            "Access contents information", 0, ["Manager", "Reader"]
+        )
         state.setPermission("Modify portal content", 0, ["Manager"])
         state.setPermission("View", 0, ["Manager", "Reader"])
         state.setPermission("eea.annotator: Edit", 0, ["Manager"])
@@ -69,7 +74,7 @@ def update_workflow_for_archived_state(context):
             if "archived" not in transitions:
                 transitions.append("archived")
                 state.transitions = tuple(transitions)
-                logger.info(f"Added archived transition to {state_id} state")
+                logger.info("Added archived transition to %s state", state_id)
 
     # Add enable transition from archived state if not exists
     if "archived" in workflow.states:
