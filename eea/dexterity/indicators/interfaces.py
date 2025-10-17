@@ -1,6 +1,5 @@
 """Module where all interfaces, events and exceptions live."""
 
-# pylint: disable=line-too-long
 from eea.dexterity.indicators import EEAMessageFactory as _
 from eea.schema.slate.field import SlateJSONField
 from plone.autoform.interfaces import IFormFieldProvider

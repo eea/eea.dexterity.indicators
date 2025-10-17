@@ -85,7 +85,7 @@ class Indicator:
             "data_provenance",
         ]
 
-    def __getattr__(self, name):  # pylint: disable=R1710
+    def __getattr__(self, name):
         if name not in IIndicatorMetadata:
             raise AttributeError(name)
 
