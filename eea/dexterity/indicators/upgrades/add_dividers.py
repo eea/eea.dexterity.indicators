@@ -52,8 +52,7 @@ def add_dividers_to_indicators(context):
 
         # If not found by ID, search by title
         for block_data in blocks.values():
-            if (isinstance(block_data, dict) and
-                    block_data.get("title") == group_title):
+            if isinstance(block_data, dict) and block_data.get("title") == group_title:
                 return block_data
 
         return None
@@ -76,8 +75,7 @@ def add_dividers_to_indicators(context):
         blocks[divider_id] = new_dividers[divider_id]
 
         # Add to layout if present
-        if ("blocks_layout" in group_data and
-                "items" in group_data["blocks_layout"]):
+        if "blocks_layout" in group_data and "items" in group_data["blocks_layout"]:
             layout_items = group_data["blocks_layout"]["items"]
             if divider_id not in layout_items:
                 # Insert after the embed_content block
@@ -108,8 +106,7 @@ def add_dividers_to_indicators(context):
 
         divider_id1 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881d"
         embed_id1 = "b0279dde-1ceb-4137-a7f1-5ab7b46a782c"
-        if add_divider_to_group(aggregate_group, divider_id1, embed_id1,
-                                new_dividers):
+        if add_divider_to_group(aggregate_group, divider_id1, embed_id1, new_dividers):
             blocks_modified = True
 
         # Find and update Disaggregate level assessment group
@@ -121,8 +118,9 @@ def add_dividers_to_indicators(context):
 
         divider_id2 = "43df8fab-b278-4b0e-a62c-ce6b8e0a881e"
         embed_id2 = "02ba4a04-fcfe-4968-806f-1dac3119cfef"
-        if add_divider_to_group(disaggregate_group, divider_id2, embed_id2,
-                                new_dividers):
+        if add_divider_to_group(
+            disaggregate_group, divider_id2, embed_id2, new_dividers
+        ):
             blocks_modified = True
 
         if blocks_modified:
