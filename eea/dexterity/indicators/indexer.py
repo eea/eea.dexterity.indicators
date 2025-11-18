@@ -1,4 +1,5 @@
-""" indexer.py """
+"""indexer.py"""
+
 from plone.indexer import indexer
 from plone.base.utils import safe_text
 from plone.app.contenttypes.indexers import SearchableText
@@ -37,7 +38,7 @@ def data_provenance_indexer(obj):
         return None
 
     data = {}
-    for val in data_provenance['data']:
+    for val in data_provenance["data"]:
         org = val.get("organisation", "")
         if org:
             data[org] = org

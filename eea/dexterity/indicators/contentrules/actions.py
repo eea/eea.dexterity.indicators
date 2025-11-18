@@ -1,5 +1,4 @@
-""" EEAContentTypes actions for plone.app.contentrules
-"""
+"""EEAContentTypes actions for plone.app.contentrules"""
 
 import logging
 from time import time
@@ -69,7 +68,7 @@ class RetractAndRenameOldVersionExecutor:
             if old_id in parent:
                 old_version = parent[old_id]
             else:
-                copied_from = getattr(obj, 'copied_from', None)
+                copied_from = getattr(obj, "copied_from", None)
                 if copied_from:
                     old_version = uuidToObject(copied_from, True)
 
@@ -85,8 +84,7 @@ class RetractAndRenameOldVersionExecutor:
             api.content.transition(
                 obj=old_version,
                 transition="markForDeletion",
-                comment=("Auto archive item due to "
-                         "new version being published"),
+                comment=("Auto archive item due to new version being published"),
             )
 
             # Bypass user roles in order to rename old version
@@ -119,7 +117,7 @@ class IEnableDisableDiscussionAction(Interface):
 
     action = schema.Choice(
         title="How discussions are changed",
-        description="Should the discussions be disabled" "or enabled?",
+        description="Should the discussions be disabledor enabled?",
         values=["enabled", "disabled"],
         required=True,
     )
@@ -163,9 +161,7 @@ class EnableDisableDiscussionActionExecutor:
         if choice is not None:
             setattr(obj, "allow_discussion", bool(choice))
 
-            logger.info(
-                "Discussions for %s set to %s", obj.absolute_url(), action
-            )
+            logger.info("Discussions for %s set to %s", obj.absolute_url(), action)
         else:
             logger.info(
                 "eea.dexterity.indicators.actions.EnableDisable"

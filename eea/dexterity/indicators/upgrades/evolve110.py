@@ -1,4 +1,5 @@
 """Upgrade step to upgrade indicators to the new embed block"""
+
 from Products.CMFCore.utils import getToolByName
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from plone.restapi.blocks import visit_blocks
@@ -16,14 +17,14 @@ def to_110(context):
         for block in visit_blocks(doc, doc.blocks):
             block_type = block.get("@type", "")
             if block_type == "dataFigure":
-                block['old_type'] = block_type
-                block['@type'] = 'embed_content'
+                block["old_type"] = block_type
+                block["@type"] = "embed_content"
                 block["with_metadata_section"] = True
                 block["svg_as_img"] = True
-                block['with_notes'] = False
+                block["with_notes"] = False
                 href = block.get("href", "")
                 if href and "/resolveuid/" in href:
-                    block["old_url"] = block.get('url', '')
+                    block["old_url"] = block.get("url", "")
                     block["url"] = href
                 doc.reindexObject()
     pghandler.finish()
