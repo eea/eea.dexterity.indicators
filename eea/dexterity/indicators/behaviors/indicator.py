@@ -1,6 +1,4 @@
-""" Custom behavior for Indicator
-
-"""
+"""Custom behavior for Indicator"""
 
 from eea.dexterity.indicators.interfaces import IIndicatorMetadata
 from zope.component import adapter
@@ -58,7 +56,7 @@ def dedupe_data(data):
 
 
 def get_embed_content(block):
-    """ Get related content from block """
+    """Get related content from block"""
     path = block.get("url", "")
     if not path:
         return None
@@ -85,7 +83,7 @@ class Indicator:
             "data_provenance",
         ]
 
-    def __getattr__(self, name):  # pylint: disable=R1710
+    def __getattr__(self, name):
         if name not in IIndicatorMetadata:
             raise AttributeError(name)
 
@@ -171,8 +169,7 @@ class Indicator:
         blocks = getattr(self.context, "blocks", None) or {}
         for block in visit_blocks(self.context, blocks):
             if "data_provenance" in block:
-                data_provenance = block.get(
-                    "data_provenance", {}).get("data", []) or []
+                data_provenance = block.get("data_provenance", {}).get("data", []) or []
                 res.extend(data_provenance)
                 continue
 
@@ -183,7 +180,4 @@ class Indicator:
                     data_provenance = data_provenance.get("data", []) or []
                     res.extend(data_provenance)
 
-        return {
-            "readOnly": True,
-            "data": list(dedupe_data(res))
-        }
+        return {"readOnly": True, "data": list(dedupe_data(res))}
