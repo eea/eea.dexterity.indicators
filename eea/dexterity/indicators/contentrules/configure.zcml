@@ -88,4 +88,25 @@
         factory=".actions.EnableDisableDiscussionAction"
         />
 
+    <!-- Publish contained content -->
+    <adapter factory=".actions.PublishContainedContentExecutor" />
+
+    <browser:page
+        for="plone.app.contentrules.browser.interfaces.IRuleActionAdding"
+        name="eea.dexterity.indicators.publish_contained_content"
+        class=".actions.PublishContainedContentAddForm"
+        permission="plone.app.contentrules.ManageContentRules"
+      />
+
+    <plone:ruleAction
+        name="eea.dexterity.indicators.publish_contained_content"
+        title="IMSv4: Publish all contained content"
+        description="Publish all contained content items when the Indicator is published"
+        for="*"
+        event="zope.interface.interfaces.IObjectEvent"
+        addview="eea.dexterity.indicators.publish_contained_content"
+        schema=".actions.IPublishContainedContentAction"
+        factory=".actions.PublishContainedContentAction"
+        />
+
 </configure>

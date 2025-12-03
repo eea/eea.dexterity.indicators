@@ -188,3 +188,84 @@ class EnableDisableDiscussionEditForm(ActionEditForm):
     label = "Edit Enable/Disable Discussion Action"
     description = "A Enable/Disable Discussion action."
     form_name = "Configure element"
+
+
+class IPublishContainedContentAction(Interface):
+    """Publish all contained content"""
+
+
+@implementer(IPublishContainedContentAction, IRuleElementData)
+class PublishContainedContentAction(SimpleItem):
+    """Publish all contained content action"""
+
+    element = "eea.dexterity.indicators.publish_contained_content"
+    summary = "Will publish all contained content items within this Indicator."
+
+
+@implementer(IExecutable)
+@adapter(Interface, IPublishContainedContentAction, Interface)
+class PublishContainedContentExecutor:
+    """Publish all contained content executor"""
+
+    def __init__(self, context, element, event):
+        self.context = context
+        self.element = element
+        self.event = event
+
+    def __call__(self):
+        obj = self.event.object
+
+        # Check if the object is folderish (can contain items)
+        if not getattr(obj, "objectValues", None):
+            return True
+
+        # Get all contained items recursively
+        catalog = api.portal.get_tool("portal_catalog")
+        path = "/".join(obj.getPhysicalPath())
+
+        # Find all items inside this indicator that are not published
+        brains = catalog(
+            path={"query": path, "depth": -1}, review_state={"not": "published"}
+        )
+
+        for brain in brains:
+            try:
+                item = brain.getObject()
+                # Skip the indicator itself
+                if item == obj:
+                    continue
+
+                # Try to publish the item
+                wf_tool = api.portal.get_tool("portal_workflow")
+                workflows = wf_tool.getWorkflowsFor(item)
+
+                if workflows:
+                    # Get available transitions
+                    transitions = wf_tool.getTransitionsFor(item)
+                    publish_transition = None
+                    for t in transitions:
+                        if t["id"] == "publish":
+                            publish_transition = t
+                            break
+                    if publish_transition:
+                        api.content.transition(
+                            obj=item,
+                            transition=publish_transition["id"],
+                            comment=(
+                                "Auto-published when parent Indicator was published"
+                            ),
+                        )
+                        logger.info("Published contained item: %s", item.absolute_url())
+            except Exception as err:
+                logger.warning("Could not publish %s: %s", brain.getPath(), err)
+                continue
+
+        return True
+
+
+class PublishContainedContentAddForm(NullAddForm):
+    """Publish contained content addform"""
+
+    def create(self):
+        """Create content-rule"""
+        return PublishContainedContentAction()
