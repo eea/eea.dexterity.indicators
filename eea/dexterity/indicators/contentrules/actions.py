@@ -84,10 +84,7 @@ class RetractAndRenameOldVersionExecutor:
             api.content.transition(
                 obj=old_version,
                 transition="markForDeletion",
-                comment=(
-                    "Auto archive item due to new version being "
-                    "published"
-                ),
+                comment=("Auto archive item due to new version being published"),
             )
 
             # Bypass user roles in order to rename old version
@@ -164,8 +161,7 @@ class EnableDisableDiscussionActionExecutor:
         if choice is not None:
             setattr(obj, "allow_discussion", bool(choice))
 
-            logger.info("Discussions for %s set to %s",
-                        obj.absolute_url(), action)
+            logger.info("Discussions for %s set to %s", obj.absolute_url(), action)
         else:
             logger.info(
                 "eea.dexterity.indicators.actions.EnableDisable"
@@ -219,17 +215,16 @@ class PublishContainedContentExecutor:
         obj = self.event.object
 
         # Check if the object is folderish (can contain items)
-        if not getattr(obj, 'objectValues', None):
+        if not getattr(obj, "objectValues", None):
             return True
 
         # Get all contained items recursively
-        catalog = api.portal.get_tool('portal_catalog')
-        path = '/'.join(obj.getPhysicalPath())
+        catalog = api.portal.get_tool("portal_catalog")
+        path = "/".join(obj.getPhysicalPath())
 
         # Find all items inside this indicator that are not published
         brains = catalog(
-            path={'query': path, 'depth': -1},
-            review_state={'not': 'published'}
+            path={"query": path, "depth": -1}, review_state={"not": "published"}
         )
 
         for brain in brains:
@@ -240,7 +235,7 @@ class PublishContainedContentExecutor:
                     continue
 
                 # Try to publish the item
-                wf_tool = api.portal.get_tool('portal_workflow')
+                wf_tool = api.portal.get_tool("portal_workflow")
                 workflows = wf_tool.getWorkflowsFor(item)
 
                 if workflows:
@@ -248,24 +243,20 @@ class PublishContainedContentExecutor:
                     transitions = wf_tool.getTransitionsFor(item)
                     publish_transition = None
                     for t in transitions:
-                        if t['id'] == 'publish':
+                        if t["id"] == "publish":
                             publish_transition = t
                             break
                     if publish_transition:
                         api.content.transition(
                             obj=item,
-                            transition=publish_transition['id'],
+                            transition=publish_transition["id"],
                             comment=(
-                                "Auto-published when parent Indicator was "
-                                "published"
+                                "Auto-published when parent Indicator was published"
                             ),
                         )
-                        logger.info(
-                            "Published contained item: %s",
-                            item.absolute_url())
+                        logger.info("Published contained item: %s", item.absolute_url())
             except Exception as err:
-                logger.warning("Could not publish %s: %s",
-                               brain.getPath(), err)
+                logger.warning("Could not publish %s: %s", brain.getPath(), err)
                 continue
 
         return True
