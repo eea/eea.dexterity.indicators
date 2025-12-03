@@ -3,15 +3,17 @@ Changelog
 
 12.4-dev0 - (unreleased)
 ---------------------------
+* Change: Add content rule on Indicator publish to also publish it's children
+  [razvanMiu - ref #294770]
 * Bug fix: TypeError No converter for making <bound method EnableDisableDiscussionAction.summary
-  [avoinea]
+  [avoinea - refs #294770]
 
 12.3 - (2025-11-18)
 ---------------------------
 * Change: Replace Python linting to ruff
-  [mihaidobrescu1111 = refs #286821]
+  [mihaidobrescu1111 - refs #286821]
 * Change: Add plone6 tests
-  [mihaidobrescu1111 = refs #293593]
+  [mihaidobrescu1111 - refs #293593]
 
 12.2 - (2025-09-22)
 ---------------------------
