@@ -130,6 +130,7 @@ class EnableDisableDiscussionAction(SimpleItem):
     element = "eea.dexterity.indicators.enable_disable_discussion"
     action = None  # default value
 
+    @property
     def summary(self):
         """Summary"""
         if self.action:
