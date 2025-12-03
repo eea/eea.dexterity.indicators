@@ -318,6 +318,7 @@
   </conditions>
   <actions>
    <action type="eea.dexterity.indicators.retract_and_rename_old_version"/>
+   <action type="eea.dexterity.indicators.publish_contained_content"/>
    <action type="plone.actions.Mail">
     <property name="source"/>
     <property
