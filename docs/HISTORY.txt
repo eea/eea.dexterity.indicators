@@ -3,6 +3,8 @@ Changelog
 
 12.4-dev0 - (unreleased)
 ---------------------------
+* Bug fix: TypeError No converter for making <bound method EnableDisableDiscussionAction.summary
+  [avoinea]
 
 12.3 - (2025-11-18)
 ---------------------------
