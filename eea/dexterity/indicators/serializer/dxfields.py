@@ -12,6 +12,9 @@ from plone.restapi.deserializer.utils import path2uid
 from plone.app.uuid.utils import uuidToCatalogBrain
 from eea.dexterity.indicators.interfaces import IIndicator
 
+# Fields that store references as UUIDs but should be serialized as URLs
+COPIED_FIELDS = ("copied_from", "copied_to")
+
 
 @implementer(ISerializeToJson)
 @adapter(IIndicator, IBrowserRequest)
@@ -23,7 +26,7 @@ class IndicatorSerializer(SerializeToJson):
         result = super().__call__(version=version, include_items=include_items)
 
         # Convert UUIDs to URLs for copied fields
-        for field in ["copied_from", "copied_to"]:
+        for field in COPIED_FIELDS:
             if field in result and result[field]:
                 uid = result[field]
                 brain = uuidToCatalogBrain(uid)
@@ -52,15 +55,10 @@ class IndicatorDeserializer(DeserializeFromJson):
             except (ValueError, TypeError):
                 data = {}
 
-        # Convert copied_from URL back to UUID
-        if "copied_from" in data and data["copied_from"]:
-            data["copied_from"] = path2uid(
-                context=self.context, link=data["copied_from"]
-            )
-
-        # Convert copied_to URL back to UUID
-        if "copied_to" in data and data["copied_to"]:
-            data["copied_to"] = path2uid(context=self.context, link=data["copied_to"])
+        # Convert URLs back to UUIDs for copied fields
+        for field in COPIED_FIELDS:
+            if field in data and data[field]:
+                data[field] = path2uid(context=self.context, link=data[field])
 
         # Update the request body with the modified data
         self.request["BODY"] = json.dumps(data)
