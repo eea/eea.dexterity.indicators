@@ -1,8 +1,27 @@
 Changelog
 =========
 
-12.2-dev0 - (unreleased)
+12.5-dev0 - (unreleased)
 ---------------------------
+
+12.4 - (2025-12-03)
+---------------------------
+* Change: Add content rule on Indicator publish to also publish it's children
+  [razvanMiu - ref #294770]
+* Bug fix: TypeError No converter for making <bound method EnableDisableDiscussionAction.summary
+  [avoinea - refs #294770]
+
+12.3 - (2025-11-18)
+---------------------------
+* Change: Replace Python linting to ruff
+  [mihaidobrescu1111 - refs #286821]
+* Change: Add plone6 tests
+  [mihaidobrescu1111 - refs #293593]
+
+12.2 - (2025-09-22)
+---------------------------
+* Bug fix: Fix dedupe_data to handle also data sources without link
+  [dobri1408 - refs ##292196]
 
 12.1 - (2025-07-28)
 ---------------------------

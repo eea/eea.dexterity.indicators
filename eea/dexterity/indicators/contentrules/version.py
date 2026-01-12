@@ -88,10 +88,7 @@ class CopyAction(SimpleItem):
     @property
     def summary(self):
         """A summary of the element's configuration."""
-        return _(
-            "Copy to folder ${folder}.",
-            mapping=dict(folder=self.target_folder)
-        )
+        return _("Copy to folder ${folder}.", mapping=dict(folder=self.target_folder))
 
 
 @adapter(Interface, ICopyAction, Interface)
@@ -105,7 +102,6 @@ class CopyActionExecutor:
         self.event = event
 
     def __call__(self):
-
         portal_url = getToolByName(self.context, "portal_url", None)
         if portal_url is None:
             return False
@@ -125,8 +121,7 @@ class CopyActionExecutor:
         if target is None:
             self.error(
                 obj,
-                _("Target folder ${target} does not exist.",
-                  mapping={"target": path}),
+                _("Target folder ${target} does not exist.", mapping={"target": path}),
             )
             return False
 
@@ -169,8 +164,7 @@ class CopyActionExecutor:
         pr.save(obj=obj, comment=change_note)
         # CHANGE URL OF FIGURES TO THE NEW DRAFT VERSION
         for block_data in visit_blocks(obj, obj.blocks):
-            if (block_data.get("@type") == "embed_content" and
-                    "url" in block_data):
+            if block_data.get("@type") == "embed_content" and "url" in block_data:
                 url = uid_to_url(block_data["url"])
                 if previous_obj_path in url:
                     url = url.replace(previous_obj_path,

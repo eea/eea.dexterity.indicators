@@ -1,5 +1,4 @@
-""" EEAContentTypes actions for plone.app.contentrules
-"""
+"""EEAContentTypes actions for plone.app.contentrules"""
 
 import logging
 from time import time
@@ -69,7 +68,7 @@ class RetractAndRenameOldVersionExecutor:
             if old_id in parent:
                 old_version = parent[old_id]
             else:
-                copied_from = getattr(obj, 'copied_from', None)
+                copied_from = getattr(obj, "copied_from", None)
                 if copied_from:
                     old_version = uuidToObject(copied_from, True)
 
@@ -118,7 +117,7 @@ class IEnableDisableDiscussionAction(Interface):
 
     action = schema.Choice(
         title="How discussions are changed",
-        description="Should the discussions be disabled" "or enabled?",
+        description="Should the discussions be disabledor enabled?",
         values=["enabled", "disabled"],
         required=True,
     )
@@ -131,6 +130,7 @@ class EnableDisableDiscussionAction(SimpleItem):
     element = "eea.dexterity.indicators.enable_disable_discussion"
     action = None  # default value
 
+    @property
     def summary(self):
         """Summary"""
         if self.action:
@@ -162,9 +162,7 @@ class EnableDisableDiscussionActionExecutor:
         if choice is not None:
             setattr(obj, "allow_discussion", bool(choice))
 
-            logger.info(
-                "Discussions for %s set to %s", obj.absolute_url(), action
-            )
+            logger.info("Discussions for %s set to %s", obj.absolute_url(), action)
         else:
             logger.info(
                 "eea.dexterity.indicators.actions.EnableDisable"
@@ -190,3 +188,84 @@ class EnableDisableDiscussionEditForm(ActionEditForm):
     label = "Edit Enable/Disable Discussion Action"
     description = "A Enable/Disable Discussion action."
     form_name = "Configure element"
+
+
+class IPublishContainedContentAction(Interface):
+    """Publish all contained content"""
+
+
+@implementer(IPublishContainedContentAction, IRuleElementData)
+class PublishContainedContentAction(SimpleItem):
+    """Publish all contained content action"""
+
+    element = "eea.dexterity.indicators.publish_contained_content"
+    summary = "Will publish all contained content items within this Indicator."
+
+
+@implementer(IExecutable)
+@adapter(Interface, IPublishContainedContentAction, Interface)
+class PublishContainedContentExecutor:
+    """Publish all contained content executor"""
+
+    def __init__(self, context, element, event):
+        self.context = context
+        self.element = element
+        self.event = event
+
+    def __call__(self):
+        obj = self.event.object
+
+        # Check if the object is folderish (can contain items)
+        if not getattr(obj, "objectValues", None):
+            return True
+
+        # Get all contained items recursively
+        catalog = api.portal.get_tool("portal_catalog")
+        path = "/".join(obj.getPhysicalPath())
+
+        # Find all items inside this indicator that are not published
+        brains = catalog(
+            path={"query": path, "depth": -1}, review_state={"not": "published"}
+        )
+
+        for brain in brains:
+            try:
+                item = brain.getObject()
+                # Skip the indicator itself
+                if item == obj:
+                    continue
+
+                # Try to publish the item
+                wf_tool = api.portal.get_tool("portal_workflow")
+                workflows = wf_tool.getWorkflowsFor(item)
+
+                if workflows:
+                    # Get available transitions
+                    transitions = wf_tool.getTransitionsFor(item)
+                    publish_transition = None
+                    for t in transitions:
+                        if t["id"] == "publish":
+                            publish_transition = t
+                            break
+                    if publish_transition:
+                        api.content.transition(
+                            obj=item,
+                            transition=publish_transition["id"],
+                            comment=(
+                                "Auto-published when parent Indicator was published"
+                            ),
+                        )
+                        logger.info("Published contained item: %s", item.absolute_url())
+            except Exception as err:
+                logger.warning("Could not publish %s: %s", brain.getPath(), err)
+                continue
+
+        return True
+
+
+class PublishContainedContentAddForm(NullAddForm):
+    """Publish contained content addform"""
+
+    def create(self):
+        """Create content-rule"""
+        return PublishContainedContentAction()
