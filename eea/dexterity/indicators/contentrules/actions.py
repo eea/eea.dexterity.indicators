@@ -83,8 +83,7 @@ class RetractAndRenameOldVersionExecutor:
             api.content.transition(
                 obj=old_version,
                 transition="archived",
-                comment=("Auto archive item due to "
-                         "new version being published"),
+                comment=("Auto archive item due to new version being published"),
             )
 
             # Bypass user roles in order to rename old version

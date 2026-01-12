@@ -60,9 +60,7 @@ class IndicatorDeserializer(DeserializeFromJson):
 
         # Convert copied_to URL back to UUID
         if "copied_to" in data and data["copied_to"]:
-            data["copied_to"] = path2uid(
-                context=self.context, link=data["copied_to"]
-            )
+            data["copied_to"] = path2uid(context=self.context, link=data["copied_to"])
 
         # Update the request body with the modified data
         self.request["BODY"] = json.dumps(data)

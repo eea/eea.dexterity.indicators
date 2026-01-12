@@ -32,9 +32,7 @@ def update_workflow_for_archived_state(context):
         state.description = "This item has been archived"
 
         # Set permissions for archived state
-        state.setPermission(
-            "Access contents information", 0, ["Manager", "Reader"]
-        )
+        state.setPermission("Access contents information", 0, ["Manager", "Reader"])
         state.setPermission("Modify portal content", 0, ["Manager"])
         state.setPermission("View", 0, ["Manager", "Reader"])
         state.setPermission("eea.annotator: Edit", 0, ["Manager"])
