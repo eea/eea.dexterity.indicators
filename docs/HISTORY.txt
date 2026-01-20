@@ -3,6 +3,9 @@ Changelog
 
 14.1-dev0 - (unreleased)
 ---------------------------
+* Bug fix: Fix version linking sort order - drafts are newest (work in progress),
+  not oldest. Correct order: archived < published < drafts
+  [avoinea - refs #289335]
 
 14.0 - (2026-01-20)
 ---------------------------

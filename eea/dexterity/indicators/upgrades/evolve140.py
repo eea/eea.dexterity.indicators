@@ -19,16 +19,16 @@ def get_base_name_and_sort_key(obj_id):
 
     Returns a tuple (base_name, sort_key) where:
     - base_name: The canonical name without version suffix
-    - sort_key: A tuple (category, value) for sorting:
-        - (0, N) for drafts (.N suffix)
-        - (1, timestamp) for archived (-timestamp suffix)
-        - (2, 0) for published (plain name, newest)
+    - sort_key: A tuple (category, value) for sorting chronologically:
+        - (0, timestamp) for archived (-timestamp suffix) - oldest
+        - (1, 0) for published (plain name) - current version
+        - (2, N) for drafts (.N suffix) - newest (work in progress)
 
     Examples:
-    - 'agricultural-area-used-for-organic-1732031108' -> ('agricultural-area-used-for-organic', (1, 1732031108))
-    - 'circular-material-use-rate.2' -> ('circular-material-use-rate', (0, 2))
-    - 'copy_of_circular-material-use-rate' -> ('circular-material-use-rate', (0, 1))
-    - 'agricultural-area-used-for-organic' -> ('agricultural-area-used-for-organic', (2, 0))
+    - 'agricultural-area-used-for-organic-1732031108' -> ('agricultural-area-used-for-organic', (0, 1732031108))
+    - 'circular-material-use-rate.2' -> ('circular-material-use-rate', (2, 2))
+    - 'copy_of_circular-material-use-rate' -> ('circular-material-use-rate', (2, 1))
+    - 'agricultural-area-used-for-organic' -> ('agricultural-area-used-for-organic', (1, 0))
     """
     # Pattern: base-name-TIMESTAMP (10 digits, value >= 1000000000)
     timestamp_match = re.search(r"-(\d{10,})$", obj_id)
@@ -36,22 +36,22 @@ def get_base_name_and_sort_key(obj_id):
         timestamp = int(timestamp_match.group(1))
         if timestamp >= TIMESTAMP_THRESHOLD:
             base = obj_id[: timestamp_match.start()]
-            return base, (1, timestamp)
+            return base, (0, timestamp)
 
-    # Pattern: base-name.N (draft)
+    # Pattern: base-name.N (draft - newest, work in progress)
     draft_match = re.search(r"\.(\d+)$", obj_id)
     if draft_match:
         n = int(draft_match.group(1))
         base = obj_id[: draft_match.start()]
-        return base, (0, n)
+        return base, (2, n)
 
     # Pattern: copy_of_base-name (draft)
     if obj_id.startswith("copy_of_"):
         base = obj_id[8:]  # len('copy_of_') = 8
-        return base, (0, 1)
+        return base, (2, 1)
 
-    # Plain name = published (newest in chain)
-    return obj_id, (2, 0)
+    # Plain name = published (current version)
+    return obj_id, (1, 0)
 
 
 def link_indicator_versions(context):
@@ -87,7 +87,7 @@ def link_indicator_versions(context):
             # Single version, no linking needed
             continue
 
-        # Sort by sort_key (chronologically: drafts < archived < published)
+        # Sort by sort_key (chronologically: archived < published < drafts)
         versions.sort(key=lambda x: x[0])
 
         # Get objects and link them
