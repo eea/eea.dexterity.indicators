@@ -97,9 +97,7 @@ def link_indicator_versions(context):
                 obj = brain.getObject()
                 objects.append(obj)
             except Exception as e:
-                logger.error(
-                    "Failed to get object for %s: %s", brain.getPath(), str(e)
-                )
+                logger.error("Failed to get object for %s: %s", brain.getPath(), str(e))
                 error_count += 1
 
         if len(objects) < 2:
