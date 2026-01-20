@@ -1,6 +1,11 @@
 Changelog
 =========
 
+13.0 - (2026-01-20)
+---------------------------
+* Feature: Add archived state to indicators
+  [dobri1408 - refs #289335]
+
 12.4 - (2025-12-03)
 ---------------------------
 * Change: Add content rule on Indicator publish to also publish it's children
