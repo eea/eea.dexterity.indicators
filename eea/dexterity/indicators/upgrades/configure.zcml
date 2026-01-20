@@ -63,4 +63,13 @@
     profile="eea.dexterity.indicators:default"
     />
 
+  <genericsetup:upgradeStep
+    title="Link indicator versions"
+    description="Populate copied_from and copied_to fields for existing indicators based on naming conventions"
+    source="13.0"
+    destination="14.0"
+    handler=".evolve140.link_indicator_versions"
+    profile="eea.dexterity.indicators:default"
+    />
+
 </configure>

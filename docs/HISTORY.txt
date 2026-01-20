@@ -1,6 +1,12 @@
 Changelog
 =========
 
+14.0 - (2026-01-20)
+---------------------------
+* Feature: Upgrade step to link indicator versions by populating
+  copied_from and copied_to fields based on naming conventions
+  [avoinea - refs #289335]
+
 13.0 - (2026-01-20)
 ---------------------------
 * Feature: Add archived state to indicators
