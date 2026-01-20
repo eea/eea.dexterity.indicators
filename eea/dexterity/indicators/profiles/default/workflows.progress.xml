@@ -10,6 +10,9 @@
   <object name="marked_for_deletion" meta_type="Workflow State">
    <property name="progress">0</property>
   </object>
+  <object name="archived" meta_type="Workflow State">
+   <property name="progress">0</property>
+  </object>
   <object name="visible" meta_type="Workflow State">
    <property name="progress">50</property>
   </object>

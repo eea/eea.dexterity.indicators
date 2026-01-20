@@ -54,4 +54,13 @@
     profile="eea.dexterity.indicators:default"
     />
 
+  <genericsetup:upgradeStep
+    title="Update workflow for archived state"
+    description="Add archived state to workflow without overwriting web-configured changes"
+    source="12.0"
+    destination="13.0"
+    handler=".evolve130.update_workflow_for_archived_state"
+    profile="eea.dexterity.indicators:default"
+    />
+
 </configure>

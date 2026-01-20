@@ -14,7 +14,7 @@ except ImportError:
     from z3c.form.browser.select import SelectFieldWidget
 from zope.interface import provider, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.schema import Int
+from zope.schema import Int, TextLine
 
 
 class IEeaDexterityIndicatorsLayer(IDefaultBrowserLayer):
@@ -163,6 +163,22 @@ class IIndicatorMetadata(model.Schema):
         "workflow",
         label=_("Workflow"),
         fields=[],
+    )
+    model.fieldset(
+        "default",
+        fields=["copied_from", "copied_to"],
+    )
+
+    copied_from = TextLine(
+        title=_("Copied from"),
+        description=_("Link to the indicator this was copied from"),
+        required=False,
+    )
+
+    copied_to = TextLine(
+        title=_("Copied to"),
+        description=_("Link to the indicator this was copied to"),
+        required=False,
     )
 
 
