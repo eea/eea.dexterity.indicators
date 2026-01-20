@@ -1,6 +1,12 @@
 Changelog
 =========
 
+14.1 - (2026-01-20)
+---------------------------
+* Bug fix: Fix version linking sort order - drafts are newest (work in progress),
+  not oldest. Correct order: archived < published < drafts
+  [avoinea - refs #289335]
+
 14.0 - (2026-01-20)
 ---------------------------
 * Feature: Upgrade step to link indicator versions by populating

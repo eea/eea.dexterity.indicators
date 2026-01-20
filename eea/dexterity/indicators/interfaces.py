@@ -164,10 +164,7 @@ class IIndicatorMetadata(model.Schema):
         label=_("Workflow"),
         fields=[],
     )
-    model.fieldset(
-        "default",
-        fields=["copied_from", "copied_to"],
-    )
+    directives.omitted("copied_from", "copied_to")
 
     copied_from = TextLine(
         title=_("Copied from"),
