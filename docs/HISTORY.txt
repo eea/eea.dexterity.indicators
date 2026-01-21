@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-15.0-dev0 - (unreleased)
+15.0 - (2026-01-21)
 ---------------------------
 * Refactor: Rename workflow transition from 'archived' to 'archive' to follow
   Plone naming conventions (verb form for transitions, past tense for states)
