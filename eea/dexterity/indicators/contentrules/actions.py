@@ -82,7 +82,7 @@ class RetractAndRenameOldVersionExecutor:
                 new_id = old_id + "-%d" % time()
             api.content.transition(
                 obj=old_version,
-                transition="archived",
+                transition="archive",
                 comment=("Auto archive item due to new version being published"),
             )
 

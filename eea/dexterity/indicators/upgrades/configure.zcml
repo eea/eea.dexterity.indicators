@@ -72,4 +72,13 @@
     profile="eea.dexterity.indicators:default"
     />
 
+  <genericsetup:upgradeStep
+    title="Rename archived transition to archive"
+    description="Rename the 'archived' transition to 'archive' to follow Plone workflow naming conventions"
+    source="14.0"
+    destination="15.0"
+    handler=".evolve150.rename_archived_transition"
+    profile="eea.dexterity.indicators:default"
+    />
+
 </configure>
