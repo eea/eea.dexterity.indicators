@@ -46,13 +46,13 @@ def update_workflow_for_archived_state(context):
         logger.info("Added archived state to workflow")
 
     # Check if transition to archived exists from published and retracted states
-    if "archived" not in workflow.transitions:
-        workflow.transitions.addTransition("archived")
-        transition = workflow.transitions["archived"]
+    if "archive" not in workflow.transitions:
+        workflow.transitions.addTransition("archive")
+        transition = workflow.transitions["archive"]
         transition.new_state_id = "archived"
-        transition.title = "Archived"
+        transition.title = "Archive"
         transition.description = "Mark this content to be archived."
-        transition.actbox_name = "Archived"
+        transition.actbox_name = "Archive"
         transition.actbox_category = "workflow"
 
         # Create and set guard - same as markForDeletion transition
@@ -62,17 +62,17 @@ def update_workflow_for_archived_state(context):
         guard.groups = ("indicatorsCopyEditors", "WebReviewers")
         transition.guard = guard
 
-        logger.info("Added archived transition to workflow")
+        logger.info("Added archive transition to workflow")
 
     # Ensure published and retracted states have exit transition to archived
     for state_id in ["published", "retracted"]:
         if state_id in workflow.states:
             state = workflow.states[state_id]
             transitions = list(state.transitions)
-            if "archived" not in transitions:
-                transitions.append("archived")
+            if "archive" not in transitions:
+                transitions.append("archive")
                 state.transitions = tuple(transitions)
-                logger.info("Added archived transition to %s state", state_id)
+                logger.info("Added archive transition to %s state", state_id)
 
     # Add enable transition from archived state if not exists
     if "archived" in workflow.states:

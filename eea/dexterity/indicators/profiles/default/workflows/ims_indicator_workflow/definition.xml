@@ -253,7 +253,7 @@
  <state state_id="published" title="Published" >
   <exit-transition transition_id="createNewVersion" />
   <exit-transition transition_id="markForDeletion" />
-  <exit-transition transition_id="archived" />
+  <exit-transition transition_id="archive" />
   <permission-map name="Access contents information" acquired="True">
    <permission-role>Anonymous</permission-role>
    <permission-role>Editor</permission-role>
@@ -317,7 +317,7 @@
   <description>Items in this state have been retracted from one of the publishing state due to discovered relevant errors in content.</description>
   <exit-transition transition_id="enable" />
   <exit-transition transition_id="markForDeletion" />
-  <exit-transition transition_id="archived" />
+  <exit-transition transition_id="archive" />
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
@@ -560,9 +560,9 @@
    <guard-group>WebReviewers</guard-group>
   </guard>
  </transition>
- <transition transition_id="archived" title="Archived" new_state="archived" trigger="USER" before_script="" after_script="" >
+ <transition transition_id="archive" title="Archive" new_state="archived" trigger="USER" before_script="" after_script="" >
   <description>Mark this content to be archived.</description>
-  <action url="" category="workflow" icon="">Archived</action>
+  <action url="" category="workflow" icon="">Archive</action>
   <guard >
    <guard-group>indicatorsCopyEditors</guard-group>
    <guard-group>WebReviewers</guard-group>
