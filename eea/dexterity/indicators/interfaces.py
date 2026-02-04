@@ -242,6 +242,7 @@ class IIndicatorLayout(model.Schema):
                 "fixedLayout": True,
                 "title": "Content header",
                 "maxChars": "500",
+                "maxCharsOverPercent": "0",
                 "ignoreSpaces": True,
                 "required": True,
                 "disableNewBlocks": True,
@@ -298,6 +299,7 @@ class IIndicatorLayout(model.Schema):
             "1bc4379d-cddb-4120-84ad-5ab025533b12": {
                 "title": "Aggregate level assessment",
                 "maxChars": "2000",
+                "maxCharsOverPercent": "20",
                 "ignoreSpaces": True,
                 "required": True,
                 "disableNewBlocks": False,
@@ -648,6 +650,7 @@ class IIndicatorLayout(model.Schema):
             "d060487d-88fc-4f7b-8ea4-003f14e0fb0c": {
                 "title": "Disaggregate level assessment",
                 "maxChars": "1000",
+                "maxCharsOverPercent": "10",
                 "ignoreSpaces": True,
                 "required": True,
                 "disableNewBlocks": False,
