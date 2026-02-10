@@ -3,7 +3,8 @@ Changelog
 
 15.1-dev0 - (unreleased)
 ---------------------------
-
+* Feature: Add maxCharsOverflowPercent to Indicator's fixed layout
+  [dobri1408 - refs #294806]
 
 15.0 - (2026-01-21)
 ---------------------------
