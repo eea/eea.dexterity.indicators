@@ -1,8 +1,10 @@
 Changelog
 =========
 
-15.2-dev0 - (unreleased)
+15.2 - (2026-04-14)
 ---------------------------
+* Change: Add unit tests for remove_api_string, dedupe_data, and _unicode_save_string_concat
+  [avoinea]
 
 15.1 - (2026-02-10)
 ---------------------------
