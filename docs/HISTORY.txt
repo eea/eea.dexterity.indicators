@@ -1,8 +1,10 @@
 Changelog
 =========
 
-15.3-dev0 - (unreleased)
+15.3 - (2026-04-21)
 ---------------------------
+* Fix: disableNewBlocks on level 1 sections aggregated level and dissagregate level
+  [avoinea - refs #302095]
 
 15.2 - (2026-04-14)
 ---------------------------
