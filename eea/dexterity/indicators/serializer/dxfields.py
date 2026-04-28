@@ -5,7 +5,7 @@ from zope.component import adapter
 from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserRequest
 from plone.restapi.interfaces import ISerializeToJson, IDeserializeFromJson
-from plone.restapi.serializer.dxcontent import SerializeToJson
+from plone.restapi.serializer.dxcontent import SerializeFolderToJson
 from plone.restapi.deserializer.dxcontent import DeserializeFromJson
 from plone.restapi.serializer.utils import uid_to_url
 from plone.restapi.deserializer.utils import path2uid
@@ -18,12 +18,21 @@ COPIED_FIELDS = ("copied_from", "copied_to")
 
 @implementer(ISerializeToJson)
 @adapter(IIndicator, IBrowserRequest)
-class IndicatorSerializer(SerializeToJson):
+class IndicatorSerializer(SerializeFolderToJson):
     """Custom serializer for Indicator to convert UUID to URLs for
     copied_from/copied_to"""
 
-    def __call__(self, version=None, include_items=True):
-        result = super().__call__(version=version, include_items=include_items)
+    def __call__(
+        self,
+        version=None,
+        include_items=True,
+        include_expansion=True,
+    ):
+        result = super().__call__(
+            version=version,
+            include_items=include_items,
+            include_expansion=include_expansion,
+        )
 
         # Convert UUIDs to URLs for copied fields
         for field in COPIED_FIELDS:

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+15.4 - (2026-04-28)
+---------------------------
+* Fix: Fix Folder Icon not showing in indicators - refs #299417
+  [dobri1408 - refs #299417]
+
 15.3 - (2026-04-21)
 ---------------------------
 * Fix: disableNewBlocks on level 1 sections aggregated level and dissagregate level
