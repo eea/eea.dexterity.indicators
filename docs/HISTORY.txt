@@ -1,6 +1,11 @@
 Changelog
 =========
 
+15.6 - (2026-04-29)
+---------------------------
+* Change: fix: Archive content rule bypass security - refs #299417
+  [avoinea]
+
 15.5 - (2026-04-29)
 ---------------------------
 * Change: Fix arching not working bypass security 

@@ -3,11 +3,12 @@
 import logging
 from time import time
 
-from AccessControl import SpecialUsers, getSecurityManager
+from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import (
     newSecurityManager,
     setSecurityManager,
 )
+from AccessControl.users import UnrestrictedUser
 from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from plone import api
@@ -23,6 +24,24 @@ from zope.component import adapter
 from zope.interface import Interface, implementer
 
 logger = logging.getLogger("eea.dexterity.indicators")
+
+ARCHIVE_STATE = "archived"
+ARCHIVE_TRANSITION = "archive"
+SYSTEM_USER = UnrestrictedUser("System Processes", "", ("Manager",), [])
+
+
+def _archive_version(obj):
+    """Archive an old indicator version if it is not already archived."""
+    workflow_tool = api.portal.get_tool("portal_workflow")
+    state = workflow_tool.getInfoFor(obj, "review_state", None)
+    if state == ARCHIVE_STATE:
+        return
+
+    api.content.transition(
+        obj=obj,
+        transition=ARCHIVE_TRANSITION,
+        comment=("Auto archive item due to new version being published"),
+    )
 
 
 class IRetractAndRenameOldVersionAction(Interface):
@@ -83,19 +102,16 @@ class RetractAndRenameOldVersionExecutor:
 
             # Bypass user roles in order to rename old version
             oldSecurityManager = getSecurityManager()
-            newSecurityManager(None, SpecialUsers.system)
-            api.content.transition(
-                obj=old_version,
-                transition="archive",
-                comment=("Auto archive item due to new version being published"),
-            )
-            api.content.rename(obj=old_version, new_id=new_id)
-            api.content.rename(obj=obj, new_id=old_id)
-            obj.setEffectiveDate(DateTime())
-            obj.reindexObject()
-
-            # Switch back to the current user
-            setSecurityManager(oldSecurityManager)
+            newSecurityManager(None, SYSTEM_USER)
+            try:
+                _archive_version(old_version)
+                api.content.rename(obj=old_version, new_id=new_id)
+                api.content.rename(obj=obj, new_id=old_id)
+                obj.setEffectiveDate(DateTime())
+                obj.reindexObject()
+            finally:
+                # Switch back to the current user
+                setSecurityManager(oldSecurityManager)
         except Exception as err:
             logger.exception(err)
             return True
