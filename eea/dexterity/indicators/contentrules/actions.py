@@ -80,16 +80,15 @@ class RetractAndRenameOldVersionExecutor:
 
             if not new_id:
                 new_id = old_id + "-%d" % time()
+
+            # Bypass user roles in order to rename old version
+            oldSecurityManager = getSecurityManager()
+            newSecurityManager(None, SpecialUsers.system)
             api.content.transition(
                 obj=old_version,
                 transition="archive",
                 comment=("Auto archive item due to new version being published"),
             )
-
-            # Bypass user roles in order to rename old version
-            oldSecurityManager = getSecurityManager()
-            newSecurityManager(None, SpecialUsers.system)
-
             api.content.rename(obj=old_version, new_id=new_id)
             api.content.rename(obj=obj, new_id=old_id)
             obj.setEffectiveDate(DateTime())
