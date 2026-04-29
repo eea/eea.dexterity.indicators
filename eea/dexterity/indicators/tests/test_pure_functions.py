@@ -7,10 +7,12 @@ These tests cover pure functions that don't require Plone context:
 """
 
 import unittest
+
 from eea.dexterity.indicators.behaviors.indicator import (
     remove_api_string,
     dedupe_data,
 )
+from eea.dexterity.indicators.contentrules.actions import SYSTEM_USER
 from eea.dexterity.indicators.indexer import _unicode_save_string_concat
 
 
@@ -113,6 +115,13 @@ class TestUnicodeSaveStringConcat(unittest.TestCase):
     def test_empty_args(self):
         result = _unicode_save_string_concat()
         self.assertEqual(result, "")
+
+
+class TestWorkflowSystemUser(unittest.TestCase):
+    """Tests for the system user used by workflow rule actions."""
+
+    def test_system_user_has_manager_role_for_workflow_bypass(self):
+        self.assertIn("Manager", SYSTEM_USER.getRoles())
 
 
 if __name__ == "__main__":
