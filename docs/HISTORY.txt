@@ -1,6 +1,9 @@
 Changelog
 =========
 
+15.7-dev0 - (unreleased)
+---------------------------
+
 15.6 - (2026-04-29)
 ---------------------------
 * Change: fix: Archive content rule bypass security - refs #299417
