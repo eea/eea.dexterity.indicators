@@ -1,6 +1,9 @@
 Changelog
 =========
 
+15.6-dev0 - (unreleased)
+---------------------------
+
 15.5 - (2026-04-29)
 ---------------------------
 * Change: Fix arching not working bypass security 
