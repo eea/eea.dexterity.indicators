@@ -1,6 +1,11 @@
 Changelog
 =========
 
+15.5 - (2026-04-29)
+---------------------------
+* Change: Fix arching not working bypass security 
+  [dobri1408]
+
 15.4 - (2026-04-28)
 ---------------------------
 * Fix: Fix Folder Icon not showing in indicators - refs #299417
