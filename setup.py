@@ -52,6 +52,7 @@ setup(
         "eea.api.layout",
         "eea.schema.slate",
         "eea.dexterity.themes",
+        "eea.coremetadata",
     ],
     extras_require={
         "test": [

@@ -1,5 +1,6 @@
 """Module where all interfaces, events and exceptions live."""
 
+from eea.coremetadata.interfaces import IGeoCoverageField
 from eea.dexterity.indicators import EEAMessageFactory as _
 from eea.schema.slate.field import SlateJSONField
 from plone.autoform.interfaces import IFormFieldProvider
@@ -12,7 +13,7 @@ try:
     from plone.app.z3cform.widgets.select import SelectFieldWidget
 except ImportError:
     from z3c.form.browser.select import SelectFieldWidget
-from zope.interface import provider, Interface
+from zope.interface import provider, Interface, directlyProvides
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.schema import Int, TextLine
 
@@ -76,6 +77,7 @@ class IIndicatorMetadata(model.Schema):
         widget="geolocation",
         default={"readOnly": True, "geolocation": []},
     )
+    directlyProvides(geo_coverage, IGeoCoverageField)
 
     #
     # Supporting information
