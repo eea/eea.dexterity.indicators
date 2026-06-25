@@ -1,8 +1,11 @@
 Changelog
 =========
 
-15.7-dev0 - (unreleased)
+16.0-dev0 - (unreleased)
 ---------------------------
+* Feature: Add IGeoCoverageField marker interface on geo_coverage field
+  for grouped geolocation serializer support
+  [avoinea - refs #296992]
 
 15.6 - (2026-04-29)
 ---------------------------
