@@ -293,9 +293,7 @@ class PublishContainedContentExecutor:
                 try:
                     self._publish_item(brain, obj)
                 except Exception as err:
-                    logger.warning(
-                        "Could not publish %s: %s", brain.getPath(), err
-                    )
+                    logger.warning("Could not publish %s: %s", brain.getPath(), err)
                     continue
         finally:
             # Switch back to the current user
