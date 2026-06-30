@@ -226,6 +226,46 @@ class PublishContainedContentExecutor:
         self.element = element
         self.event = event
 
+    def _publish_item(self, brain, obj):
+        """Try to publish a single contained item.
+
+        Returns True if the item was published, False if it was skipped.
+        """
+        item = brain.getObject()
+        # Skip the indicator itself
+        if item == obj:
+            return False
+
+        wf_tool = api.portal.get_tool("portal_workflow")
+        workflows = wf_tool.getWorkflowsFor(item)
+
+        if not workflows:
+            logger.info("Skipping %s: no workflow bound", brain.getPath())
+            return False
+
+        # Get available transitions
+        transitions = wf_tool.getTransitionsFor(item)
+        publish_transition = None
+        for t in transitions:
+            if t["id"] == "publish":
+                publish_transition = t
+                break
+
+        if not publish_transition:
+            logger.info(
+                "Skipping %s: no 'publish' transition available",
+                brain.getPath(),
+            )
+            return False
+
+        api.content.transition(
+            obj=item,
+            transition=publish_transition["id"],
+            comment=("Auto-published when parent Indicator was published"),
+        )
+        logger.info("Published contained item: %s", item.absolute_url())
+        return True
+
     def __call__(self):
         obj = self.event.object
 
@@ -242,37 +282,22 @@ class PublishContainedContentExecutor:
             path={"query": path, "depth": -1}, review_state={"not": "published"}
         )
 
-        for brain in brains:
-            try:
-                item = brain.getObject()
-                # Skip the indicator itself
-                if item == obj:
+        # Bypass user roles in order to publish contained items.
+        # The current user (e.g. WebReviewer) may not have the
+        # "Review portal content" permission required by the publish
+        # transition guard in simple_publication_workflow.
+        oldSecurityManager = getSecurityManager()
+        newSecurityManager(None, SYSTEM_USER)
+        try:
+            for brain in brains:
+                try:
+                    self._publish_item(brain, obj)
+                except Exception as err:
+                    logger.warning("Could not publish %s: %s", brain.getPath(), err)
                     continue
-
-                # Try to publish the item
-                wf_tool = api.portal.get_tool("portal_workflow")
-                workflows = wf_tool.getWorkflowsFor(item)
-
-                if workflows:
-                    # Get available transitions
-                    transitions = wf_tool.getTransitionsFor(item)
-                    publish_transition = None
-                    for t in transitions:
-                        if t["id"] == "publish":
-                            publish_transition = t
-                            break
-                    if publish_transition:
-                        api.content.transition(
-                            obj=item,
-                            transition=publish_transition["id"],
-                            comment=(
-                                "Auto-published when parent Indicator was published"
-                            ),
-                        )
-                        logger.info("Published contained item: %s", item.absolute_url())
-            except Exception as err:
-                logger.warning("Could not publish %s: %s", brain.getPath(), err)
-                continue
+        finally:
+            # Switch back to the current user
+            setSecurityManager(oldSecurityManager)
 
         return True
 
