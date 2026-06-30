@@ -1,7 +1,7 @@
 Changelog
 =========
 
-16.1 - (unreleased)
+16.1-dev0 - (unreleased)
 ---------------------------
 * Fix: Publish contained content rule now bypasses user permissions,
   so contained items (e.g. chart_static, map_static, visualization) are
